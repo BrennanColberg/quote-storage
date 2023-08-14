@@ -1,6 +1,7 @@
 {
 	"scripts": {
-		"dev": "next dev"
+		"dev": "prisma generate && next dev",
+		"db": "prisma studio"
 	},
 	"dependencies": {
 		"@prisma/client": "^5.1.1",

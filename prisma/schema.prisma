@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "./quotes.db"
+  provider = "sqlite"
+  url      = "file:../quotes.db"
 }
 
 model Quote {
-  id      Int      @id @default(autoincrement())
+  id      String   @id @default(uuid())
   authors Person[]
   key     String?
   sources Source[]
@@ -26,13 +26,13 @@ model Person {
   yearDied  Int?
   quotes    Quote[]
   Text      Text?   @relation(fields: [textId], references: [id])
-  textId    Int?
+  textId    String?
   Source    Source? @relation(fields: [sourceId], references: [id])
-  sourceId  Int?
+  sourceId  String?
 }
 
 model Text {
-  id       Int       @id @default(autoincrement())
+  id       String    @id @default(uuid())
   authors  Person[]
   editions Edition[]
   subtitle String
@@ -43,14 +43,14 @@ model Text {
 }
 
 model Source {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(uuid())
   authors   Person[]
   citations Citation[]
   quote     Quote      @relation(fields: [quoteId], references: [id])
   text      Text       @relation(fields: [textId], references: [id])
   primary   Boolean
-  quoteId   Int
-  textId    Int
+  quoteId   String
+  textId    String
 }
 
 model Citation {
@@ -58,13 +58,12 @@ model Citation {
   source    Source  @relation(fields: [sourceId], references: [id])
   edition   Edition @relation(fields: [editionId], references: [id])
   // Representing pages as JSON; consult Prisma documentation for your specific needs
-  pages     Json?
-  sourceId  Int
-  editionId Int
+  sourceId  String
+  editionId String
 }
 
 model Edition {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(uuid())
   publisher   Publisher  @relation(fields: [publisherId], references: [id])
   subtitle    String
   texts       Text[]
@@ -73,11 +72,11 @@ model Edition {
   link        String?
   year        Int
   citations   Citation[]
-  publisherId Int
+  publisherId String
 }
 
 model Publisher {
-  id       Int       @id @default(autoincrement())
+  id       String    @id @default(uuid())
   name     String
   city     String?
   editions Edition[]
