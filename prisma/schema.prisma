@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "./quotes.db"
+}
+
+model Quote {
+  id      Int      @id @default(autoincrement())
+  authors Person[]
+  key     String?
+  sources Source[]
+  text    String
+}
+
+model Person {
+  id        String  @id @default(uuid())
+  name      String
+  shortName String?
+  yearBorn  Int?
+  yearDied  Int?
+  quotes    Quote[]
+  Text      Text?   @relation(fields: [textId], references: [id])
+  textId    Int?
+  Source    Source? @relation(fields: [sourceId], references: [id])
+  sourceId  Int?
+}
+
+model Text {
+  id       Int       @id @default(autoincrement())
+  authors  Person[]
+  editions Edition[]
+  subtitle String
+  title    String
+  type     String // You can also create an enum for "book", "article", "speech", "letter"
+  year     Int
+  sources  Source[]
+}
+
+model Source {
+  id        Int        @id @default(autoincrement())
+  authors   Person[]
+  citations Citation[]
+  quote     Quote      @relation(fields: [quoteId], references: [id])
+  text      Text       @relation(fields: [textId], references: [id])
+  primary   Boolean
+  quoteId   Int
+  textId    Int
+}
+
+model Citation {
+  id        String  @id @default(uuid())
+  source    Source  @relation(fields: [sourceId], references: [id])
+  edition   Edition @relation(fields: [editionId], references: [id])
+  // Representing pages as JSON; consult Prisma documentation for your specific needs
+  pages     Json?
+  sourceId  Int
+  editionId Int
+}
+
+model Edition {
+  id          Int        @id @default(autoincrement())
+  publisher   Publisher  @relation(fields: [publisherId], references: [id])
+  subtitle    String
+  texts       Text[]
+  title       String
+  type        String // You can also create an enum for "paperback", "hardcover", "website", "pdf"
+  link        String?
+  year        Int
+  citations   Citation[]
+  publisherId Int
+}
+
+model Publisher {
+  id       Int       @id @default(autoincrement())
+  name     String
+  city     String?
+  editions Edition[]
+}
