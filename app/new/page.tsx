@@ -1,25 +1,10 @@
-"use client";
-
-import { useState } from "react";
 import axios from "axios";
+import NewQuoteForm from "./NewQuoteForm";
+import { Person, PrismaClient } from "@prisma/client";
 
-export default function AddQuote() {
-	const [text, setText] = useState("");
+export default async function AddQuote() {
+	const prisma = new PrismaClient();
+	const persons = await prisma.person.findMany();
 
-	return (
-		<form
-			onSubmit={async (e) => {
-				e.preventDefault();
-				await axios.post("/api/quotes", { text });
-				setText("");
-			}}
-		>
-			<textarea
-				name="text"
-				value={text}
-				onChange={(e) => setText(e.target.value)}
-			/>
-			<button type="submit">Add Quote</button>
-		</form>
-	);
+	return <NewQuoteForm persons={persons} />;
 }

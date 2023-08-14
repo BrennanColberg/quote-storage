@@ -9,7 +9,9 @@
 		"next": "13.4.13",
 		"prisma": "5.1.1",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"react-select": "5.7.4",
+		"zod": "3.21.4"
 	},
 	"devDependencies": {
 		"@types/node": "20.5.0",
