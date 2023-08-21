@@ -1,6 +1,7 @@
 - [x] add tailwind
 - [x] add prettier
-- [ ] add shadcn/ui
+- [x] add shadcn/ui
+- [ ] migrate existing form to shadcn/ui
 
 - [ ] system for popping up sub-forms (modal? new window?)
 - [ ] different form for adding/editing author (full, short?, birth?, death?, gender?, notes)

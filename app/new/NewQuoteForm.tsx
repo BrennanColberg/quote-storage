@@ -1,5 +1,6 @@
 "use client"
 
+import { Textarea } from "@/components/ui/textarea"
 import { Person } from "@prisma/client"
 import axios from "axios"
 import { useMemo, useState } from "react"
@@ -31,7 +32,7 @@ export default function NewQuoteForm({
         setText("")
       }}
     >
-      <textarea
+      <Textarea
         name="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
