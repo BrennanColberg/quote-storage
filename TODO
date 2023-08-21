@@ -1,0 +1,11 @@
+- [ ] add shadcn/ui, tailwind for decent-looking UI elements
+- [ ] system for popping up sub-forms (modal? new window?)
+- [ ] different form for adding/editing author (full, short?, birth?, death?, gender?, notes)
+- [ ] different form for adding/editing text
+- [ ] different form for adding/editing editions
+- [ ] different form for adding/editing publishers
+- [ ] display quote
+- [ ] display quotes from text
+- [ ] display quotes from author
+- [ ] search quotes (via regex to start?)
+- [ ] publish to internet
