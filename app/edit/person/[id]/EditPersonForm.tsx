@@ -19,8 +19,12 @@ import axios from "axios"
 import personSchema from "./personSchema"
 import { Person } from "@prisma/client"
 import { Input } from "@/components/ui/input"
+import { useSearchParams } from "next/navigation"
 
 export function EditPersonForm({ person: initialPerson }: { person?: Person }) {
+  const searchParams = useSearchParams()
+  const closeOnSubmit = searchParams.has("from")
+
   const form = useForm<z.infer<typeof personSchema>>({
     resolver: zodResolver(personSchema),
     defaultValues: initialPerson
@@ -48,6 +52,7 @@ export function EditPersonForm({ person: initialPerson }: { person?: Person }) {
     if (initialPerson) {
       // edit
       await axios.put("/api/person", { ...values, id: initialPerson.id })
+      if (closeOnSubmit) return window.close()
       alert("Updated person!")
       location.reload()
     } else {

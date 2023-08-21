@@ -91,7 +91,11 @@ export function EditQuoteForm({
                     })
                     setPersons((x) => [...x, person.data])
                     field.onChange({ target: { value: person.data.id } })
-                    // TODO open window with option to edit author
+                    // opens a new tab to edit the person (which will close when done)
+                    window.open(
+                      `/edit/person/${person.data.id}?from=quote`,
+                      "_blank",
+                    )
                   }}
                 />
               </FormControl>
