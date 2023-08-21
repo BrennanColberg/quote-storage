@@ -15,7 +15,7 @@ model Quote {
   authors Person[]
   key     String?
   sources Source[]
-  text    String
+  content String   @map("text")
 }
 
 model Person {

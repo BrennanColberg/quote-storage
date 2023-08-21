@@ -1,9 +1,12 @@
+import Link from "next/link"
+
 // basic placeholder page
 export default function Page() {
   return (
     <div>
-      <h1>Page</h1>
-      <a href="/new">Add new quote</a>
+      <Link href="/edit/quote" className="text-blue-500 underline">
+        Add quote
+      </Link>
     </div>
   )
 }

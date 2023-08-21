@@ -1,19 +1,14 @@
+import quoteSchema from "@/app/edit/quote/quoteSchema"
 import { PrismaClient } from "@prisma/client"
-import { NextRequest, NextResponse } from "next/server"
-import { z } from "zod"
-
-const schema = z.object({
-  text: z.string(),
-  authorIds: z.array(z.string()),
-})
+import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
-  // extract the data from the request
-  const { text, authorIds } = schema.parse(await request.json())
+  const { content, authorId } = quoteSchema.parse(await request.json())
+  const authorIds = [authorId]
 
   const prisma = new PrismaClient()
   const quote = await prisma.quote.create({
-    data: { text, authors: { connect: authorIds.map((id) => ({ id })) } },
+    data: { content, authors: { connect: authorIds.map((id) => ({ id })) } },
   })
   return NextResponse.json(quote)
 }
