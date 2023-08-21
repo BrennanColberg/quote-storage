@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import CreatableSelect from "react-select/creatable"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import axios from "axios"
 import { Person } from "@prisma/client"
 import quoteSchema from "./quoteSchema"
@@ -41,10 +41,16 @@ export function EditQuoteForm({
     },
   })
 
+  const contentRef = useRef<HTMLTextAreaElement>(null)
   async function onSubmit(values: z.infer<typeof quoteSchema>) {
     await axios.post("/api/quote", values)
-    alert("Created quote!")
-    form.reset()
+
+    // reset things that are different between "adjacent" quotes
+    form.resetField("content")
+    form.resetField("notes")
+
+    // refocus on content to start entering next quote
+    contentRef.current.focus()
   }
 
   return (
@@ -60,7 +66,11 @@ export function EditQuoteForm({
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea placeholder="In the beginning..." field={field} />
+                <Textarea
+                  placeholder="In the beginning..."
+                  field={field}
+                  ref={contentRef}
+                />
               </FormControl>
               <FormDescription>
                 This "is" the quote, as you'd say or refer to it.
