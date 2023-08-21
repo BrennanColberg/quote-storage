@@ -41,7 +41,7 @@ export function EditQuoteForm({
   })
 
   async function onSubmit(values: z.infer<typeof quoteSchema>) {
-    await axios.post("/api/quotes", values)
+    await axios.post("/api/quote", values)
     alert("Created quote!")
     form.reset()
   }
@@ -59,7 +59,7 @@ export function EditQuoteForm({
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea placeholder="In the beginning..." {...field} />
+                <Textarea placeholder="In the beginning..." field={field} />
               </FormControl>
               <FormDescription>
                 This "is" the quote, as you'd say or refer to it.
@@ -86,11 +86,12 @@ export function EditQuoteForm({
                     ) ?? null
                   }
                   onCreateOption={async (inputValue) => {
-                    const person = await axios.post("/api/persons", {
+                    const person = await axios.post("/api/person", {
                       name: inputValue,
                     })
                     setPersons((x) => [...x, person.data])
                     field.onChange({ target: { value: person.data.id } })
+                    // TODO open window with option to edit author
                   }}
                 />
               </FormControl>

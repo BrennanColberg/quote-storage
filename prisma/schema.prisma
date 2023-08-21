@@ -22,13 +22,16 @@ model Person {
   id        String  @id @default(uuid())
   name      String
   shortName String?
-  yearBorn  Int?
-  yearDied  Int?
+  yearBorn  String?
+  yearDied  String?
   quotes    Quote[]
   Text      Text?   @relation(fields: [textId], references: [id])
   textId    String?
   Source    Source? @relation(fields: [sourceId], references: [id])
   sourceId  String?
+  fictional Boolean @default(false)
+  notes     String?
+  bio       String?
 }
 
 model Text {
@@ -38,7 +41,7 @@ model Text {
   subtitle String
   title    String
   type     String // You can also create an enum for "book", "article", "speech", "letter"
-  year     Int
+  year     String
   sources  Source[]
 }
 
@@ -70,7 +73,7 @@ model Edition {
   title       String
   type        String // You can also create an enum for "paperback", "hardcover", "website", "pdf"
   link        String?
-  year        Int
+  year        String
   citations   Citation[]
   publisherId String
 }
