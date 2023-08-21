@@ -36,7 +36,7 @@ export function EditQuoteForm({
     resolver: zodResolver(quoteSchema),
     defaultValues: {
       content: "",
-      authorId: undefined,
+      authorIds: [],
       notes: "",
     },
   })
@@ -81,21 +81,24 @@ export function EditQuoteForm({
         />
         <FormField
           control={form.control}
-          name="authorId"
+          name="authorIds"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Author</FormLabel>
               <FormControl>
                 <CreatableSelect
+                  isMulti
                   options={personOptions}
-                  onChange={(newValue) => {
-                    field.onChange({ target: { value: newValue.value } })
+                  onChange={(selectedOptions) => {
+                    field.onChange({
+                      target: {
+                        value: selectedOptions.map((option) => option.value),
+                      },
+                    })
                   }}
-                  value={
-                    personOptions.find(
-                      (person) => person.value === field.value,
-                    ) ?? null
-                  }
+                  value={personOptions.filter((person) =>
+                    field.value.includes(person.value),
+                  )}
                   onCreateOption={async (inputValue) => {
                     const person = await axios.post("/api/person", {
                       name: inputValue,

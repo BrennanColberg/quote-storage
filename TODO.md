@@ -9,10 +9,9 @@
 quote form upgrades
 
 - [x] notes
-- [ ] select multiple authors
-- [ ] edit authors (?)
-- [ ] edit texts
+- [x] select multiple authors
 - [ ] add sources
+- [ ] edit texts
 - [ ] add citations to sources
 - [ ] dictation for content
 

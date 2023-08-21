@@ -4,8 +4,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
   const body = await request.json()
-  const { content, authorId, notes } = quoteSchema.parse(body)
-  const authorIds = [authorId]
+  const { content, authorIds, notes } = quoteSchema.parse(body)
 
   const prisma = new PrismaClient()
   const quote = await prisma.quote.create({

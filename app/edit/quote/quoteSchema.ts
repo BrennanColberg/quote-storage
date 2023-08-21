@@ -4,8 +4,8 @@ const quoteSchema = z.object({
   content: z.string({
     required_error: "Content must not be empty.",
   }),
-  authorId: z.string({
-    required_error: "Quotes must have at least one author.",
+  authorIds: z.array(z.string()).min(1, {
+    message: "Quotes must have at least one author.",
   }),
   notes: z.string().optional(),
 })
