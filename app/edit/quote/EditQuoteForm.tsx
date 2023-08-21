@@ -37,6 +37,7 @@ export function EditQuoteForm({
     defaultValues: {
       content: "",
       authorId: undefined,
+      notes: "",
     },
   })
 
@@ -104,6 +105,21 @@ export function EditQuoteForm({
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="notes"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Notes</FormLabel>
+              <FormControl>
+                <Textarea field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>

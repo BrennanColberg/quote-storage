@@ -7,6 +7,7 @@ const quoteSchema = z.object({
   authorId: z.string({
     required_error: "Quotes must have at least one author.",
   }),
+  notes: z.string().optional(),
 })
 
 export default quoteSchema

@@ -16,6 +16,7 @@ model Quote {
   key     String?
   sources Source[]
   content String   @map("text")
+  notes   String?
 }
 
 model Person {

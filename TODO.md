@@ -5,6 +5,17 @@
 
 - [x] different form for adding/editing author (full, short?, birth?, death?, gender?, notes)
 - [x] system for popping up sub-forms (modal? new window?)
+
+quote form upgrades
+
+- [x] notes
+- [ ] select multiple authors
+- [ ] edit authors (?)
+- [ ] edit texts
+- [ ] add sources
+- [ ] add citations to sources
+- [ ] dictation for content
+
 - [ ] different form for adding/editing text
 - [ ] different form for adding/editing editions
 - [ ] different form for adding/editing publishers
