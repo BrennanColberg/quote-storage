@@ -44,6 +44,7 @@ model Text {
   type     String? // You can also create an enum for "book", "article", "speech", "letter"
   year     String?
   sources  Source[]
+  notes    String?
 }
 
 model Source {

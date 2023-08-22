@@ -21,7 +21,11 @@ import { Person } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 
-export function EditPersonForm({ person: initialPerson }: { person?: Person }) {
+export default function EditPersonForm({
+  person: initialPerson,
+}: {
+  person?: Person
+}) {
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
 

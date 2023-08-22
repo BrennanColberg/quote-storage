@@ -47,7 +47,7 @@ export default function EditSourceSubform({
 
       <div className="items-top flex space-x-2 my-4">
         <Checkbox
-          id="primary"
+          id={`primary-${i}`}
           checked={source.primary}
           onCheckedChange={(state) =>
             setSource({ ...source, primary: state === true })
@@ -55,7 +55,7 @@ export default function EditSourceSubform({
         />
         <div className="grid gap-1.5 leading-none">
           <label
-            htmlFor="primary"
+            htmlFor={`primary-${i}`}
             className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             This text is the <b>primary source</b> for this quote.
