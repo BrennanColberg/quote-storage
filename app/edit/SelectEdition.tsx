@@ -35,7 +35,9 @@ export default function SelectEdition({
         const edition = await axios.post("/api/edition", {
           title: inputValue,
           authorIds: authorIds,
-          textId,
+          translatorIds: [],
+          editorIds: [],
+          textIds: [textId],
         })
         setEditions((x) => [...x, edition.data])
         setEditionId(edition.data.id)

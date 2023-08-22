@@ -14,7 +14,7 @@ quote form upgrades needed for MVP
 - [x] add citations to sources
 - [x] different form for adding/editing text
 - [ ] auto refetch data for Selects (at least on every page focus, if not on timer)?
-- [ ] different form for adding/editing editions
+- [x] different form for adding/editing editions
 - [ ] different form for adding/editing publishers
 - [ ] more attributes for citations (depending on edition type?)
 - [ ] see information about texts/sources? with button to go edit?
@@ -42,3 +42,5 @@ later super upgrades
 - [ ] quote search via embeddings
 - [ ] fancy meta tags
 - [ ] quote image auto-generator
+- [ ] preload meta tags, locally cache/backup URLs entered for editions
+- [ ] make IDs changeable / able to not be UUIDs

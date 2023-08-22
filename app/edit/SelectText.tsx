@@ -10,7 +10,7 @@ export default function SelectText({
   setTextId,
   authorIds,
 }: {
-  texts: (Text & { authors: Person[] })[]
+  texts: Text[]
   setTexts: Dispatch<SetStateAction<(Text & { authors: Person[] })[]>>
   textId?: string
   setTextId: (value?: string) => void

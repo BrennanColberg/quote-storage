@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json()
+  console.log(body)
   const { title, authorIds, id, subtitle, year, notes, type } = textSchema
     .and(z.object({ id: z.string() }))
     .parse(body)

@@ -77,20 +77,31 @@ model Citation {
   editionId String
 }
 
+enum EditionType {
+  PAPERBACK
+  HARDCOVER
+  LEATHERBOUND
+  WEBSITE
+  PDF
+  VIDEO_RECORDING
+  AUDIO_RECORDING
+}
+
 model Edition {
-  id          String     @id @default(uuid())
-  publisher   Publisher? @relation(fields: [publisherId], references: [id])
+  id          String       @id @default(uuid())
+  publisher   Publisher?   @relation(fields: [publisherId], references: [id])
   subtitle    String?
   texts       Text[]
   title       String
-  type        String? // You can also create an enum for "paperback", "hardcover", "website", "pdf"
-  link        String?
+  type        EditionType?
+  url         String?
   year        String?
   citations   Citation[]
   publisherId String?
-  authors     Person[]   @relation("EditionAuthors")
-  translators Person[]   @relation("EditionTranslators")
-  editors     Person[]   @relation("EditionEditors")
+  notes       String?
+  authors     Person[]     @relation("EditionAuthors")
+  translators Person[]     @relation("EditionTranslators")
+  editors     Person[]     @relation("EditionEditors")
 }
 
 model Publisher {
