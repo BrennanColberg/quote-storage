@@ -12,8 +12,8 @@ quote form upgrades needed for MVP
 - [x] select multiple authors
 - [x] add sources
 - [x] add citations to sources
+- [x] different form for adding/editing text
 - [ ] auto refetch data for Selects (at least on every page focus, if not on timer)?
-- [ ] different form for adding/editing text
 - [ ] different form for adding/editing editions
 - [ ] different form for adding/editing publishers
 - [ ] more attributes for citations (depending on edition type?)

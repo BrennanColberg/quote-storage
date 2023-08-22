@@ -5,7 +5,8 @@ import { z } from "zod"
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const { title, authorIds, notes, subtitle, year } = textSchema.parse(body)
+  const { title, authorIds, notes, subtitle, year, type } =
+    textSchema.parse(body)
   const prisma = new PrismaClient()
   const text = await prisma.text.create({
     data: {
@@ -14,6 +15,7 @@ export async function POST(request: NextRequest) {
       year: year || null,
       notes: notes || null,
       authors: { connect: authorIds.map((id) => ({ id })) },
+      type: type ?? null,
     },
   })
   return NextResponse.json(text)
@@ -21,7 +23,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json()
-  const { title, authorIds, id, subtitle, year, notes } = textSchema
+  const { title, authorIds, id, subtitle, year, notes, type } = textSchema
     .and(z.object({ id: z.string() }))
     .parse(body)
   const prisma = new PrismaClient()
@@ -33,6 +35,7 @@ export async function PUT(request: NextRequest) {
       year: year || null,
       notes: notes || null,
       authors: { connect: authorIds.map((id) => ({ id })) },
+      type: type ?? null,
     },
   })
   return NextResponse.json(text)

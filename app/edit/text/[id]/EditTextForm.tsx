@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,11 +16,12 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
 import textSchema from "./textSchema"
-import { Person, Text } from "@prisma/client"
+import { Person, Text, TextType } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import SelectPerson from "../../SelectPerson"
+import Select from "react-select"
 
 export default function EditTextForm({
   text: initialText,
@@ -44,11 +44,20 @@ export default function EditTextForm({
           year: initialText.year ?? "",
           notes: initialText.notes ?? "",
           authorIds: initialText.authors.map((a) => a.id),
+          type: initialText.type,
         }
-      : { title: "", subtitle: "", year: "", notes: "", authorIds: [] },
+      : {
+          title: "",
+          subtitle: "",
+          year: "",
+          notes: "",
+          authorIds: [],
+          type: null,
+        },
   })
 
   async function onSubmit(values: z.infer<typeof textSchema>) {
+    console.log(values)
     if (initialText) {
       // edit
       await axios.put("/api/text", { ...values, id: initialText.id })
@@ -128,6 +137,31 @@ export default function EditTextForm({
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <FormControl>
+                <Select
+                  options={Object.values(TextType).map((type) => ({
+                    label: type,
+                    value: type,
+                  }))}
+                  value={
+                    field.value && { value: field.value, label: field.value }
+                  }
+                  onChange={(type) =>
+                    form.setValue("type", type?.value ?? null)
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

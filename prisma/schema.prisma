@@ -35,13 +35,24 @@ model Person {
   editionsEdited     Edition[] @relation("EditionEditors")
 }
 
+enum TextType {
+  BOOK
+  ARTICLE
+  SPEECH
+  LETTER
+  BLOG_POST
+  SOCIAL_MEDIA_POST
+  INTERVIEW
+  ESSAY
+}
+
 model Text {
   id       String    @id @default(uuid())
   authors  Person[]
   editions Edition[]
   subtitle String?
   title    String
-  type     String? // You can also create an enum for "book", "article", "speech", "letter"
+  type     TextType?
   year     String?
   sources  Source[]
   notes    String?
