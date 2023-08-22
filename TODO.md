@@ -26,12 +26,14 @@ quote form upgrades needed for MVP
 
 things to "finalize" the app MVP
 
+- [ ] switch to using remote postgres
+- [ ] publish to internet
+- [ ] transcribe at least one book's worth of quotes
+
 - [ ] display quote
 - [ ] display quotes from text
 - [ ] display quotes from author
 - [ ] search quotes (via regex to start)
-
-- [ ] publish to internet
 
 later super upgrades
 
