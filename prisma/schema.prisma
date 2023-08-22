@@ -28,8 +28,6 @@ model Person {
   quotes    Quote[]
   Text      Text?   @relation(fields: [textId], references: [id])
   textId    String?
-  Source    Source? @relation(fields: [sourceId], references: [id])
-  sourceId  String?
   fictional Boolean @default(false)
   notes     String?
   bio       String?
@@ -48,11 +46,10 @@ model Text {
 
 model Source {
   id        String     @id @default(uuid())
-  authors   Person[]
   citations Citation[]
   quote     Quote      @relation(fields: [quoteId], references: [id])
   text      Text       @relation(fields: [textId], references: [id])
-  primary   Boolean
+  primary   Boolean?
   quoteId   String
   textId    String
 }

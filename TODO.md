@@ -10,9 +10,8 @@ quote form upgrades needed for MVP
 
 - [x] notes
 - [x] select multiple authors
-- [ ] add sources
+- [x] add sources
 - [ ] different form for adding/editing text
-- [ ] edit texts
 - [ ] add citations to sources
 - [ ] different form for adding/editing editions
 - [ ] different form for adding/editing publishers

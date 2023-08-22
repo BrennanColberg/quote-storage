@@ -3,6 +3,8 @@ import sourceSchema from "./sourceSchema"
 import SelectText from "../SelectText"
 import { Dispatch, SetStateAction } from "react"
 import { Text } from "@prisma/client"
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
 
 export default function EditSourceSubform({
   source,
@@ -24,13 +26,29 @@ export default function EditSourceSubform({
       <h3 className="text-center font-semibold text-xl text-neutral-400">
         Source {i + 1}
       </h3>
-      <SelectText
-        authorIds={authorIds}
-        textId={source.textId}
-        setTextId={(textId) => setSource({ ...source, textId })}
-        texts={texts}
-        setTexts={setTexts}
-      />
+      <FormItem>
+        <FormLabel>Text</FormLabel>
+        <FormControl>
+          <SelectText
+            authorIds={authorIds}
+            textId={source.textId}
+            setTextId={(textId) => setSource({ ...source, textId })}
+            texts={texts}
+            setTexts={setTexts}
+          />
+        </FormControl>
+      </FormItem>
+
+      {/* <Button
+        variant="outline"
+        size="lg"
+        onClick={(e) => {
+          e.preventDefault()
+          setSource({ ...source, citations: [...(source.citations ?? []), {}] })
+        }}
+      >
+        Add citation
+      </Button> */}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
   const body = await request.json()
-  const { content, authorIds, notes } = quoteSchema.parse(body)
+  const { content, authorIds, notes, sources } = quoteSchema.parse(body)
 
   const prisma = new PrismaClient()
   const quote = await prisma.quote.create({
@@ -12,6 +12,7 @@ export async function POST(request: Request) {
       content,
       notes: notes || null,
       authors: { connect: authorIds.map((id) => ({ id })) },
+      sources: { create: sources.map(({ textId }) => ({ textId })) },
     },
   })
   return NextResponse.json(quote)

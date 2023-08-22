@@ -1,17 +1,16 @@
 import { z } from "zod"
+import citationSchema from "./citationSchema"
 
 const sourceSchema = z.object({
   textId: z
     .string({
-      required_error: "Source must contain a text.",
+      required_error: "Source must refer to a text.",
     })
     .uuid(),
   notes: z.string().optional(),
-  // citations: z.array(
-  //   z.object({
-  //     editionId: z.string().uuid(),
-  //   }),
-  // ),
+  // citations: z
+  //   .array(citationSchema)
+  //   .min(1, "Source must contain at least one citation."),
 })
 
 export default sourceSchema

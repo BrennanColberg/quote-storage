@@ -44,6 +44,7 @@ export function EditQuoteForm({
 
   const contentRef = useRef<HTMLTextAreaElement>(null)
   async function onSubmit(values: z.infer<typeof quoteSchema>) {
+    console.log(values)
     await axios.post("/api/quote", values)
 
     // reset things that are different between "adjacent" quotes
@@ -73,9 +74,6 @@ export function EditQuoteForm({
                   ref={contentRef}
                 />
               </FormControl>
-              <FormDescription>
-                This "is" the quote, as you'd say or refer to it.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -89,14 +87,11 @@ export function EditQuoteForm({
               <FormControl>
                 <SelectPerson
                   personIds={field.value}
-                  setPersonIds={(value) =>
-                    field.onChange({ target: { value } })
-                  }
+                  setPersonIds={(value) => form.setValue("authorIds", value)}
                   persons={persons}
                   setPersons={setPersons}
                 />
               </FormControl>
-              <FormDescription>Who said this?</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -125,6 +120,7 @@ export function EditQuoteForm({
                 <>
                   {field.value.map((source, i) => (
                     <EditSourceSubform
+                      key={i}
                       authorIds={form.getValues().authorIds}
                       texts={texts}
                       setTexts={setTexts}
@@ -133,7 +129,7 @@ export function EditQuoteForm({
                       setSource={(newSource) => {
                         const newSources = [...field.value]
                         newSources[i] = newSource
-                        field.onChange({ target: { value: newSources } })
+                        form.setValue("sources", newSources)
                       }}
                     />
                   ))}
@@ -144,7 +140,7 @@ export function EditQuoteForm({
                 size="lg"
                 onClick={(e) => {
                   e.preventDefault()
-                  field.onChange([...field.value, {}])
+                  form.setValue("sources", [...field.value, {}])
                 }}
               >
                 Add source
