@@ -20,6 +20,8 @@ import personSchema from "./personSchema"
 import { Person } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
+import { Checkbox } from "@/components/ui/checkbox"
+import { useState } from "react"
 
 export default function EditPersonForm({
   person: initialPerson,
@@ -28,6 +30,7 @@ export default function EditPersonForm({
 }) {
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
+  const [showYears, setShowYears] = useState(true)
 
   const form = useForm<z.infer<typeof personSchema>>({
     resolver: zodResolver(personSchema),
@@ -127,37 +130,73 @@ export default function EditPersonForm({
           )}
         />
 
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="yearBorn"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Born</FormLabel>
-                <FormControl>
-                  <Input field={field} />
-                </FormControl>
-                <FormMessage />
-                <FormDescription>
-                  Omit if not precisely known. BC = negative.
-                </FormDescription>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="yearDied"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Died (if applicable)</FormLabel>
-                <FormControl>
-                  <Input field={field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="fictional"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="items-top flex space-x-2 my-4">
+                  <Checkbox
+                    id="fictional"
+                    checked={field.value}
+                    onCheckedChange={(state) => {
+                      form.setValue("fictional", state === true)
+                      setShowYears(state !== true)
+                      if (state === true) {
+                        form.setValue("yearBorn", "")
+                        form.setValue("yearDied", "")
+                      }
+                    }}
+                  />
+                  <div className="grid gap-1.5 leading-none">
+                    <label
+                      htmlFor="fictional"
+                      className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      This person is a fictional character.
+                    </label>
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {showYears && (
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="yearBorn"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Born</FormLabel>
+                  <FormControl>
+                    <Input field={field} />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription>
+                    Omit if not precisely known. BC = negative.
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="yearDied"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Died (if applicable)</FormLabel>
+                  <FormControl>
+                    <Input field={field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        )}
 
         <FormField
           control={form.control}

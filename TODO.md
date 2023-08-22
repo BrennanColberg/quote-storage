@@ -16,6 +16,7 @@ quote form upgrades needed for MVP
 - [ ] auto refetch data for Selects (at least on every page focus, if not on timer)?
 - [x] different form for adding/editing editions
 - [ ] different form for adding/editing publishers
+- [x] add fictional selector for persons
 - [ ] more attributes for citations (depending on edition type?)
 - [ ] see information about texts/sources? with button to go edit?
 - [ ] better form validation error rendering for `sources`
