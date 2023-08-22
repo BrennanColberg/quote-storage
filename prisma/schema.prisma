@@ -20,17 +20,19 @@ model Quote {
 }
 
 model Person {
-  id        String  @id @default(uuid())
-  name      String
-  shortName String?
-  yearBorn  String?
-  yearDied  String?
-  quotes    Quote[]
-  Text      Text?   @relation(fields: [textId], references: [id])
-  textId    String?
-  fictional Boolean @default(false)
-  notes     String?
-  bio       String?
+  id                 String    @id @default(uuid())
+  name               String
+  shortName          String?
+  yearBorn           String?
+  yearDied           String?
+  quotes             Quote[]
+  texts              Text[]
+  fictional          Boolean   @default(false)
+  notes              String?
+  bio                String?
+  editionsAuthored   Edition[] @relation("EditionAuthors")
+  editionsTranslated Edition[] @relation("EditionTranslators")
+  editionsEdited     Edition[] @relation("EditionEditors")
 }
 
 model Text {
@@ -65,15 +67,18 @@ model Citation {
 
 model Edition {
   id          String     @id @default(uuid())
-  publisher   Publisher  @relation(fields: [publisherId], references: [id])
-  subtitle    String
+  publisher   Publisher? @relation(fields: [publisherId], references: [id])
+  subtitle    String?
   texts       Text[]
   title       String
-  type        String // You can also create an enum for "paperback", "hardcover", "website", "pdf"
+  type        String? // You can also create an enum for "paperback", "hardcover", "website", "pdf"
   link        String?
-  year        String
+  year        String?
   citations   Citation[]
-  publisherId String
+  publisherId String?
+  authors     Person[]   @relation("EditionAuthors")
+  translators Person[]   @relation("EditionTranslators")
+  editors     Person[]   @relation("EditionEditors")
 }
 
 model Publisher {

@@ -17,7 +17,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useRef, useState } from "react"
 import axios from "axios"
-import { Person, Text } from "@prisma/client"
+import { Edition, Person, Text } from "@prisma/client"
 import quoteSchema from "./quoteSchema"
 import SelectPerson from "../SelectPerson"
 import EditSourceSubform from "./EditSourceSubform"
@@ -25,12 +25,15 @@ import EditSourceSubform from "./EditSourceSubform"
 export function EditQuoteForm({
   persons: initialPersons,
   texts: initialTexts,
+  editions: initialEditions,
 }: {
   persons: Person[]
-  texts: Text[]
+  texts: (Text & { authors: Person[] })[]
+  editions: Edition[]
 }) {
   const [persons, setPersons] = useState(initialPersons)
   const [texts, setTexts] = useState(initialTexts)
+  const [editions, setEditions] = useState(initialEditions)
 
   const form = useForm<z.infer<typeof quoteSchema>>({
     resolver: zodResolver(quoteSchema),
@@ -120,6 +123,8 @@ export function EditQuoteForm({
                 <>
                   {field.value.map((source, i) => (
                     <EditSourceSubform
+                      editions={editions}
+                      setEditions={setEditions}
                       key={i}
                       authorIds={form.getValues().authorIds}
                       texts={texts}
@@ -140,7 +145,10 @@ export function EditQuoteForm({
                 size="lg"
                 onClick={(e) => {
                   e.preventDefault()
-                  form.setValue("sources", [...field.value, {}])
+                  form.setValue("sources", [
+                    ...field.value,
+                    { citations: [], primary: false },
+                  ])
                 }}
               >
                 Add source
