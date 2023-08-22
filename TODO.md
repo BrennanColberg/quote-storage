@@ -13,10 +13,16 @@ quote form upgrades needed for MVP
 - [x] add sources
 - [x] add citations to sources
 - [ ] auto refetch data for Selects (at least on every page focus, if not on timer)?
-- [ ] ability to remove a source/citation
 - [ ] different form for adding/editing text
 - [ ] different form for adding/editing editions
 - [ ] different form for adding/editing publishers
+- [ ] more attributes for citations (depending on edition type?)
+- [ ] see information about texts/sources? with button to go edit?
+- [ ] better form validation error rendering for `sources`
+- [ ] ability to remove a source/citation
+- [ ] make the quote form not look like crap
+- [ ] ensure tab/enter work for navigating form mouselessly
+- [ ] add notes fields widely?
 
 things to "finalize" the app MVP
 
