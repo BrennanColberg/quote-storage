@@ -39,10 +39,10 @@ model Text {
   id       String    @id @default(uuid())
   authors  Person[]
   editions Edition[]
-  subtitle String
+  subtitle String?
   title    String
-  type     String // You can also create an enum for "book", "article", "speech", "letter"
-  year     String
+  type     String? // You can also create an enum for "book", "article", "speech", "letter"
+  year     String?
   sources  Source[]
 }
 

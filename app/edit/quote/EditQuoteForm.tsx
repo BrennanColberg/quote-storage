@@ -15,22 +15,22 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
-import CreatableSelect from "react-select/creatable"
-import { useMemo, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import axios from "axios"
-import { Person } from "@prisma/client"
+import { Person, Text } from "@prisma/client"
 import quoteSchema from "./quoteSchema"
+import SelectPerson from "../SelectPerson"
+import EditSourceSubform from "./EditSourceSubform"
 
 export function EditQuoteForm({
   persons: initialPersons,
+  texts: initialTexts,
 }: {
   persons: Person[]
+  texts: Text[]
 }) {
   const [persons, setPersons] = useState(initialPersons)
-  const personOptions = useMemo(
-    () => persons.map((person) => ({ value: person.id, label: person.name })),
-    [persons],
-  )
+  const [texts, setTexts] = useState(initialTexts)
 
   const form = useForm<z.infer<typeof quoteSchema>>({
     resolver: zodResolver(quoteSchema),
@@ -38,6 +38,7 @@ export function EditQuoteForm({
       content: "",
       authorIds: [],
       notes: "",
+      sources: [],
     },
   })
 
@@ -86,31 +87,13 @@ export function EditQuoteForm({
             <FormItem>
               <FormLabel>Author</FormLabel>
               <FormControl>
-                <CreatableSelect
-                  isMulti
-                  options={personOptions}
-                  onChange={(selectedOptions) => {
-                    field.onChange({
-                      target: {
-                        value: selectedOptions.map((option) => option.value),
-                      },
-                    })
-                  }}
-                  value={personOptions.filter((person) =>
-                    field.value.includes(person.value),
-                  )}
-                  onCreateOption={async (inputValue) => {
-                    const person = await axios.post("/api/person", {
-                      name: inputValue,
-                    })
-                    setPersons((x) => [...x, person.data])
-                    field.onChange({ target: { value: person.data.id } })
-                    // opens a new tab to edit the person (which will close when done)
-                    window.open(
-                      `/edit/person/${person.data.id}?from=quote`,
-                      "_blank",
-                    )
-                  }}
+                <SelectPerson
+                  personIds={field.value}
+                  setPersonIds={(value) =>
+                    field.onChange({ target: { value } })
+                  }
+                  persons={persons}
+                  setPersons={setPersons}
                 />
               </FormControl>
               <FormDescription>Who said this?</FormDescription>
@@ -128,6 +111,44 @@ export function EditQuoteForm({
               <FormControl>
                 <Textarea field={field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="sources"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <>
+                  {field.value.map((source, i) => (
+                    <EditSourceSubform
+                      authorIds={form.getValues().authorIds}
+                      texts={texts}
+                      setTexts={setTexts}
+                      source={source}
+                      i={i}
+                      setSource={(newSource) => {
+                        const newSources = [...field.value]
+                        newSources[i] = newSource
+                        field.onChange({ target: { value: newSources } })
+                      }}
+                    />
+                  ))}
+                </>
+              </FormControl>
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={(e) => {
+                  e.preventDefault()
+                  field.onChange([...field.value, {}])
+                }}
+              >
+                Add source
+              </Button>
               <FormMessage />
             </FormItem>
           )}
