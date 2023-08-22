@@ -26,7 +26,8 @@ quote form upgrades needed for MVP
 
 things to "finalize" the app MVP
 
-- [ ] switch to using remote postgres
+- [x] switch to using postgres
+- [ ] use local postgres instance for development
 - [ ] publish to internet
 - [ ] transcribe at least one book's worth of quotes
 
