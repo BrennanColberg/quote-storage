@@ -23,11 +23,13 @@ import { useState } from "react"
 import SelectPerson from "../../SelectPerson"
 import Select from "react-select"
 import SelectText from "../../SelectText"
+import SelectPublisher from "../../SelectPublisher"
 
 export default function EditEditionForm({
   edition: initialEdition,
   persons: initialPersons,
   texts: initialTexts,
+  publishers: initialPublishers,
 }: {
   edition?: Edition & {
     authors: Person[]
@@ -38,9 +40,11 @@ export default function EditEditionForm({
   }
   persons: Person[]
   texts: Text[]
+  publishers: Publisher[]
 }) {
   const [persons, setPersons] = useState(initialPersons)
   const [texts, setTexts] = useState(initialTexts)
+  const [publishers, setPublishers] = useState(initialPublishers)
 
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
@@ -130,32 +134,6 @@ export default function EditEditionForm({
         <div className="grid grid-cols-3 gap-4">
           <FormField
             control={form.control}
-            name="publisherId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Publisher</FormLabel>
-                <FormControl>
-                  <Input field={field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="year"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Year</FormLabel>
-                <FormControl>
-                  <Input field={field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="type"
             render={({ field }) => (
               <FormItem>
@@ -173,6 +151,40 @@ export default function EditEditionForm({
                       form.setValue("type", type?.value ?? null)
                     }
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="publisherId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Publisher</FormLabel>
+                <FormControl>
+                  <SelectPublisher
+                    publishers={publishers}
+                    setPublishers={setPublishers}
+                    setPublisherId={(publisherId) =>
+                      form.setValue("publisherId", publisherId)
+                    }
+                    publisherId={field.value}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="year"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Year</FormLabel>
+                <FormControl>
+                  <Input field={field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

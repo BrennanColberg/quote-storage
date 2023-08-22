@@ -107,6 +107,8 @@ model Edition {
 model Publisher {
   id       String    @id @default(uuid())
   name     String
-  city     String?
+  location String?
+  url      String?
+  notes    String?
   editions Edition[]
 }
