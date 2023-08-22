@@ -21,19 +21,15 @@ import { Edition, Person, Text } from "@prisma/client"
 import quoteSchema from "./quoteSchema"
 import SelectPerson from "../SelectPerson"
 import EditSourceSubform from "./EditSourceSubform"
+import useOptions from "../useOptions"
 
-export function EditQuoteForm({
-  persons: initialPersons,
-  texts: initialTexts,
-  editions: initialEditions,
-}: {
-  persons: Person[]
-  texts: (Text & { authors: Person[] })[]
-  editions: Edition[]
-}) {
-  const [persons, setPersons] = useState(initialPersons)
-  const [texts, setTexts] = useState(initialTexts)
-  const [editions, setEditions] = useState(initialEditions)
+export function EditQuoteForm() {
+  const [persons, setPersons] = useState<Person[]>([])
+  useOptions("person", setPersons)
+  const [texts, setTexts] = useState<(Text & { authors: Person[] })[]>([])
+  useOptions("text", setTexts)
+  const [editions, setEditions] = useState<Edition[]>([])
+  useOptions("edition", setEditions)
 
   const form = useForm<z.infer<typeof quoteSchema>>({
     resolver: zodResolver(quoteSchema),

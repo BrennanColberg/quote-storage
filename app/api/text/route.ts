@@ -3,6 +3,12 @@ import textSchema from "../../edit/text/[id]/textSchema"
 import { PrismaClient } from "@prisma/client"
 import { z } from "zod"
 
+export async function GET() {
+  const prisma = new PrismaClient()
+  const texts = await prisma.text.findMany({ include: { authors: true } })
+  return NextResponse.json(texts)
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json()
   const { title, authorIds, notes, subtitle, year, type } =

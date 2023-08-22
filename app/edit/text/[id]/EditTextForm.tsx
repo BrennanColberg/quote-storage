@@ -22,15 +22,15 @@ import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import SelectPerson from "../../SelectPerson"
 import Select from "react-select"
+import useOptions from "../../useOptions"
 
 export default function EditTextForm({
   text: initialText,
-  persons: initialPersons,
 }: {
   text?: Text & { authors: Person[] }
-  persons: Person[]
 }) {
-  const [persons, setPersons] = useState(initialPersons)
+  const [persons, setPersons] = useState<Person[]>([])
+  useOptions("person", setPersons)
 
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")

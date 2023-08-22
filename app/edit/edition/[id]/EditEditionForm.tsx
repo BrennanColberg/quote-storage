@@ -24,12 +24,10 @@ import SelectPerson from "../../SelectPerson"
 import Select from "react-select"
 import SelectText from "../../SelectText"
 import SelectPublisher from "../../SelectPublisher"
+import useOptions from "../../useOptions"
 
 export default function EditEditionForm({
   edition: initialEdition,
-  persons: initialPersons,
-  texts: initialTexts,
-  publishers: initialPublishers,
 }: {
   edition?: Edition & {
     authors: Person[]
@@ -38,13 +36,13 @@ export default function EditEditionForm({
     publisher?: Publisher
     texts: Text[]
   }
-  persons: Person[]
-  texts: Text[]
-  publishers: Publisher[]
 }) {
-  const [persons, setPersons] = useState(initialPersons)
-  const [texts, setTexts] = useState(initialTexts)
-  const [publishers, setPublishers] = useState(initialPublishers)
+  const [persons, setPersons] = useState<Person[]>([])
+  useOptions("person", setPersons)
+  const [texts, setTexts] = useState<Text[]>([])
+  useOptions("text", setTexts)
+  const [publishers, setPublishers] = useState<Publisher[]>([])
+  useOptions("publisher", setPublishers)
 
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")

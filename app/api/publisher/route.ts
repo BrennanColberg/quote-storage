@@ -3,6 +3,12 @@ import { PrismaClient } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
+export async function GET() {
+  const prisma = new PrismaClient()
+  const publishers = await prisma.publisher.findMany()
+  return NextResponse.json(publishers)
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json()
   const props = publisherSchema.parse(body)

@@ -3,6 +3,12 @@ import editionSchema from "../../edit/edition/[id]/editionSchema"
 import { PrismaClient } from "@prisma/client"
 import { z } from "zod"
 
+export async function GET() {
+  const prisma = new PrismaClient()
+  const editions = await prisma.edition.findMany()
+  return NextResponse.json(editions)
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json()
   const {
