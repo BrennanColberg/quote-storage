@@ -19,14 +19,12 @@ quote form upgrades needed for MVP
 - [x] different form for adding/editing editions
 - [x] PublisherSelect on edition form
 - [x] different form for editing publishers
-- [ ] make editions practically linkable to multiple texts
+- [x] make editions practically linkable to multiple texts
 - [x] add fictional selector for persons
 - [ ] more attributes for citations (depending on edition type?)
 - [ ] see information about texts/sources? with button to go edit?
 - [ ] better form validation error rendering for `sources`
 - [ ] ability to remove a source/citation
-- [ ] make the quote form not look like crap
-- [ ] ensure tab/enter work for navigating form mouselessly
 - [ ] add notes fields widely?
 
 things to "finalize" the app MVP
@@ -43,6 +41,8 @@ things to "finalize" the app MVP
 
 later super upgrades
 
+- [ ] make the quote form not look like crap
+- [ ] ensure tab/enter work for navigating form mouselessly
 - [ ] dictation for content
 - [ ] quote search via embeddings
 - [ ] fancy meta tags

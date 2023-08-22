@@ -25,6 +25,7 @@ import Select from "react-select"
 import SelectText from "../../SelectText"
 import SelectPublisher from "../../SelectPublisher"
 import useOptions from "../../useOptions"
+import SelectTexts from "../../SelectTexts"
 
 export default function EditEditionForm({
   edition: initialEdition,
@@ -270,10 +271,10 @@ export default function EditEditionForm({
             <FormItem>
               <FormLabel>Text(s)</FormLabel>
               <FormControl>
-                <SelectText
+                <SelectTexts
                   authorIds={form.getValues("authorIds")}
-                  textId={field.value[0]}
-                  setTextId={(textId) => form.setValue("textIds", [textId])}
+                  textIds={field.value}
+                  setTextIds={(textIds) => form.setValue("textIds", textIds)}
                   texts={texts}
                   setTexts={setTexts}
                 />

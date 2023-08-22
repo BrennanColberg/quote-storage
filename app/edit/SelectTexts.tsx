@@ -3,17 +3,17 @@ import axios from "axios"
 import { Dispatch, SetStateAction, useMemo } from "react"
 import CreatableSelect from "react-select/creatable"
 
-export default function SelectText({
+export default function SelectTexts({
   texts,
   setTexts,
-  textId,
-  setTextId,
+  textIds,
+  setTextIds,
   authorIds,
 }: {
   texts: Text[]
   setTexts: Dispatch<SetStateAction<(Text & { authors: Person[] })[]>>
-  textId?: string
-  setTextId: (value?: string) => void
+  textIds: string[]
+  setTextIds: (value: string[]) => void
   authorIds: string[]
 }) {
   const textOptions = useMemo(
@@ -23,9 +23,10 @@ export default function SelectText({
 
   return (
     <CreatableSelect
+      isMulti
       options={textOptions}
-      onChange={(option) => setTextId(option.value)}
-      value={textOptions.find((text) => textId === text.value) ?? null}
+      onChange={(options) => setTextIds(options.map((option) => option.value))}
+      value={textOptions.filter((text) => textIds.includes(text.value)) ?? null}
       onCreateOption={async (inputValue) => {
         const text = await axios.post<Text>("/api/text", {
           title: inputValue,
@@ -33,7 +34,7 @@ export default function SelectText({
         })
         console.log(text.data)
         setTexts((x) => [...x, { ...text.data, authors: [] }])
-        setTextId(text.data.id)
+        setTextIds([...textIds, text.data.id])
         // opens a new tab to edit the person (which will close when done)
         window.open(`/edit/text/${text.data.id}?from=quote`, "_blank")
       }}
