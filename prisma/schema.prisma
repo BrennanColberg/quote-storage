@@ -50,8 +50,8 @@ model Text {
 model Source {
   id        String     @id @default(uuid())
   citations Citation[]
-  quote     Quote      @relation(fields: [quoteId], references: [id])
-  text      Text       @relation(fields: [textId], references: [id])
+  quote     Quote      @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  text      Text       @relation(fields: [textId], references: [id], onDelete: Cascade)
   primary   Boolean?
   quoteId   String
   textId    String
@@ -59,8 +59,8 @@ model Source {
 
 model Citation {
   id        String  @id @default(uuid())
-  source    Source  @relation(fields: [sourceId], references: [id])
-  edition   Edition @relation(fields: [editionId], references: [id])
+  source    Source  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  edition   Edition @relation(fields: [editionId], references: [id], onDelete: Cascade)
   // Representing pages as JSON; consult Prisma documentation for your specific needs
   sourceId  String
   editionId String
