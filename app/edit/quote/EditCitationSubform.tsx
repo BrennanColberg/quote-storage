@@ -1,14 +1,9 @@
 import { z } from "zod"
 import citationSchema from "./citationSchema"
-import { Edition } from "@prisma/client"
+import { Edition, Person, Text } from "@prisma/client"
 import { Dispatch, SetStateAction } from "react"
 import SelectEdition from "../SelectEdition"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form"
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 
 export default function EditCitationSubform({
   i,
@@ -17,8 +12,7 @@ export default function EditCitationSubform({
   setCitation,
   editions,
   setEditions,
-  authorIds,
-  textId,
+  text,
 }: {
   i: number
   j: number
@@ -26,8 +20,7 @@ export default function EditCitationSubform({
   setEditions: Dispatch<SetStateAction<Edition[]>>
   citation: z.infer<typeof citationSchema>
   setCitation: (citation: z.infer<typeof citationSchema>) => void
-  authorIds: string[]
-  textId: string
+  text: Text & { authors: Person[] }
 }) {
   return (
     <div key={j} className="border-4 border-neutral-300">
@@ -47,8 +40,7 @@ export default function EditCitationSubform({
               console.log("setting edition id", editionId)
               setCitation({ ...citation, editionId })
             }}
-            authorIds={authorIds}
-            textId={textId}
+            text={text}
           />
         </FormControl>
       </FormItem>

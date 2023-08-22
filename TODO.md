@@ -14,8 +14,8 @@ quote form upgrades needed for MVP
 - [x] add citations to sources
 - [x] different form for adding/editing text
 - [x] auto refetch data for Selects (at least on every page focus, if not on timer)?
-- [ ] copy year, subtitle from text to edition (as well as authors)
-- [ ] easy creation option for making an edition from a text?
+- [x] copy year, subtitle from text to edition (as well as authors)
+- [x] easy creation option for making an edition from a text?
 - [x] different form for adding/editing editions
 - [x] PublisherSelect on edition form
 - [x] different form for editing publishers

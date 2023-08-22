@@ -65,7 +65,6 @@ export default function EditSourceSubform({
 
       {source.citations.map((citation, j) => (
         <EditCitationSubform
-          textId={source.textId}
           citation={citation}
           i={i}
           j={j}
@@ -77,15 +76,7 @@ export default function EditSourceSubform({
           }}
           editions={editions}
           setEditions={setEditions}
-          authorIds={
-            // we prefer to base editions on the text's authors
-            // (TODO auto-update when a text's details are edited)
-            texts
-              .find((text) => text.id === source.textId)
-              ?.authors.map((author) => author.id) ??
-            // but if that's not available we'll use the quote's authors
-            authorIds
-          }
+          text={texts.find((text) => text.id === source.textId)}
         />
       ))}
 
