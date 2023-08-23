@@ -46,9 +46,9 @@ tasks from test #1
 - [x] text: year _first published_
 - [x] ^^ google me button
 - [x] [AUTO] should be "AUTO NEW" or similar (emphasis on new)
-- [ ] end page _if different_
+- [x] end page _if different_
 - [ ] on quote creation, scroll back to top
-- [ ] reset edition start/end/etc on quote creation
+- [x] reset edition start/end/etc on quote creation
 - [ ] "edition" should show publisher/type/year when it has the same title
 - [ ] content field should be bigger on quote form
 - [ ] end page should never be "before" start page (properly compared)

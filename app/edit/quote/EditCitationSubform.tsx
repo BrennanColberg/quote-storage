@@ -118,6 +118,7 @@ export default function EditCitationSubform({
                 : markerType === "time"
                 ? "time"
                 : "page/time"}
+              , if different
             </FormLabel>
             <FormControl>
               <Input

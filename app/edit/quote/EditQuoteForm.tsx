@@ -49,6 +49,19 @@ export function EditQuoteForm() {
     // reset things that are different between "adjacent" quotes
     form.resetField("content")
     form.resetField("notes")
+    form.setValue(
+      "sources",
+      form.getValues("sources").map((source) => ({
+        ...source,
+        citations: source.citations.map((citation) => ({
+          ...citation,
+          // remove start/end info from citations
+          start: undefined,
+          startLine: undefined,
+          end: undefined,
+        })),
+      })),
+    )
 
     // refocus on content to start entering next quote
     contentRef.current.focus()
