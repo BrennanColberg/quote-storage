@@ -31,13 +31,13 @@ things to "finalize" the app MVP
 
 - [x] switch to using postgres
 - [x] restrict editing power to myself via cookie
-- [ ] publish to internet (via Vercel)
+- [x] publish to internet (via Vercel)
 - [ ] use local postgres instance for development
 
-- [ ] display quote
+- [ ] **display quote**
 - [x] display quotes from text
   - [ ] custom start/end comparator
-- [ ] display quotes from author
+- [ ] **display quotes from author**
 - [ ] search quotes (via regex to start)
 
 tasks from test #1
@@ -52,14 +52,15 @@ tasks from test #1
 - [x] reset edition start/end/etc on quote creation
 - [x] "edition" should show publisher/type/year when it has the same title
 - [ ] end page should never be "before" start page (properly compared)
-- [ ] be able to edit a quote
+- [ ] **be able to edit a quote**
 
-- [ ] actually reset start/end when a quote is submitted
-- [ ] command + enter to submit
+- [ ] **actually reset start/end when a quote is submitted**
+- [ ] **command + enter to submit**
 - [ ] content form size should reset (to larger than now) default every time
 - [ ] link fictional Persons to texts as "from X book"?
 - [ ] difference between author and sayer of a quote?
 - [ ] about fields that are different from notes fields
+- [ ] **content should be rendered as markdown**
 
 later super upgrades
 
