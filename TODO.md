@@ -57,10 +57,18 @@ tasks from test #1
 - [ ] **actually reset start/end when a quote is submitted**
 - [ ] **command + enter to submit**
 - [ ] content form size should reset (to larger than now) default every time
-- [ ] link fictional Persons to texts as "from X book"?
-- [ ] difference between author and sayer of a quote?
-- [ ] about fields that are different from notes fields
+- [ ] _link fictional Persons to texts as "from X book"?_
+- [ ] _difference between author and sayer of a quote?_
+- [ ] _about fields that are different from notes fields_
 - [ ] **content should be rendered as markdown**
+- [x] render from list of quotes, not list of sources
+
+tasks from test #2:
+
+- [ ] subtexts
+- [ ] link to add should show up on index for authenticated users (me)
+- [ ] way to specify the order of authors (for both text and edition)
+- [ ] data linter script which checks that everything's in the right format (start before end, matching time/page citations, etc)
 
 later super upgrades
 

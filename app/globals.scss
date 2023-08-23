@@ -77,11 +77,11 @@
 main {
   @apply m-auto max-w-xl;
 
+  // always show scrollbar
   ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
   }
-
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -109,5 +109,8 @@ main {
 
   ul {
     @apply list-disc list-inside;
+  }
+  li ul {
+    @apply ml-4;
   }
 }

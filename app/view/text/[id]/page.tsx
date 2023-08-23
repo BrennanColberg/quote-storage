@@ -1,5 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 import { notFound } from "next/navigation"
+import { QuoteList, QuoteProp } from "../../Quote"
+import { SourceProp, TextProp } from "../../Source"
+import { CitationProp } from "../../Citation"
 
 export default async function ViewTextPage({
   params: { id },
@@ -27,6 +30,36 @@ export default async function ViewTextPage({
     },
   })
   if (!text) notFound()
+
+  // make simple version of text with just authors
+  const _textProp: Partial<TextProp> & typeof text = { ...text }
+  delete _textProp.sources
+  delete _textProp.editions
+  const textProp: TextProp = _textProp
+
+  const quoteProps: QuoteProp[] = []
+  for (const source of text.sources) {
+    // add edition to each citation to make it a valid CitationProp
+    const citationProps: CitationProp[] = source.citations.map((citation) => ({
+      ...citation,
+      edition: text.editions.find((e) => e.id === citation.editionId),
+    }))
+    // prep the source to be a valid SourceProp
+    const _sourceProp: SourceProp & typeof source = {
+      ...source,
+      citations: citationProps,
+      text: textProp,
+    }
+    delete _sourceProp.quote
+    const sourceProp: SourceProp = _sourceProp
+    // check if quote is already in props
+    const quote = quoteProps.find((quote) => quote.id === source.quote.id)
+    // if it is, add the source to the quote
+    if (quote) quote.sources.push(sourceProp)
+    // if it isn't, add the quote to the props
+    else quoteProps.push({ ...source.quote, sources: [sourceProp] })
+  }
+
   return (
     <main>
       <h1>{text.title}</h1>
@@ -62,45 +95,7 @@ export default async function ViewTextPage({
       <br />
 
       <h3>Quotes</h3>
-      <div>
-        {/* TODO transform into quotes->sources before rendering */}
-        {text.sources
-          .sort((a, b) => {
-            // TODO turn into proper comparator of citation location
-            const page = +a.citations[0].start - +b.citations[0].start
-            if (page) return page
-            const line = a.citations[0].startLine - b.citations[0].startLine
-            return line
-          })
-          .map((source) => (
-            <div key={source.id} className="mb-6 mt-3">
-              <blockquote className="border-l-4 pl-2 text-neutral-500 max-h-64 overflow-y-scroll pr-1">
-                {source.quote.content}
-              </blockquote>
-              {/* TODO authors */}
-              {/* ({source.quote.authors
-              .filter((author) => !text.authors.find((a) => a.id === author.id))
-              .map((author) => author.name)
-              .join(", ")}) */}
-              <ul>
-                {source.citations.map((citation) => {
-                  const edition = text.editions.find(
-                    (e) => e.id === citation.editionId,
-                  )
-                  let pages
-                  if (citation.start && citation.end)
-                    pages = `pp. ${citation.start}-${citation.end}`
-                  else if (citation.start) pages = `p. ${citation.start}`
-                  return (
-                    <li key={citation.id}>
-                      {pages} ({edition.publisher.name}, {edition.year})
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          ))}
-      </div>
+      <QuoteList quotes={quoteProps} excludeTexts={[text.id]} />
     </main>
   )
 }
