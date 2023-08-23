@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
+import GoogleButton from "../../GoogleButton"
 
 export default function EditPersonForm({
   person: initialPerson,
@@ -171,9 +172,14 @@ export default function EditPersonForm({
               name="yearBorn"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Born</FormLabel>
+                  <FormLabel>Birth year</FormLabel>
                   <FormControl>
-                    <Input field={field} />
+                    <div className="flex flex-row">
+                      <Input field={field} />
+                      <GoogleButton
+                        query={`${form.getValues("name")} birth year`}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                   <FormDescription>
@@ -187,9 +193,14 @@ export default function EditPersonForm({
               name="yearDied"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Died (if applicable)</FormLabel>
+                  <FormLabel>Death year (if applicable)</FormLabel>
                   <FormControl>
-                    <Input field={field} />
+                    <div className="flex flex-row">
+                      <Input field={field} />
+                      <GoogleButton
+                        query={`${form.getValues("name")} death year`}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

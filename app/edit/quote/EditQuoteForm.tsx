@@ -98,20 +98,6 @@ export function EditQuoteForm() {
 
         <FormField
           control={form.control}
-          name="notes"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Notes</FormLabel>
-              <FormControl>
-                <Textarea field={field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="sources"
           render={({ field }) => (
             <FormItem>
@@ -150,6 +136,20 @@ export function EditQuoteForm() {
               >
                 Add source
               </Button>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="notes"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Notes</FormLabel>
+              <FormControl>
+                <Textarea field={field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

@@ -41,10 +41,10 @@ things to "finalize" the app MVP
 
 tasks from test #1
 
-- [ ] question mark by birth year in person form which googles "$NAME birth year"
-- [ ] quote notes should go at bottom, under sources/citation
-- [ ] text: year _first published_
-- [ ] ^^ google me button
+- [x] question mark by birth year in person form which googles "$NAME birth year"
+- [x] quote notes should go at bottom, under sources/citation
+- [x] text: year _first published_
+- [x] ^^ google me button
 - [ ] [AUTO] should be "AUTO NEW" or similar (emphasis on new)
 - [ ] end page _if different_
 - [ ] on quote creation, scroll back to top

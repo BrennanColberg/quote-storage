@@ -23,6 +23,7 @@ import { useState } from "react"
 import SelectPerson from "../../SelectPerson"
 import Select from "react-select"
 import useOptions from "../../useOptions"
+import GoogleButton from "../../GoogleButton"
 
 export default function EditTextForm({
   text: initialText,
@@ -128,9 +129,14 @@ export default function EditTextForm({
             name="year"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Year</FormLabel>
+                <FormLabel>Year first published</FormLabel>
                 <FormControl>
-                  <Input field={field} />
+                  <div className="flex flex-row">
+                    <Input field={field} />
+                    <GoogleButton
+                      query={`${form.getValues("title")} year first published`}
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
