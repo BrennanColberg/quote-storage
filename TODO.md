@@ -41,7 +41,19 @@ things to "finalize" the app MVP
 
 tasks from test #1
 
-- [ ]
+- [ ] question mark by birth year in person form which googles "$NAME birth year"
+- [ ] quote notes should go at bottom, under sources/citation
+- [ ] text: year _first published_
+- [ ] ^^ google me button
+- [ ] [AUTO] should be "AUTO NEW" or similar (emphasis on new)
+- [ ] end page _if different_
+- [ ] on quote creation, scroll back to top
+- [ ] reset edition start/end/etc on quote creation
+- [ ] "edition" should show publisher/type/year when it has the same title
+- [ ] content field should be bigger on quote form
+- [ ] end page should never be "before" start page (properly compared)
+- [ ] content, at least, should explicitly be markdown (limited rich text editor?)
+- [ ] be able to edit a quote
 
 later super upgrades
 
