@@ -5,7 +5,7 @@ const textSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   year: z.string().optional(),
-  authorIds: z.array(z.string().uuid()),
+  authorIds: z.array(z.string()),
   notes: z.string().optional(),
   type: z.nativeEnum(TextType).optional(),
 })

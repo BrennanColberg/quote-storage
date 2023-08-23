@@ -71,4 +71,4 @@ later super upgrades
 - [ ] fancy meta tags
 - [ ] quote image auto-generator
 - [ ] preload meta tags, locally cache/backup URLs entered for editions
-- [ ] make IDs changeable / able to not be UUIDs
+- [x] make IDs changeable / able to not be UUIDs

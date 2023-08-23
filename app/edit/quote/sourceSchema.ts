@@ -2,11 +2,9 @@ import { z } from "zod"
 import citationSchema from "./citationSchema"
 
 const sourceSchema = z.object({
-  textId: z
-    .string({
-      required_error: "Source must refer to a text.",
-    })
-    .uuid(),
+  textId: z.string({
+    required_error: "Source must refer to a text.",
+  }),
   notes: z.string().optional(),
   citations: z
     .array(citationSchema)

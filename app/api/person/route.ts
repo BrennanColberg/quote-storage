@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(person)
 }
 
-const editPersonSchema = personSchema.and(z.object({ id: z.string().uuid() }))
+const editPersonSchema = personSchema.and(z.object({ id: z.string() }))
 export async function PUT(request: NextRequest) {
   const body = await request.json()
   console.log("PUT person", body)
