@@ -18,8 +18,11 @@ export async function POST(request: Request) {
           textId,
           primary,
           citations: {
-            create: citations.map(({ editionId }) => ({
+            create: citations.map(({ editionId, start, end, startLine }) => ({
               editionId,
+              start: start || null,
+              end: end || null,
+              startLine: startLine || (startLine === 0 ? 0 : null),
             })),
           },
         })),

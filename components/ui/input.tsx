@@ -6,10 +6,12 @@ import { ControllerRenderProps } from "react-hook-form"
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   field?: ControllerRenderProps<any, any>
+  setValue?: (value: string) => void
+  setValueAsNumber?: (value: number) => void
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, field, ...props }, ref) => {
+  ({ className, type, field, setValue, setValueAsNumber, ...props }, ref) => {
     if (field) {
       props.onChange =
         props.onChange ??
@@ -26,6 +28,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className,
         )}
         ref={ref}
+        onChange={(e) => {
+          props.onChange?.(e)
+          setValue?.(e.target.value)
+          setValueAsNumber?.(Number(e.target.value))
+        }}
         {...props}
       />
     )

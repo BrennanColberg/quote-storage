@@ -29,8 +29,8 @@ export default function SelectEdition({
           // "auto" option -> create edition as close to current text as possible
           const edition = await axios.post("/api/edition", {
             title: text.title,
-            subtitle: text.subtitle,
-            year: text.year,
+            subtitle: text.subtitle || undefined,
+            year: text.year || undefined,
             authorIds: text.authors.map((a) => a.id),
             translatorIds: [],
             editorIds: [],

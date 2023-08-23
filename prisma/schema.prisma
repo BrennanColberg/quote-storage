@@ -72,9 +72,11 @@ model Citation {
   id        String  @id @default(uuid())
   source    Source  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   edition   Edition @relation(fields: [editionId], references: [id], onDelete: Cascade)
-  // Representing pages as JSON; consult Prisma documentation for your specific needs
   sourceId  String
   editionId String
+  start     String? // can be roman (e.g. in intro) or arabic numerals, or a timestamp
+  end       String? // ^^
+  startLine Int? // for displaying citations within an edition in order
 }
 
 enum EditionType {
