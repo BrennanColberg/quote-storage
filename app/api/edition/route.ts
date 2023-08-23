@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json()
-  console.log(body)
   const {
     title,
     authorIds,

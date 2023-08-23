@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
 const editPersonSchema = personSchema.and(z.object({ id: z.string() }))
 export async function PUT(request: NextRequest) {
   const body = await request.json()
-  console.log("PUT person", body)
   const props = editPersonSchema.parse(body)
   const prisma = new PrismaClient()
   const person = await prisma.person.update({

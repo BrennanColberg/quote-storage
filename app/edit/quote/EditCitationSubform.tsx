@@ -68,10 +68,9 @@ export default function EditCitationSubform({
             editions={editions}
             setEditions={setEditions}
             editionId={citation.editionId}
-            setEditionId={(editionId) => {
-              console.log("setting edition id", editionId)
+            setEditionId={(editionId) =>
               setCitation({ ...citation, editionId })
-            }}
+            }
             text={text}
           />
         </FormControl>

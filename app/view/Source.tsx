@@ -18,7 +18,6 @@ export function SourceComponent({
   source: SourceProp
   excludeTexts?: string[]
 }) {
-  console.log({ excludeTexts })
   if (excludeTexts?.includes(source.textId))
     return <CitationList citations={source.citations} type={null} />
 

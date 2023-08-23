@@ -48,7 +48,6 @@ export default function EditEditionForm({
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
 
-  console.log("initial edition", initialEdition)
   const form = useForm<z.infer<typeof editionSchema>>({
     resolver: zodResolver(editionSchema),
     defaultValues: initialEdition
@@ -80,7 +79,6 @@ export default function EditEditionForm({
   })
 
   async function onSubmit(values: z.infer<typeof editionSchema>) {
-    console.log(values)
     if (initialEdition) {
       // edit
       await axios.put("/api/edition", { ...values, id: initialEdition.id })

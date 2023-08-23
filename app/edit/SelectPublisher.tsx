@@ -36,7 +36,6 @@ export default function SelectPublisher({
         const publisher = await axios.post<Publisher>("/api/publisher", {
           name: inputValue,
         })
-        console.log(publisher.data)
         setPublishers((x) => [...x, { ...publisher.data }])
         setPublisherId(publisher.data.id)
         // opens a new tab to edit the publisher (which will close when done)

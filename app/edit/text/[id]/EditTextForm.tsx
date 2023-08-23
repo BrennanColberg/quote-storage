@@ -58,7 +58,6 @@ export default function EditTextForm({
   })
 
   async function onSubmit(values: z.infer<typeof textSchema>) {
-    console.log(values)
     if (initialText) {
       // edit
       await axios.put("/api/text", { ...values, id: initialText.id })

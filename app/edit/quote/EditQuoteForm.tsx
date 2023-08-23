@@ -45,7 +45,6 @@ export function EditQuoteForm() {
 
   const contentRef = useRef<HTMLTextAreaElement>(null)
   async function onSubmit(values: z.infer<typeof quoteSchema>) {
-    console.log(values)
     await axios.post("/api/quote", values)
 
     // reset things that are different between "adjacent" quotes

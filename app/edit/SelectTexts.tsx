@@ -32,7 +32,6 @@ export default function SelectTexts({
           title: inputValue,
           authorIds: authorIds,
         })
-        console.log(text.data)
         setTexts((x) => [...x, { ...text.data, authors: [] }])
         setTextIds([...textIds, text.data.id])
         // opens a new tab to edit the person (which will close when done)

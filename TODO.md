@@ -62,6 +62,7 @@ tasks from test #1
 - [ ] _about fields that are different from notes fields_
 - [ ] **content should be rendered as markdown**
 - [x] render from list of quotes, not list of sources
+- [ ] make sure it dynamically rerenders from DB every time
 
 tasks from test #2:
 
