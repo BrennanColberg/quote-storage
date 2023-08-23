@@ -65,6 +65,8 @@ export function EditQuoteForm() {
 
     // refocus on content to start entering next quote
     contentRef.current.focus()
+    // scroll to top
+    window.scrollTo(0, 0)
   }
 
   return (
