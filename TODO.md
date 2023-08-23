@@ -54,6 +54,11 @@ tasks from test #1
 - [ ] end page should never be "before" start page (properly compared)
 - [ ] be able to edit a quote
 
+- [ ] actually reset start/end when a quote is submitted
+- [ ] command + enter to submit
+- [ ] content form size should reset (to larger than now) default every time
+- [ ] link fictional Persons to texts as "from X book"?
+
 later super upgrades
 
 - [ ] content form input should be bigger, rich text, etc
