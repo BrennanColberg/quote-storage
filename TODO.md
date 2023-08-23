@@ -30,14 +30,18 @@ quote form upgrades needed for MVP
 things to "finalize" the app MVP
 
 - [x] switch to using postgres
+- [x] restrict editing power to myself via cookie
+- [ ] publish to internet (via Vercel)
 - [ ] use local postgres instance for development
-- [ ] publish to internet
-- [ ] transcribe at least one book's worth of quotes
 
 - [ ] display quote
 - [ ] display quotes from text
 - [ ] display quotes from author
 - [ ] search quotes (via regex to start)
+
+tasks from test #1
+
+- [ ]
 
 later super upgrades
 
