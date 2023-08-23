@@ -36,6 +36,7 @@ things to "finalize" the app MVP
 
 - [ ] display quote
 - [ ] display quotes from text
+  - [ ] custom start/end comparator
 - [ ] display quotes from author
 - [ ] search quotes (via regex to start)
 
@@ -50,13 +51,12 @@ tasks from test #1
 - [x] on quote creation, scroll back to top
 - [x] reset edition start/end/etc on quote creation
 - [x] "edition" should show publisher/type/year when it has the same title
-- [ ] content field should be bigger on quote form
 - [ ] end page should never be "before" start page (properly compared)
-- [ ] content, at least, should explicitly be markdown (limited rich text editor?)
 - [ ] be able to edit a quote
 
 later super upgrades
 
+- [ ] content form input should be bigger, rich text, etc
 - [ ] make the quote form not look like crap
 - [ ] ensure tab/enter work for navigating form mouselessly
 - [ ] dictation for content
