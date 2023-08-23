@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "prisma migrate deploy && next build",
+    "build": "prisma migrate deploy && prisma generate && next build",
     "dev": "prisma generate && next dev",
     "db": "prisma studio",
     "format": "prettier --write ."
