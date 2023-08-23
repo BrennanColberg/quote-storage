@@ -113,4 +113,10 @@ main {
   li ul {
     @apply ml-4;
   }
+
+  blockquote {
+    p + p {
+      @apply mt-2;
+    }
+  }
 }

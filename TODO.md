@@ -60,7 +60,7 @@ tasks from test #1
 - [ ] _link fictional Persons to texts as "from X book"?_
 - [ ] _difference between author and sayer of a quote?_
 - [ ] _about fields that are different from notes fields_
-- [ ] **content should be rendered as markdown**
+- [x] **content should be rendered as markdown**
 - [x] render from list of quotes, not list of sources
 - [ ] make sure it dynamically rerenders from DB every time
 

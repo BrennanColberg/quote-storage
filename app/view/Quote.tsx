@@ -1,5 +1,6 @@
 import { Person, Quote } from "@prisma/client"
 import { SourceList, SourceProp } from "./Source"
+import ReactMarkdown from "react-markdown"
 
 export type QuoteProp = Quote & {
   sources: SourceProp[]
@@ -16,7 +17,7 @@ export function QuoteComponent({
   return (
     <div className="mb-6 mt-3">
       <blockquote className="border-l-4 pl-2 text-neutral-500 max-h-64 overflow-y-scroll pr-1">
-        {quote.content}
+        <ReactMarkdown>{quote.content.replace(/\n+/g, "\n\n")}</ReactMarkdown>
       </blockquote>
 
       {/* TODO authors */}
