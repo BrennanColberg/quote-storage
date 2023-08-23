@@ -45,7 +45,7 @@ tasks from test #1
 - [x] quote notes should go at bottom, under sources/citation
 - [x] text: year _first published_
 - [x] ^^ google me button
-- [ ] [AUTO] should be "AUTO NEW" or similar (emphasis on new)
+- [x] [AUTO] should be "AUTO NEW" or similar (emphasis on new)
 - [ ] end page _if different_
 - [ ] on quote creation, scroll back to top
 - [ ] reset edition start/end/etc on quote creation

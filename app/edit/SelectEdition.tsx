@@ -23,7 +23,10 @@ export default function SelectEdition({
   )
   return (
     <CreatableSelect
-      options={[{ label: "[AUTO]", value: "auto" }, ...editionOptions]}
+      options={[
+        { label: "[AUTO-CREATE, MATCHING TEXT]", value: "auto" },
+        ...editionOptions,
+      ]}
       onChange={async (option) => {
         if (option.value === "auto") {
           // "auto" option -> create edition as close to current text as possible
