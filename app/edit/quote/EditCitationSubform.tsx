@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction } from "react"
 import SelectEdition from "../SelectEdition"
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 export default function EditCitationSubform({
   i,
@@ -47,6 +48,16 @@ export default function EditCitationSubform({
     <div key={j} className="border-4 border-neutral-300">
       <h4 className="text-center font-lg text-neutral-300 font-bold">
         Citation {i + 1}.{j + 1}
+        <Button
+          variant="destructive"
+          onClick={(e) => {
+            e.preventDefault()
+            setCitation(undefined)
+          }}
+          className="h-6 ml-2"
+        >
+          Remove
+        </Button>
       </h4>
 
       {/* Edition */}

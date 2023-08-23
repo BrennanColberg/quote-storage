@@ -22,9 +22,9 @@ quote form upgrades needed for MVP
 - [x] make editions practically linkable to multiple texts
 - [x] add fictional selector for persons
 - [x] more attributes for citations (depending on edition type?)
+- [x] ability to remove a source/citation
 - [ ] see information about texts/sources? with button to go edit?
 - [ ] better form validation error rendering for `sources`
-- [ ] ability to remove a source/citation
 - [ ] add notes fields widely?
 
 things to "finalize" the app MVP

@@ -128,8 +128,9 @@ export function EditQuoteForm() {
                       source={source}
                       i={i}
                       setSource={(newSource) => {
-                        const newSources = [...field.value]
+                        let newSources = [...field.value]
                         newSources[i] = newSource
+                        newSources = newSources.filter((x) => x !== undefined)
                         form.setValue("sources", newSources)
                       }}
                     />

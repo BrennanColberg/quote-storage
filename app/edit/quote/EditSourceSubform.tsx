@@ -20,7 +20,7 @@ export default function EditSourceSubform({
 }: {
   source: z.infer<typeof sourceSchema>
   i: number
-  setSource: (source: z.infer<typeof sourceSchema>) => void
+  setSource: (source?: z.infer<typeof sourceSchema>) => void
   texts: (Text & { authors: Person[] })[]
   setTexts: Dispatch<SetStateAction<Text[]>>
   authorIds: string[]
@@ -30,7 +30,17 @@ export default function EditSourceSubform({
   return (
     <div className="border-4 border-neutral-400 p-2 rounded-md">
       <h3 className="text-center font-semibold text-xl text-neutral-400">
-        Source {i + 1}
+        Source {i + 1}{" "}
+        <Button
+          variant="destructive"
+          onClick={(e) => {
+            e.preventDefault()
+            setSource(undefined)
+          }}
+          className="h-6 ml-2"
+        >
+          Remove
+        </Button>
       </h3>
       <FormItem>
         <FormLabel>Text</FormLabel>
@@ -70,8 +80,9 @@ export default function EditSourceSubform({
           j={j}
           key={j}
           setCitation={(citation) => {
-            const newCitations = [...source.citations]
+            let newCitations = [...source.citations]
             newCitations[j] = citation
+            newCitations = newCitations.filter((x) => x !== undefined)
             setSource({ ...source, citations: newCitations })
           }}
           editions={editions}
