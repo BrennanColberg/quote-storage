@@ -35,7 +35,7 @@ things to "finalize" the app MVP
 - [ ] use local postgres instance for development
 
 - [ ] display quote
-- [ ] display quotes from text
+- [x] display quotes from text
   - [ ] custom start/end comparator
 - [ ] display quotes from author
 - [ ] search quotes (via regex to start)
@@ -58,6 +58,8 @@ tasks from test #1
 - [ ] command + enter to submit
 - [ ] content form size should reset (to larger than now) default every time
 - [ ] link fictional Persons to texts as "from X book"?
+- [ ] difference between author and sayer of a quote?
+- [ ] about fields that are different from notes fields
 
 later super upgrades
 
