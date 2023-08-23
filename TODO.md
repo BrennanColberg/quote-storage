@@ -52,7 +52,7 @@ tasks from test #1
 - [x] reset edition start/end/etc on quote creation
 - [x] "edition" should show publisher/type/year when it has the same title
 - [ ] end page should never be "before" start page (properly compared)
-- [ ] **be able to edit a quote**
+- [x] **be able to edit a quote**
 
 - [ ] **actually reset start/end when a quote is submitted**
 - [ ] **command + enter to submit**
@@ -70,6 +70,7 @@ tasks from test #2:
 - [ ] link to add should show up on index for authenticated users (me)
 - [ ] way to specify the order of authors (for both text and edition)
 - [ ] data linter script which checks that everything's in the right format (start before end, matching time/page citations, etc)
+- [ ] created at, updated at timestamp keeping
 
 later super upgrades
 

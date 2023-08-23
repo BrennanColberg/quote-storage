@@ -1,5 +1,5 @@
-import { EditQuoteForm } from "./EditQuoteForm"
+import { EditQuoteForm } from "./[id]/EditQuoteForm"
 
-export default async function EditQuotePage() {
+export default async function AddQuotePage() {
   return <EditQuoteForm />
 }

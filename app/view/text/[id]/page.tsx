@@ -77,7 +77,7 @@ export default async function ViewTextPage({
             <a href={`/view/edition/${edition.id}`}>
               {edition.type.charAt(0).toUpperCase()}
               {edition.type.substring(1).toLowerCase()} (
-              {edition.publisher.name}, {edition.year})
+              {edition.publisher?.name}, {edition.year})
             </a>
           </li>
         ))}

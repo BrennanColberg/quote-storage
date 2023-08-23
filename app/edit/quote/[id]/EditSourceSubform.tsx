@@ -1,12 +1,13 @@
 import { z } from "zod"
 import sourceSchema from "./sourceSchema"
-import SelectText from "../SelectText"
+import SelectText from "../../SelectText"
 import { Dispatch, SetStateAction } from "react"
 import { Edition, Person, Publisher, Text } from "@prisma/client"
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import EditCitationSubform from "./EditCitationSubform"
+import { v4 as uuid } from "uuid"
 
 export default function EditSourceSubform({
   source,
@@ -100,7 +101,7 @@ export default function EditSourceSubform({
             e.preventDefault()
             setSource({
               ...source,
-              citations: [...(source.citations ?? []), {}],
+              citations: [...(source.citations ?? []), { id: uuid() }],
             })
           }}
         >

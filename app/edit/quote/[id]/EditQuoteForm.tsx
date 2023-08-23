@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,13 +16,33 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useRef, useState } from "react"
 import axios from "axios"
-import { Edition, Person, Publisher, Text } from "@prisma/client"
+import {
+  Citation,
+  Edition,
+  Person,
+  Publisher,
+  Quote,
+  Source,
+  Text,
+} from "@prisma/client"
 import quoteSchema from "./quoteSchema"
-import SelectPerson from "../SelectPerson"
+import SelectPerson from "../../SelectPerson"
 import EditSourceSubform from "./EditSourceSubform"
-import useOptions from "../useOptions"
+import useOptions from "../../useOptions"
+import { useSearchParams } from "next/navigation"
+import { v4 as uuid } from "uuid"
 
-export function EditQuoteForm() {
+export function EditQuoteForm({
+  quote: initialQuote,
+}: {
+  quote?: Quote & {
+    authors: Person[]
+    sources: (Source & { citations: Citation[] })[]
+  }
+}) {
+  const searchParams = useSearchParams()
+  const closeOnSubmit = searchParams.has("from")
+
   const [persons, setPersons] = useState<Person[]>([])
   useOptions("person", setPersons)
   const [texts, setTexts] = useState<(Text & { authors: Person[] })[]>([])
@@ -35,39 +54,64 @@ export function EditQuoteForm() {
 
   const form = useForm<z.infer<typeof quoteSchema>>({
     resolver: zodResolver(quoteSchema),
-    defaultValues: {
-      content: "",
-      authorIds: [],
-      notes: "",
-      sources: [],
-    },
+    defaultValues: initialQuote
+      ? {
+          content: initialQuote.content,
+          authorIds: initialQuote.authors.map((a) => a.id),
+          notes: initialQuote.notes ?? "",
+          sources: initialQuote.sources.map((source) => ({
+            id: source.id,
+            textId: source.textId,
+            primary: source.primary,
+            citations: source.citations.map((citation) => ({
+              id: citation.id,
+              editionId: citation.editionId,
+              start: citation.start ?? "",
+              startLine: citation.startLine ?? undefined,
+              end: citation.end ?? "",
+            })),
+          })),
+        }
+      : {
+          content: "",
+          authorIds: [],
+          notes: "",
+          sources: [],
+        },
   })
 
   const contentRef = useRef<HTMLTextAreaElement>(null)
   async function onSubmit(values: z.infer<typeof quoteSchema>) {
-    await axios.post("/api/quote", values)
+    if (!initialQuote) {
+      await axios.post("/api/quote", values)
 
-    // reset things that are different between "adjacent" quotes
-    form.resetField("content")
-    form.resetField("notes")
-    form.setValue(
-      "sources",
-      form.getValues("sources").map((source) => ({
-        ...source,
-        citations: source.citations.map((citation) => ({
-          ...citation,
-          // remove start/end info from citations
-          start: undefined,
-          startLine: undefined,
-          end: undefined,
+      // reset things that are different between "adjacent" quotes
+      form.resetField("content")
+      form.resetField("notes")
+      form.setValue(
+        "sources",
+        form.getValues("sources").map((source) => ({
+          ...source,
+          citations: source.citations.map((citation) => ({
+            ...citation,
+            // remove start/end info from citations
+            start: undefined,
+            startLine: undefined,
+            end: undefined,
+          })),
         })),
-      })),
-    )
+      )
 
-    // refocus on content to start entering next quote
-    contentRef.current.focus()
-    // scroll to top
-    window.scrollTo(0, 0)
+      // refocus on content to start entering next quote
+      contentRef.current.focus()
+      // scroll to top
+      window.scrollTo(0, 0)
+    } else {
+      await axios.put("/api/quote", { ...values, id: initialQuote.id })
+      if (closeOnSubmit) return window.close()
+      alert("Quote updated!")
+      location.reload()
+    }
   }
 
   return (
@@ -146,7 +190,7 @@ export function EditQuoteForm() {
                   e.preventDefault()
                   form.setValue("sources", [
                     ...field.value,
-                    { citations: [], primary: false },
+                    { citations: [], primary: false, id: uuid() },
                   ])
                 }}
               >
