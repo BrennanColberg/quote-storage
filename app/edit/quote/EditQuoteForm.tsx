@@ -17,7 +17,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useRef, useState } from "react"
 import axios from "axios"
-import { Edition, Person, Text } from "@prisma/client"
+import { Edition, Person, Publisher, Text } from "@prisma/client"
 import quoteSchema from "./quoteSchema"
 import SelectPerson from "../SelectPerson"
 import EditSourceSubform from "./EditSourceSubform"
@@ -28,7 +28,9 @@ export function EditQuoteForm() {
   useOptions("person", setPersons)
   const [texts, setTexts] = useState<(Text & { authors: Person[] })[]>([])
   useOptions("text", setTexts)
-  const [editions, setEditions] = useState<Edition[]>([])
+  const [editions, setEditions] = useState<
+    (Edition & { publisher?: Publisher; texts: Text[] })[]
+  >([])
   useOptions("edition", setEditions)
 
   const form = useForm<z.infer<typeof quoteSchema>>({

@@ -5,7 +5,12 @@ import { z } from "zod"
 
 export async function GET() {
   const prisma = new PrismaClient()
-  const editions = await prisma.edition.findMany()
+  const editions = await prisma.edition.findMany({
+    include: {
+      texts: true,
+      publisher: true,
+    },
+  })
   return NextResponse.json(editions)
 }
 

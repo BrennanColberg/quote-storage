@@ -49,7 +49,7 @@ tasks from test #1
 - [x] end page _if different_
 - [x] on quote creation, scroll back to top
 - [x] reset edition start/end/etc on quote creation
-- [ ] "edition" should show publisher/type/year when it has the same title
+- [x] "edition" should show publisher/type/year when it has the same title
 - [ ] content field should be bigger on quote form
 - [ ] end page should never be "before" start page (properly compared)
 - [ ] content, at least, should explicitly be markdown (limited rich text editor?)

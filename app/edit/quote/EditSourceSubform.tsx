@@ -2,7 +2,7 @@ import { z } from "zod"
 import sourceSchema from "./sourceSchema"
 import SelectText from "../SelectText"
 import { Dispatch, SetStateAction } from "react"
-import { Edition, Person, Text } from "@prisma/client"
+import { Edition, Person, Publisher, Text } from "@prisma/client"
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,7 @@ export default function EditSourceSubform({
   texts: (Text & { authors: Person[] })[]
   setTexts: Dispatch<SetStateAction<Text[]>>
   authorIds: string[]
-  editions: Edition[]
+  editions: (Edition & { publisher?: Publisher; texts: Text[] })[]
   setEditions: Dispatch<SetStateAction<Edition[]>>
 }) {
   return (

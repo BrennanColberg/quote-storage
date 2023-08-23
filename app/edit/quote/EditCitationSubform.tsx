@@ -1,6 +1,6 @@
 import { z } from "zod"
 import citationSchema from "./citationSchema"
-import { Edition, EditionType, Person, Text } from "@prisma/client"
+import { Edition, EditionType, Person, Publisher, Text } from "@prisma/client"
 import { Dispatch, SetStateAction } from "react"
 import SelectEdition from "../SelectEdition"
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
@@ -18,7 +18,7 @@ export default function EditCitationSubform({
 }: {
   i: number
   j: number
-  editions: Edition[]
+  editions: (Edition & { publisher?: Publisher; texts: Text[] })[]
   setEditions: Dispatch<SetStateAction<Edition[]>>
   citation: z.infer<typeof citationSchema>
   setCitation: (citation: z.infer<typeof citationSchema>) => void

@@ -1,7 +1,7 @@
-import { Edition, Person, Text } from "@prisma/client"
+import { Edition, Person, Publisher, Text } from "@prisma/client"
 import axios from "axios"
 import { Dispatch, SetStateAction, useMemo } from "react"
-import CreatableSelect from "react-select/creatable"
+import Select from "react-select"
 
 export default function SelectEdition({
   editions,
@@ -10,7 +10,7 @@ export default function SelectEdition({
   setEditionId,
   text,
 }: {
-  editions: Edition[]
+  editions: (Edition & { publisher?: Publisher; texts: Text[] })[]
   setEditions: Dispatch<SetStateAction<Edition[]>>
   editionId?: string
   setEditionId: (value?: string) => void
@@ -18,17 +18,27 @@ export default function SelectEdition({
 }) {
   const editionOptions = useMemo(
     () =>
-      editions.map((edition) => ({ value: edition.id, label: edition.title })),
+      editions
+        // only show editions that contain the current text
+        .filter((edition) => edition.texts.find((et) => et.id === text.id))
+        .map((edition) => {
+          let label: string = edition.type
+          if (edition.publisher && edition.year)
+            label += ` (${edition.publisher.name}, ${edition.year})`
+          else if (edition.publisher) label += ` (${edition.publisher.name})`
+          else if (edition.year) label += ` (${edition.year})`
+          return { label, value: edition.id }
+        }),
     [editions],
   )
   return (
-    <CreatableSelect
+    <Select
       options={[
-        { label: "[AUTO-CREATE, MATCHING TEXT]", value: "auto" },
+        { label: "→ create new from Text", value: "create" },
         ...editionOptions,
       ]}
       onChange={async (option) => {
-        if (option.value === "auto") {
+        if (option.value === "create") {
           // "auto" option -> create edition as close to current text as possible
           const edition = await axios.post("/api/edition", {
             title: text.title,
@@ -39,7 +49,7 @@ export default function SelectEdition({
             editorIds: [],
             textIds: [text.id],
           })
-          setEditions((x) => [...x, edition.data])
+          setEditions((x) => [...x, { ...edition.data, texts: [text] }])
           setEditionId(edition.data.id)
           // opens a new tab to edit the person (which will close when done)
           window.open(`/edit/edition/${edition.data.id}?from=quote`, "_blank")
@@ -49,19 +59,6 @@ export default function SelectEdition({
         editionOptions.find((edition) => editionId?.includes(edition.value)) ??
         null
       }
-      onCreateOption={async (inputValue) => {
-        const edition = await axios.post("/api/edition", {
-          title: inputValue,
-          authorIds: text.authors.map((a) => a.id),
-          translatorIds: [],
-          editorIds: [],
-          textIds: [text.id],
-        })
-        setEditions((x) => [...x, edition.data])
-        setEditionId(edition.data.id)
-        // opens a new tab to edit the person (which will close when done)
-        window.open(`/edit/edition/${edition.data.id}?from=quote`, "_blank")
-      }}
     />
   )
 }
