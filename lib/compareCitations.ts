@@ -5,7 +5,7 @@ import { compareTimestamps, parseTimestamp } from "./timestamp"
 export function typeOfPlace(
   place: string,
 ): "arabic" | "roman" | "timestamp" | undefined {
-  if (place === undefined) return undefined
+  if (!place) return undefined
   place = place.trim()
   if (place.match(/^[0-9]+$/)) return "arabic"
   if (place.match(/^[ivx]+$/i)) return "roman"
