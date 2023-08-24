@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import thingSchema from "../../edit/thing/[id]/thingSchema"
-import { PrismaClient } from "@prisma/client"
 import { z } from "zod"
+import prisma from "@/prisma/prisma"
 
 export async function GET() {
-  const prisma = new PrismaClient()
   const things = await prisma.thing.findMany({
     include: {
       texts: true,
@@ -29,7 +28,6 @@ export async function POST(request: NextRequest) {
     type,
     year,
   } = thingSchema.parse(body)
-  const prisma = new PrismaClient()
   const thing = await prisma.thing.create({
     data: {
       title,
@@ -64,7 +62,6 @@ export async function PUT(request: NextRequest) {
     type,
     year,
   } = thingSchema.and(z.object({ id: z.string() })).parse(body)
-  const prisma = new PrismaClient()
   const thing = await prisma.thing.update({
     where: { id },
     data: {

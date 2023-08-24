@@ -1,17 +1,16 @@
-import { PrismaClient } from "@prisma/client"
 import { notFound } from "next/navigation"
 import { QuoteList, QuoteProp } from "../../Quote"
 import { SourceProp, TextProp } from "../../Source"
 import { CitationProp } from "../../Citation"
 import compareCitations from "@/lib/compareCitations"
 import compareQuotes from "@/lib/compareQuotes"
+import prisma from "@/prisma/prisma"
 
 export default async function ViewTextPage({
   params: { id },
 }: {
   params: { id: string }
 }) {
-  const prisma = new PrismaClient()
   const text = await prisma.text.findUnique({
     where: { id },
     include: {

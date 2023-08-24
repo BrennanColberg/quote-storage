@@ -1,5 +1,5 @@
 import quoteSchema from "@/app/edit/quote/[id]/quoteSchema"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/prisma/prisma"
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
@@ -7,7 +7,6 @@ export async function POST(request: Request) {
   const body = await request.json()
   const { content, authorIds, notes, sources } = quoteSchema.parse(body)
 
-  const prisma = new PrismaClient()
   const quote = await prisma.quote.create({
     data: {
       content,
@@ -37,8 +36,6 @@ export async function PUT(request: Request) {
   const { content, authorIds, notes, sources, id } = quoteSchema
     .and(z.object({ id: z.string() }))
     .parse(body)
-
-  const prisma = new PrismaClient()
 
   // we have to manually delete sources/citations that are no longer
   // included in the quote. we do this with as few operations as are

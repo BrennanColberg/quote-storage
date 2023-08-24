@@ -1,10 +1,9 @@
 import personSchema from "@/app/edit/person/[id]/personSchema"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/prisma/prisma"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
 export async function GET() {
-  const prisma = new PrismaClient()
   const persons = await prisma.person.findMany()
   return NextResponse.json(persons)
 }
@@ -12,7 +11,6 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const body = await request.json()
   const props = personSchema.parse(body)
-  const prisma = new PrismaClient()
   const person = await prisma.person.create({
     data: {
       name: props.name,
@@ -31,7 +29,6 @@ const editPersonSchema = personSchema.and(z.object({ id: z.string() }))
 export async function PUT(request: NextRequest) {
   const body = await request.json()
   const props = editPersonSchema.parse(body)
-  const prisma = new PrismaClient()
   const person = await prisma.person.update({
     where: { id: props.id },
     data: {

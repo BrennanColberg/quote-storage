@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import textSchema from "../../edit/text/[id]/textSchema"
-import { PrismaClient } from "@prisma/client"
 import { z } from "zod"
+import prisma from "@/prisma/prisma"
 
 export async function GET() {
-  const prisma = new PrismaClient()
   const texts = await prisma.text.findMany({ include: { authors: true } })
   return NextResponse.json(texts)
 }
@@ -13,7 +12,6 @@ export async function POST(request: NextRequest) {
   const body = await request.json()
   const { title, authorIds, notes, subtitle, year, type } =
     textSchema.parse(body)
-  const prisma = new PrismaClient()
   const text = await prisma.text.create({
     data: {
       title,
@@ -32,7 +30,6 @@ export async function PUT(request: NextRequest) {
   const { title, authorIds, id, subtitle, year, notes, type } = textSchema
     .and(z.object({ id: z.string() }))
     .parse(body)
-  const prisma = new PrismaClient()
   const text = await prisma.text.update({
     where: { id },
     data: {

@@ -1,12 +1,11 @@
-import { PrismaClient } from "@prisma/client"
 import EditThingForm from "./EditThingForm"
+import prisma from "@/prisma/prisma"
 
 export default async function EditThingPage({
   params: { id },
 }: {
   params: { id: string }
 }) {
-  const prisma = new PrismaClient()
   const thing = await prisma.thing.findUniqueOrThrow({
     where: { id },
     include: {
