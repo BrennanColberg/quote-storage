@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
-import editionSchema from "../../edit/edition/[id]/editionSchema"
+import thingSchema from "../../edit/thing/[id]/thingSchema"
 import { PrismaClient } from "@prisma/client"
 import { z } from "zod"
 
 export async function GET() {
   const prisma = new PrismaClient()
-  const editions = await prisma.edition.findMany({
+  const things = await prisma.thing.findMany({
     include: {
       texts: true,
       publisher: true,
     },
   })
-  return NextResponse.json(editions)
+  return NextResponse.json(things)
 }
 
 export async function POST(request: NextRequest) {
@@ -28,9 +28,9 @@ export async function POST(request: NextRequest) {
     url,
     type,
     year,
-  } = editionSchema.parse(body)
+  } = thingSchema.parse(body)
   const prisma = new PrismaClient()
-  const edition = await prisma.edition.create({
+  const thing = await prisma.thing.create({
     data: {
       title,
       authors: { connect: authorIds.map((id) => ({ id })) },
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       year: year || null,
     },
   })
-  return NextResponse.json(edition)
+  return NextResponse.json(thing)
 }
 
 export async function PUT(request: NextRequest) {
@@ -63,9 +63,9 @@ export async function PUT(request: NextRequest) {
     url,
     type,
     year,
-  } = editionSchema.and(z.object({ id: z.string() })).parse(body)
+  } = thingSchema.and(z.object({ id: z.string() })).parse(body)
   const prisma = new PrismaClient()
-  const edition = await prisma.edition.update({
+  const thing = await prisma.thing.update({
     where: { id },
     data: {
       title,
@@ -81,5 +81,5 @@ export async function PUT(request: NextRequest) {
       year: year || null,
     },
   })
-  return NextResponse.json(edition)
+  return NextResponse.json(thing)
 }

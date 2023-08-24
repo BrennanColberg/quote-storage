@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client"
-import EditEditionForm from "./EditEditionForm"
+import EditThingForm from "./EditThingForm"
 
-export default async function EditEditionPage({
+export default async function EditThingPage({
   params: { id },
 }: {
   params: { id: string }
 }) {
   const prisma = new PrismaClient()
-  const edition = await prisma.edition.findUniqueOrThrow({
+  const thing = await prisma.thing.findUniqueOrThrow({
     where: { id },
     include: {
       authors: true,
@@ -17,5 +17,5 @@ export default async function EditEditionPage({
       texts: true,
     },
   })
-  return <EditEditionForm edition={edition} />
+  return <EditThingForm thing={thing} />
 }

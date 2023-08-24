@@ -14,7 +14,7 @@ export default async function ViewTextPage({
     where: { id },
     include: {
       authors: true,
-      editions: { include: { publisher: true } },
+      things: { include: { publisher: true } },
       sources: {
         include: {
           quote: {
@@ -34,15 +34,15 @@ export default async function ViewTextPage({
   // make simple version of text with just authors
   const _textProp: Partial<TextProp> & typeof text = { ...text }
   delete _textProp.sources
-  delete _textProp.editions
+  delete _textProp.things
   const textProp: TextProp = _textProp
 
   const quoteProps: QuoteProp[] = []
   for (const source of text.sources) {
-    // add edition to each citation to make it a valid CitationProp
+    // add thing to each citation to make it a valid CitationProp
     const citationProps: CitationProp[] = source.citations.map((citation) => ({
       ...citation,
-      edition: text.editions.find((e) => e.id === citation.editionId),
+      thing: text.things.find((e) => e.id === citation.thingId),
     }))
     // prep the source to be a valid SourceProp
     const _sourceProp: SourceProp & typeof source = {
@@ -70,14 +70,14 @@ export default async function ViewTextPage({
 
       <br />
 
-      <h3>My Editions</h3>
+      <h3>My Things</h3>
       <ul className=" list-inside list-disc">
-        {text.editions.map((edition) => (
-          <li key={edition.id}>
-            <a href={`/view/edition/${edition.id}`}>
-              {edition.type.charAt(0).toUpperCase()}
-              {edition.type.substring(1).toLowerCase()} (
-              {edition.publisher?.name}, {edition.year})
+        {text.things.map((thing) => (
+          <li key={thing.id}>
+            <a href={`/view/thing/${thing.id}`}>
+              {thing.type.charAt(0).toUpperCase()}
+              {thing.type.substring(1).toLowerCase()} ({thing.publisher?.name},{" "}
+              {thing.year})
             </a>
           </li>
         ))}

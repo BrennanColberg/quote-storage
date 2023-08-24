@@ -1,7 +1,7 @@
-import { EditionType } from "@prisma/client"
+import { ThingType } from "@prisma/client"
 import { z } from "zod"
 
-const editionSchema = z.object({
+const thingSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   year: z.string().optional(),
@@ -11,8 +11,8 @@ const editionSchema = z.object({
   editorIds: z.array(z.string()),
   textIds: z.array(z.string()).min(1, "Must have at least one text."),
   notes: z.string().optional(),
-  type: z.nativeEnum(EditionType).optional(),
+  type: z.nativeEnum(ThingType).optional(),
   url: z.string().optional(),
 })
 
-export default editionSchema
+export default thingSchema

@@ -14,14 +14,14 @@ quote form upgrades needed for MVP
 - [x] add citations to sources
 - [x] different form for adding/editing text
 - [x] auto refetch data for Selects (at least on every page focus, if not on timer)?
-- [x] copy year, subtitle from text to edition (as well as authors)
-- [x] easy creation option for making an edition from a text?
-- [x] different form for adding/editing editions
-- [x] PublisherSelect on edition form
+- [x] copy year, subtitle from text to thing (as well as authors)
+- [x] easy creation option for making an thing from a text?
+- [x] different form for adding/editing things
+- [x] PublisherSelect on thing form
 - [x] different form for editing publishers
-- [x] make editions practically linkable to multiple texts
+- [x] make things practically linkable to multiple texts
 - [x] add fictional selector for persons
-- [x] more attributes for citations (depending on edition type?)
+- [x] more attributes for citations (depending on thing type?)
 - [x] ability to remove a source/citation
 - [ ] see information about texts/sources? with button to go edit?
 - [ ] better form validation error rendering for `sources`
@@ -49,8 +49,8 @@ tasks from test #1
 - [x] [AUTO] should be "AUTO NEW" or similar (emphasis on new)
 - [x] end page _if different_
 - [x] on quote creation, scroll back to top
-- [x] reset edition start/end/etc on quote creation
-- [x] "edition" should show publisher/type/year when it has the same title
+- [x] reset thing start/end/etc on quote creation
+- [x] "thing" should show publisher/type/year when it has the same title
 - [ ] end page should never be "before" start page (properly compared)
 - [x] **be able to edit a quote**
 
@@ -68,7 +68,7 @@ tasks from test #2:
 
 - [ ] subtexts
 - [ ] link to add should show up on index for authenticated users (me)
-- [ ] way to specify the order of authors (for both text and edition)
+- [ ] way to specify the order of authors (for both text and thing)
 - [ ] data linter script which checks that everything's in the right format (start before end, matching time/page citations, etc)
 - [ ] created at, updated at timestamp keeping
 
@@ -81,5 +81,5 @@ later super upgrades
 - [ ] quote search via embeddings
 - [ ] fancy meta tags
 - [ ] quote image auto-generator
-- [ ] preload meta tags, locally cache/backup URLs entered for editions
+- [ ] preload meta tags, locally cache/backup URLs entered for things
 - [x] make IDs changeable / able to not be UUIDs

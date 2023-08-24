@@ -1,8 +1,8 @@
 import { z } from "zod"
 import citationSchema from "./citationSchema"
-import { Edition, EditionType, Person, Publisher, Text } from "@prisma/client"
+import { Thing, ThingType, Person, Publisher, Text } from "@prisma/client"
 import { Dispatch, SetStateAction } from "react"
-import SelectEdition from "../../SelectEdition"
+import SelectThing from "../../SelectThing"
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -12,32 +12,32 @@ export default function EditCitationSubform({
   j,
   citation,
   setCitation,
-  editions,
-  setEditions,
+  things,
+  setThings,
   text,
 }: {
   i: number
   j: number
-  editions: (Edition & { publisher?: Publisher; texts: Text[] })[]
-  setEditions: Dispatch<SetStateAction<Edition[]>>
+  things: (Thing & { publisher?: Publisher; texts: Text[] })[]
+  setThings: Dispatch<SetStateAction<Thing[]>>
   citation: z.infer<typeof citationSchema>
   setCitation: (citation: z.infer<typeof citationSchema>) => void
   text: Text & { authors: Person[] }
 }) {
-  const edition = editions.find((edition) => edition.id === citation.editionId)
+  const thing = things.find((thing) => thing.id === citation.thingId)
   let markerType: "page" | "time" | "none" | "any"
-  switch (edition?.type) {
-    case EditionType.HARDCOVER:
-    case EditionType.PAPERBACK:
-    case EditionType.LEATHERBOUND:
-    case EditionType.PDF:
+  switch (thing?.type) {
+    case ThingType.HARDCOVER:
+    case ThingType.PAPERBACK:
+    case ThingType.LEATHERBOUND:
+    case ThingType.PDF:
       markerType = "page"
       break
-    case EditionType.VIDEO_RECORDING:
-    case EditionType.AUDIO_RECORDING:
+    case ThingType.VIDEO_RECORDING:
+    case ThingType.AUDIO_RECORDING:
       markerType = "time"
       break
-    case EditionType.WEBSITE:
+    case ThingType.WEBSITE:
       markerType = "none"
       break
     default:
@@ -60,17 +60,15 @@ export default function EditCitationSubform({
         </Button>
       </h4>
 
-      {/* Edition */}
+      {/* Thing */}
       <FormItem>
-        <FormLabel>Edition</FormLabel>
+        <FormLabel>Thing</FormLabel>
         <FormControl>
-          <SelectEdition
-            editions={editions}
-            setEditions={setEditions}
-            editionId={citation.editionId}
-            setEditionId={(editionId) =>
-              setCitation({ ...citation, editionId })
-            }
+          <SelectThing
+            things={things}
+            setThings={setThings}
+            thingId={citation.thingId}
+            setThingId={(thingId) => setCitation({ ...citation, thingId })}
             text={text}
           />
         </FormControl>

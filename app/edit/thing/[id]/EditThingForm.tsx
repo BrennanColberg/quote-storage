@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
-import editionSchema from "./editionSchema"
-import { Person, Edition, EditionType, Publisher, Text } from "@prisma/client"
+import thingSchema from "./thingSchema"
+import { Person, Thing, ThingType, Publisher, Text } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -27,10 +27,10 @@ import SelectPublisher from "../../SelectPublisher"
 import useOptions from "../../useOptions"
 import SelectTexts from "../../SelectTexts"
 
-export default function EditEditionForm({
-  edition: initialEdition,
+export default function EditThingForm({
+  thing: initialThing,
 }: {
-  edition?: Edition & {
+  thing?: Thing & {
     authors: Person[]
     editors: Person[]
     translators: Person[]
@@ -48,21 +48,21 @@ export default function EditEditionForm({
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
 
-  const form = useForm<z.infer<typeof editionSchema>>({
-    resolver: zodResolver(editionSchema),
-    defaultValues: initialEdition
+  const form = useForm<z.infer<typeof thingSchema>>({
+    resolver: zodResolver(thingSchema),
+    defaultValues: initialThing
       ? {
-          title: initialEdition.title,
-          subtitle: initialEdition.subtitle ?? "",
-          year: initialEdition.year ?? "",
-          publisherId: initialEdition.publisher?.id ?? "",
-          authorIds: initialEdition.authors.map((a) => a.id),
-          editorIds: initialEdition.editors.map((a) => a.id),
-          translatorIds: initialEdition.translators.map((a) => a.id),
-          textIds: initialEdition.texts.map((a) => a.id),
-          notes: initialEdition.notes ?? "",
-          type: initialEdition.type,
-          url: initialEdition.url ?? "",
+          title: initialThing.title,
+          subtitle: initialThing.subtitle ?? "",
+          year: initialThing.year ?? "",
+          publisherId: initialThing.publisher?.id ?? "",
+          authorIds: initialThing.authors.map((a) => a.id),
+          editorIds: initialThing.editors.map((a) => a.id),
+          translatorIds: initialThing.translators.map((a) => a.id),
+          textIds: initialThing.texts.map((a) => a.id),
+          notes: initialThing.notes ?? "",
+          type: initialThing.type,
+          url: initialThing.url ?? "",
         }
       : {
           title: "",
@@ -78,17 +78,17 @@ export default function EditEditionForm({
         },
   })
 
-  async function onSubmit(values: z.infer<typeof editionSchema>) {
-    if (initialEdition) {
+  async function onSubmit(values: z.infer<typeof thingSchema>) {
+    if (initialThing) {
       // edit
-      await axios.put("/api/edition", { ...values, id: initialEdition.id })
+      await axios.put("/api/thing", { ...values, id: initialThing.id })
       if (closeOnSubmit) return window.close()
-      alert("Updated edition!")
+      alert("Updated thing!")
       location.reload()
     } else {
       // create
-      await axios.post("/api/edition", values)
-      alert("Created edition!")
+      await axios.post("/api/thing", values)
+      alert("Created thing!")
       form.reset()
     }
   }
@@ -137,7 +137,7 @@ export default function EditEditionForm({
                 <FormLabel>Type</FormLabel>
                 <FormControl>
                   <Select
-                    options={Object.values(EditionType).map((type) => ({
+                    options={Object.values(ThingType).map((type) => ({
                       label: type,
                       value: type,
                     }))}

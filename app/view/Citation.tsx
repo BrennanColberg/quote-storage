@@ -1,4 +1,4 @@
-import { Citation, Edition, Publisher } from "@prisma/client"
+import { Citation, Thing, Publisher } from "@prisma/client"
 import Link from "next/link"
 
 /** show page/pages/line that this was taken from */
@@ -17,21 +17,21 @@ function citationLocation({
 }
 
 export type CitationProp = Citation & {
-  edition: Edition & { publisher?: Publisher }
+  thing: Thing & { publisher?: Publisher }
 }
 
 export function CitationComponent({ citation }: { citation: CitationProp }) {
   const pages = citationLocation(citation)
 
-  const publisher = citation.edition.publisher ? (
-    <Link href={`/view/publisher/${citation.edition.publisher.id}`}>
-      {citation.edition.publisher.name}
+  const publisher = citation.thing.publisher ? (
+    <Link href={`/view/publisher/${citation.thing.publisher.id}`}>
+      {citation.thing.publisher.name}
     </Link>
   ) : null
 
   return (
     <li>
-      {pages} ({publisher}, {citation.edition.year})
+      {pages} ({publisher}, {citation.thing.year})
     </li>
   )
 }

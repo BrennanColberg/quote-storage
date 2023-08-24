@@ -18,8 +18,8 @@ export async function POST(request: Request) {
           textId,
           primary,
           citations: {
-            create: citations.map(({ editionId, start, end, startLine }) => ({
-              editionId,
+            create: citations.map(({ thingId, start, end, startLine }) => ({
+              thingId,
               start: start || null,
               end: end || null,
               startLine: startLine || (startLine === 0 ? 0 : null),
@@ -86,16 +86,16 @@ export async function PUT(request: Request) {
               primary,
               citations: {
                 upsert: citations.map(
-                  ({ editionId, start, end, startLine, id }) => ({
+                  ({ thingId, start, end, startLine, id }) => ({
                     where: { id },
                     update: {
-                      editionId,
+                      thingId,
                       start: start || null,
                       end: end || null,
                       startLine: startLine || (startLine === 0 ? 0 : null),
                     },
                     create: {
-                      editionId,
+                      thingId,
                       start: start || null,
                       end: end || null,
                       startLine: startLine || (startLine === 0 ? 0 : null),
@@ -111,9 +111,9 @@ export async function PUT(request: Request) {
               primary,
               citations: {
                 create: citations.map(
-                  ({ editionId, start, end, startLine, id }) => ({
+                  ({ thingId, start, end, startLine, id }) => ({
                     id,
-                    editionId,
+                    thingId,
                     start: start || null,
                     end: end || null,
                     startLine: startLine || (startLine === 0 ? 0 : null),

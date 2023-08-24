@@ -2,7 +2,7 @@ import { z } from "zod"
 import sourceSchema from "./sourceSchema"
 import SelectText from "../../SelectText"
 import { Dispatch, SetStateAction } from "react"
-import { Edition, Person, Publisher, Text } from "@prisma/client"
+import { Thing, Person, Publisher, Text } from "@prisma/client"
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -12,8 +12,8 @@ import { v4 as uuid } from "uuid"
 export default function EditSourceSubform({
   source,
   setSource,
-  editions,
-  setEditions,
+  things,
+  setThings,
   texts,
   setTexts,
   i,
@@ -25,8 +25,8 @@ export default function EditSourceSubform({
   texts: (Text & { authors: Person[] })[]
   setTexts: Dispatch<SetStateAction<Text[]>>
   authorIds: string[]
-  editions: (Edition & { publisher?: Publisher; texts: Text[] })[]
-  setEditions: Dispatch<SetStateAction<Edition[]>>
+  things: (Thing & { publisher?: Publisher; texts: Text[] })[]
+  setThings: Dispatch<SetStateAction<Thing[]>>
 }) {
   return (
     <div className="border-4 border-neutral-400 p-2 rounded-md">
@@ -86,8 +86,8 @@ export default function EditSourceSubform({
             newCitations = newCitations.filter((x) => x !== undefined)
             setSource({ ...source, citations: newCitations })
           }}
-          editions={editions}
-          setEditions={setEditions}
+          things={things}
+          setThings={setThings}
           text={texts.find((text) => text.id === source.textId)}
         />
       ))}

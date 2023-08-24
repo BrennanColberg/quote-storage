@@ -18,7 +18,7 @@ import { useRef, useState } from "react"
 import axios from "axios"
 import {
   Citation,
-  Edition,
+  Thing,
   Person,
   Publisher,
   Quote,
@@ -47,10 +47,10 @@ export function EditQuoteForm({
   useOptions("person", setPersons)
   const [texts, setTexts] = useState<(Text & { authors: Person[] })[]>([])
   useOptions("text", setTexts)
-  const [editions, setEditions] = useState<
-    (Edition & { publisher?: Publisher; texts: Text[] })[]
+  const [things, setThings] = useState<
+    (Thing & { publisher?: Publisher; texts: Text[] })[]
   >([])
-  useOptions("edition", setEditions)
+  useOptions("thing", setThings)
 
   const form = useForm<z.infer<typeof quoteSchema>>({
     resolver: zodResolver(quoteSchema),
@@ -65,7 +65,7 @@ export function EditQuoteForm({
             primary: source.primary,
             citations: source.citations.map((citation) => ({
               id: citation.id,
-              editionId: citation.editionId,
+              thingId: citation.thingId,
               start: citation.start ?? "",
               startLine: citation.startLine ?? undefined,
               end: citation.end ?? "",
@@ -165,8 +165,8 @@ export function EditQuoteForm({
                 <>
                   {field.value.map((source, i) => (
                     <EditSourceSubform
-                      editions={editions}
-                      setEditions={setEditions}
+                      things={things}
+                      setThings={setThings}
                       key={i}
                       authorIds={form.getValues().authorIds}
                       texts={texts}
