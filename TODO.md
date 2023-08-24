@@ -74,7 +74,7 @@ tasks from test #2:
 
 tasks from test #3:
 
-- [ ] google button for publisher location
+- [x] google button for publisher location
 - [ ] ISBN / LoC catalog card number / LCC / Dewey on Thing
 
 later super upgrades

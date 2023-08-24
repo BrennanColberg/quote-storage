@@ -20,6 +20,7 @@ import publisherSchema from "./publisherSchema"
 import { Publisher } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
+import GoogleButton from "../../GoogleButton"
 
 export default function EditPublisherForm({
   publisher: initialPublisher,
@@ -88,7 +89,10 @@ export default function EditPublisherForm({
             <FormItem>
               <FormLabel>Location</FormLabel>
               <FormControl>
-                <Input field={field} />
+                <div className="flex flex-row">
+                  <Input field={field} />
+                  <GoogleButton query={`${form.getValues("name")} location`} />
+                </div>
               </FormControl>
               <FormDescription>
                 The city/state/country they are based in (for citation purposes)
