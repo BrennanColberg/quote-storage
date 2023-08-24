@@ -1,25 +1,26 @@
 - see information about texts/sources? with button to go edit?
 - better form validation error rendering for `sources`
-- display individual quote
+- **display individual quote with all relevant info**
 - **display quotes from author**
 - search quotes (via regex to start)
 - end page should always be "after" start page (properly compared)
 - command + enter to submit
 - **content form size should reset (to larger than now) default every time**
 - difference between author and sayer of a quote?
-- about fields that are different from notes fields
+- **about fields that are different from notes fields**
 - **subtexts**
 - link to add should show up on index for authenticated users (me)
-- way to specify the order of authors (for both text and thing)
+- way to specify the order of authors (for both text, thing, author)
 - data linter script which checks that everything's in the right format
 - **ISBN / LoC catalog card number / LCC / Dewey on Thing**
 - content form input should be bigger, rich text, etc
 - dictation for content
 - quote search via embeddings
 - button to visit url? Maybe google button too?
-- hit tab from content skips to citation page?
-- trim quote content
-- be able to fully delete line
+- trim quote content & all other inputs too
 - **show authors in quotes (when different from author of currently rendered text)**
-- persons should have authors (other persons) associated with them. e.g. Hardin is by Asimov
 - **multi paragraph quotes should be indented, not separated vertically**
+- view thing page
+- view person page
+- view publisher page
+- filtered search on each page that has quotes
