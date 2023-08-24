@@ -36,7 +36,7 @@ export function comparePlaces(a: string, b: string): number {
   return compareTimestamps(parseTimestamp(a), parseTimestamp(b))
 }
 
-export default function compareCitation(a: Citation, b: Citation) {
+export default function compareCitations(a: Citation, b: Citation) {
   // citations cannot be compared if they aren't in the same Thing
   if (a.thingId !== b.thingId) return 0
 

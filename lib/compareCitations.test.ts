@@ -1,4 +1,4 @@
-import { comparePlaces, typeOfPlace } from "./compareCitation"
+import { comparePlaces, typeOfPlace } from "./compareCitations"
 
 // reminder for comparators: 1 = b comes first, 0 = equal, -1 = a comes first
 

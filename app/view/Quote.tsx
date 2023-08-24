@@ -3,6 +3,7 @@ import { SourceList, SourceProp } from "./Source"
 import ReactMarkdown from "react-markdown"
 import isUserAuthenticated from "@/lib/isUserAuthenticated"
 import EditButton from "@/components/EditButton"
+import compareQuotes from "@/lib/compareQuotes"
 
 export type QuoteProp = Quote & {
   sources: SourceProp[]
@@ -37,10 +38,13 @@ export function QuoteComponent({
 export function QuoteList({
   quotes,
   excludeTexts,
+  sort = true,
 }: {
   quotes: QuoteProp[]
   excludeTexts?: string[]
+  sort?: boolean
 }) {
+  if (sort) quotes.sort(compareQuotes)
   return (
     <div>
       {quotes.map((quote) => (
