@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "build": "prisma generate && next build && prisma migrate deploy",
+    "build": "prisma generate && next build",
     "dev": "prisma generate && next dev",
     "db": "prisma studio",
     "format": "prettier --write .",
     "test": "jest .",
-    "start": "next start"
+    "start": "prisma migrate deploy && next start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
