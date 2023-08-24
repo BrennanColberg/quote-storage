@@ -75,7 +75,7 @@
   }
 }
 main {
-  @apply m-auto max-w-xl;
+  @apply m-auto max-w-xl w-[90vw] py-[5vw] min-h-screen;
 
   // always show scrollbar
   ::-webkit-scrollbar {
