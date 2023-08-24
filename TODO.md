@@ -20,7 +20,6 @@
 - hit tab from content skips to citation page?
 - trim quote content
 - be able to fully delete line
-- render Thing name when different from Text
 - **show authors in quotes (when different from author of currently rendered text)**
 - persons should have authors (other persons) associated with them. e.g. Hardin is by Asimov
 - **multi paragraph quotes should be indented, not separated vertically**

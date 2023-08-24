@@ -5,6 +5,7 @@ import { CitationProp } from "../../Citation"
 import prisma from "@/prisma/prisma"
 import Link from "next/link"
 import EditButton from "@/components/EditButton"
+import { ThingLink } from "../../Thing"
 
 export default async function ViewTextPage({
   params: { id },
@@ -78,11 +79,7 @@ export default async function ViewTextPage({
         {text.things.map((thing) => (
           <li key={thing.id}>
             <EditButton type="thing" id={thing.id} />
-            <a href={`/view/thing/${thing.id}`}>
-              {thing.type.charAt(0).toUpperCase()}
-              {thing.type.substring(1).toLowerCase()} ({thing.publisher?.name},{" "}
-              {thing.year})
-            </a>
+            <ThingLink thing={thing} excludeTitle={text.title} />
           </li>
         ))}
       </ul>
@@ -94,10 +91,10 @@ export default async function ViewTextPage({
         {text.characters.map((character) => (
           <li key={character.id}>
             <EditButton type="person" id={character.id} />
-            <Link className="font-medium" href={`/view/person/${character.id}`}>
-              {character.name}
-            </Link>
-            {character.bio && `: ${character.bio}`}
+            <Link href={`/view/person/${character.id}`}>{character.name}</Link>
+            {character.bio && (
+              <span className="font-light"> – {character.bio}</span>
+            )}
           </li>
         ))}
       </ul>
