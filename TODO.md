@@ -17,7 +17,6 @@
 - content form input should be bigger, rich text, etc
 - dictation for content
 - quote search via embeddings
-- **enter on checkbox doesn’t toggle**
 - button to visit url? Maybe google button too?
 - hit tab from content skips to citation page?
 - trim quote content
