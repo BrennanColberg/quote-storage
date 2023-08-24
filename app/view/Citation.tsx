@@ -23,15 +23,14 @@ export type CitationProp = Citation & {
 export function CitationComponent({ citation }: { citation: CitationProp }) {
   const pages = citationLocation(citation)
 
-  const publisher = citation.thing.publisher ? (
-    <Link href={`/view/publisher/${citation.thing.publisher.id}`}>
-      {citation.thing.publisher.name}
-    </Link>
-  ) : null
-
+  const items = [citation.thing.publisher?.name, citation.thing.year].filter(
+    (x) => x,
+  )
+  const endText = items.length ? <> ({items})</> : ""
   return (
     <li>
-      {pages} ({publisher}, {citation.thing.year})
+      {pages}
+      {endText}
     </li>
   )
 }
