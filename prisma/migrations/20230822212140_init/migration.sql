@@ -48,13 +48,13 @@ CREATE TABLE "Source" (
 CREATE TABLE "Citation" (
     "id" TEXT NOT NULL,
     "sourceId" TEXT NOT NULL,
-    "editionId" TEXT NOT NULL,
+    "thingId" TEXT NOT NULL,
 
     CONSTRAINT "Citation_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Edition" (
+CREATE TABLE "Thing" (
     "id" TEXT NOT NULL,
     "subtitle" TEXT,
     "title" TEXT NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE "Edition" (
     "year" TEXT,
     "publisherId" TEXT,
 
-    CONSTRAINT "Edition_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Thing_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -88,25 +88,25 @@ CREATE TABLE "_PersonToText" (
 );
 
 -- CreateTable
-CREATE TABLE "_EditionToText" (
+CREATE TABLE "_ThingToText" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
-CREATE TABLE "_EditionAuthors" (
+CREATE TABLE "_ThingAuthors" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
-CREATE TABLE "_EditionTranslators" (
+CREATE TABLE "_ThingTranslators" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
-CREATE TABLE "_EditionEditors" (
+CREATE TABLE "_ThingEditors" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
@@ -124,28 +124,28 @@ CREATE UNIQUE INDEX "_PersonToText_AB_unique" ON "_PersonToText"("A", "B");
 CREATE INDEX "_PersonToText_B_index" ON "_PersonToText"("B");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_EditionToText_AB_unique" ON "_EditionToText"("A", "B");
+CREATE UNIQUE INDEX "_ThingToText_AB_unique" ON "_ThingToText"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_EditionToText_B_index" ON "_EditionToText"("B");
+CREATE INDEX "_ThingToText_B_index" ON "_ThingToText"("B");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_EditionAuthors_AB_unique" ON "_EditionAuthors"("A", "B");
+CREATE UNIQUE INDEX "_ThingAuthors_AB_unique" ON "_ThingAuthors"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_EditionAuthors_B_index" ON "_EditionAuthors"("B");
+CREATE INDEX "_ThingAuthors_B_index" ON "_ThingAuthors"("B");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_EditionTranslators_AB_unique" ON "_EditionTranslators"("A", "B");
+CREATE UNIQUE INDEX "_ThingTranslators_AB_unique" ON "_ThingTranslators"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_EditionTranslators_B_index" ON "_EditionTranslators"("B");
+CREATE INDEX "_ThingTranslators_B_index" ON "_ThingTranslators"("B");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_EditionEditors_AB_unique" ON "_EditionEditors"("A", "B");
+CREATE UNIQUE INDEX "_ThingEditors_AB_unique" ON "_ThingEditors"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_EditionEditors_B_index" ON "_EditionEditors"("B");
+CREATE INDEX "_ThingEditors_B_index" ON "_ThingEditors"("B");
 
 -- AddForeignKey
 ALTER TABLE "Source" ADD CONSTRAINT "Source_quoteId_fkey" FOREIGN KEY ("quoteId") REFERENCES "Quote"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -157,10 +157,10 @@ ALTER TABLE "Source" ADD CONSTRAINT "Source_textId_fkey" FOREIGN KEY ("textId") 
 ALTER TABLE "Citation" ADD CONSTRAINT "Citation_sourceId_fkey" FOREIGN KEY ("sourceId") REFERENCES "Source"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Citation" ADD CONSTRAINT "Citation_editionId_fkey" FOREIGN KEY ("editionId") REFERENCES "Edition"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Citation" ADD CONSTRAINT "Citation_thingId_fkey" FOREIGN KEY ("thingId") REFERENCES "Thing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Edition" ADD CONSTRAINT "Edition_publisherId_fkey" FOREIGN KEY ("publisherId") REFERENCES "Publisher"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Thing" ADD CONSTRAINT "Thing_publisherId_fkey" FOREIGN KEY ("publisherId") REFERENCES "Publisher"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_PersonToQuote" ADD CONSTRAINT "_PersonToQuote_A_fkey" FOREIGN KEY ("A") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -175,25 +175,25 @@ ALTER TABLE "_PersonToText" ADD CONSTRAINT "_PersonToText_A_fkey" FOREIGN KEY ("
 ALTER TABLE "_PersonToText" ADD CONSTRAINT "_PersonToText_B_fkey" FOREIGN KEY ("B") REFERENCES "Text"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionToText" ADD CONSTRAINT "_EditionToText_A_fkey" FOREIGN KEY ("A") REFERENCES "Edition"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingToText" ADD CONSTRAINT "_ThingToText_A_fkey" FOREIGN KEY ("A") REFERENCES "Thing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionToText" ADD CONSTRAINT "_EditionToText_B_fkey" FOREIGN KEY ("B") REFERENCES "Text"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingToText" ADD CONSTRAINT "_ThingToText_B_fkey" FOREIGN KEY ("B") REFERENCES "Text"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionAuthors" ADD CONSTRAINT "_EditionAuthors_A_fkey" FOREIGN KEY ("A") REFERENCES "Edition"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingAuthors" ADD CONSTRAINT "_ThingAuthors_A_fkey" FOREIGN KEY ("A") REFERENCES "Thing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionAuthors" ADD CONSTRAINT "_EditionAuthors_B_fkey" FOREIGN KEY ("B") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingAuthors" ADD CONSTRAINT "_ThingAuthors_B_fkey" FOREIGN KEY ("B") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionTranslators" ADD CONSTRAINT "_EditionTranslators_A_fkey" FOREIGN KEY ("A") REFERENCES "Edition"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingTranslators" ADD CONSTRAINT "_ThingTranslators_A_fkey" FOREIGN KEY ("A") REFERENCES "Thing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionTranslators" ADD CONSTRAINT "_EditionTranslators_B_fkey" FOREIGN KEY ("B") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingTranslators" ADD CONSTRAINT "_ThingTranslators_B_fkey" FOREIGN KEY ("B") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionEditors" ADD CONSTRAINT "_EditionEditors_A_fkey" FOREIGN KEY ("A") REFERENCES "Edition"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingEditors" ADD CONSTRAINT "_ThingEditors_A_fkey" FOREIGN KEY ("A") REFERENCES "Thing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_EditionEditors" ADD CONSTRAINT "_EditionEditors_B_fkey" FOREIGN KEY ("B") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ThingEditors" ADD CONSTRAINT "_ThingEditors_B_fkey" FOREIGN KEY ("B") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
