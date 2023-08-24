@@ -70,7 +70,7 @@ tasks from test #2:
 - [ ] link to add should show up on index for authenticated users (me)
 - [ ] way to specify the order of authors (for both text and thing)
 - [ ] data linter script which checks that everything's in the right format (start before end, matching time/page citations, etc)
-- [ ] created at, updated at timestamp keeping
+- [x] created at, updated at timestamp keeping
 
 tasks from test #3:
 

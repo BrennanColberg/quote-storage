@@ -11,28 +11,32 @@ datasource db {
 }
 
 model Quote {
-  id      String   @id @default(uuid())
-  authors Person[]
-  key     String?
-  sources Source[]
-  content String   @map("text")
-  notes   String?
+  id        String   @id @default(uuid())
+  authors   Person[]
+  key       String?
+  sources   Source[]
+  content   String   @map("text")
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Person {
-  id               String  @id @default(uuid())
+  id               String   @id @default(uuid())
   name             String
   shortName        String?
   yearBorn         String?
   yearDied         String?
   quotes           Quote[]
   texts            Text[]
-  fictional        Boolean @default(false)
+  fictional        Boolean  @default(false)
   notes            String?
   bio              String?
-  thingsAuthored   Thing[] @relation("ThingAuthors")
-  thingsTranslated Thing[] @relation("ThingTranslators")
-  thingsEdited     Thing[] @relation("ThingEditors")
+  thingsAuthored   Thing[]  @relation("ThingAuthors")
+  thingsTranslated Thing[]  @relation("ThingTranslators")
+  thingsEdited     Thing[]  @relation("ThingEditors")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 enum TextType {
@@ -47,15 +51,17 @@ enum TextType {
 }
 
 model Text {
-  id       String    @id @default(uuid())
-  authors  Person[]
-  things   Thing[]
-  subtitle String?
-  title    String
-  type     TextType?
-  year     String?
-  sources  Source[]
-  notes    String?
+  id        String    @id @default(uuid())
+  authors   Person[]
+  things    Thing[]
+  subtitle  String?
+  title     String
+  type      TextType?
+  year      String?
+  sources   Source[]
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Source {
@@ -66,17 +72,21 @@ model Source {
   primary   Boolean?
   quoteId   String
   textId    String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Citation {
-  id        String  @id @default(uuid())
-  source    Source  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
-  thing     Thing   @relation(fields: [thingId], references: [id], onDelete: Cascade)
+  id        String   @id @default(uuid())
+  source    Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  thing     Thing    @relation(fields: [thingId], references: [id], onDelete: Cascade)
   sourceId  String
   thingId   String
   start     String? // can be roman (e.g. in intro) or arabic numerals, or a timestamp
   end       String? // ^^
   startLine Int? // for displaying citations within an thing in order
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum ThingType {
@@ -104,13 +114,17 @@ model Thing {
   authors     Person[]   @relation("ThingAuthors")
   translators Person[]   @relation("ThingTranslators")
   editors     Person[]   @relation("ThingEditors")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Publisher {
-  id       String  @id @default(uuid())
-  name     String
-  location String?
-  url      String?
-  notes    String?
-  things   Thing[]
+  id        String   @id @default(uuid())
+  name      String
+  location  String?
+  url       String?
+  notes     String?
+  things    Thing[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
