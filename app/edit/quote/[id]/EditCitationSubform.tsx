@@ -87,7 +87,7 @@ export default function EditCitationSubform({
             </FormLabel>
             <FormControl>
               <Input
-                value={citation.start}
+                value={citation.start ?? ""}
                 setValue={(start) => setCitation({ ...citation, start })}
               />
             </FormControl>
@@ -99,10 +99,12 @@ export default function EditCitationSubform({
               </FormLabel>
               <FormControl>
                 <Input
-                  value={citation.startLine}
-                  setValueAsNumber={(startLine) =>
+                  value={citation.startLine ?? ""}
+                  setValueAsNumber={(startLine) => {
+                    if (startLine === 0 || Number.isNaN(startLine))
+                      startLine = undefined
                     setCitation({ ...citation, startLine })
-                  }
+                  }}
                 />
               </FormControl>
             </FormItem>
@@ -119,7 +121,7 @@ export default function EditCitationSubform({
             </FormLabel>
             <FormControl>
               <Input
-                value={citation.end}
+                value={citation.end ?? ""}
                 setValue={(end) => setCitation({ ...citation, end })}
               />
             </FormControl>

@@ -2,6 +2,7 @@
   "scripts": {
     "build": "prisma generate && next build",
     "dev": "prisma generate && next dev",
+    "db:local": "docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres",
     "db": "prisma studio",
     "format": "prettier --write .",
     "test": "jest .",
