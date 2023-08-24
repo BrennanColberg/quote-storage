@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import textSchema from "../../edit/text/[id]/textSchema"
-import { z } from "zod"
 import prisma from "@/prisma/prisma"
 
 export async function GET() {
@@ -10,10 +9,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const { title, authorIds, characterIds, notes, subtitle, year, type } =
+  const { title, authorIds, characterIds, notes, subtitle, year, type, id } =
     textSchema.parse(body)
   const text = await prisma.text.create({
     data: {
+      id,
       title,
       subtitle: subtitle || null,
       year: year || null,
@@ -27,13 +27,16 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const url = new URL(request.url)
+  const oldId = url.searchParams.get("id")
+
   const body = await request.json()
   const { title, authorIds, characterIds, id, subtitle, year, notes, type } =
-    textSchema.and(z.object({ id: z.string() })).parse(body)
+    textSchema.parse(body)
 
   // manually tally which authors/characters to delete
   const old = await prisma.text.findUniqueOrThrow({
-    where: { id },
+    where: { id: oldId },
     include: { authors: true, characters: true },
   })
   const deletedAuthors = old.authors.filter((oa) => !authorIds.includes(oa.id))
@@ -42,8 +45,9 @@ export async function PUT(request: NextRequest) {
   )
 
   const text = await prisma.text.update({
-    where: { id },
+    where: { id: oldId },
     data: {
+      id,
       title,
       subtitle: subtitle || null,
       year: year || null,

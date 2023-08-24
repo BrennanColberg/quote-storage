@@ -1,7 +1,9 @@
+import { generateID } from "@/lib/id"
 import { ThingType } from "@prisma/client"
 import { z } from "zod"
 
 const thingSchema = z.object({
+  id: z.string().default(generateID),
   title: z.string(),
   subtitle: z.string().optional(),
   year: z.string().optional(),

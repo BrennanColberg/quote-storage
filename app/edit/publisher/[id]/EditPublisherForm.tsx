@@ -21,6 +21,7 @@ import { Publisher } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import GoogleButton from "../../GoogleButton"
+import { generateID } from "@/lib/id"
 
 export default function EditPublisherForm({
   publisher: initialPublisher,
@@ -34,12 +35,14 @@ export default function EditPublisherForm({
     resolver: zodResolver(publisherSchema),
     defaultValues: initialPublisher
       ? {
+          id: initialPublisher.id,
           name: initialPublisher.name,
           url: initialPublisher.url ?? "",
           location: initialPublisher.location ?? "",
           notes: initialPublisher.notes ?? "",
         }
       : {
+          id: generateID(),
           name: "",
           url: "",
           location: "",
@@ -50,10 +53,10 @@ export default function EditPublisherForm({
   async function onSubmit(values: z.infer<typeof publisherSchema>) {
     if (initialPublisher) {
       // edit
-      await axios.put("/api/publisher", { ...values, id: initialPublisher.id })
+      await axios.put(`/api/publisher?id=${initialPublisher.id}`, values)
       if (closeOnSubmit) return window.close()
       alert("Updated publisher!")
-      location.reload()
+      location.assign(`/edit/publisher/${values.id}`)
     } else {
       // create
       await axios.post("/api/publisher", values)
@@ -125,6 +128,20 @@ export default function EditPublisherForm({
               <FormLabel>Notes</FormLabel>
               <FormControl>
                 <Textarea field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID</FormLabel>
+              <FormControl>
+                <Input field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>

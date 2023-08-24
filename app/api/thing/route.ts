@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import thingSchema from "../../edit/thing/[id]/thingSchema"
-import { z } from "zod"
 import prisma from "@/prisma/prisma"
 
 export async function GET() {
@@ -27,9 +26,11 @@ export async function POST(request: NextRequest) {
     url,
     type,
     year,
+    id,
   } = thingSchema.parse(body)
   const thing = await prisma.thing.create({
     data: {
+      id,
       title,
       authors: { connect: authorIds.map((id) => ({ id })) },
       editors: { connect: editorIds.map((id) => ({ id })) },
@@ -47,6 +48,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const oldId = new URL(request.url).searchParams.get("id")
+
   const body = await request.json()
   const {
     title,
@@ -61,11 +64,11 @@ export async function PUT(request: NextRequest) {
     url,
     type,
     year,
-  } = thingSchema.and(z.object({ id: z.string() })).parse(body)
+  } = thingSchema.parse(body)
 
   // manually tally which authors/editors/translators/texts to disconnect
   const old = await prisma.thing.findUniqueOrThrow({
-    where: { id },
+    where: { id: oldId },
     include: {
       authors: true,
       editors: true,
@@ -81,8 +84,9 @@ export async function PUT(request: NextRequest) {
   const deletedTexts = old.texts.filter((ot) => !textIds.includes(ot.id))
 
   const thing = await prisma.thing.update({
-    where: { id },
+    where: { id: oldId },
     data: {
+      id,
       title,
       authors: {
         connect: authorIds.map((id) => ({ id })),

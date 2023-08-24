@@ -24,6 +24,7 @@ import SelectPersons from "../../SelectPersons"
 import Select from "react-select"
 import useOptions from "../../useOptions"
 import GoogleButton from "../../GoogleButton"
+import { generateID } from "@/lib/id"
 
 export default function EditTextForm({
   text: initialText,
@@ -40,6 +41,7 @@ export default function EditTextForm({
     resolver: zodResolver(textSchema),
     defaultValues: initialText
       ? {
+          id: initialText.id,
           title: initialText.title,
           subtitle: initialText.subtitle ?? "",
           year: initialText.year ?? "",
@@ -49,6 +51,7 @@ export default function EditTextForm({
           type: initialText.type,
         }
       : {
+          id: generateID(),
           title: "",
           subtitle: "",
           year: "",
@@ -62,10 +65,10 @@ export default function EditTextForm({
   async function onSubmit(values: z.infer<typeof textSchema>) {
     if (initialText) {
       // edit
-      await axios.put("/api/text", { ...values, id: initialText.id })
+      await axios.put(`/api/text?id=${initialText.id}`, values)
       if (closeOnSubmit) return window.close()
       alert("Updated text!")
-      location.reload()
+      location.assign(`/edit/text/${values.id}`)
     } else {
       // create
       await axios.post("/api/text", values)
@@ -80,32 +83,34 @@ export default function EditTextForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 max-w-xl mx-auto mt-5"
       >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input field={field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="subtitle"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Subtitle</FormLabel>
-              <FormControl>
-                <Input field={field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input field={field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="subtitle"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Subtitle</FormLabel>
+                <FormControl>
+                  <Input field={field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
@@ -197,6 +202,20 @@ export default function EditTextForm({
               <FormLabel>Notes</FormLabel>
               <FormControl>
                 <Textarea field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID</FormLabel>
+              <FormControl>
+                <Input field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -1,7 +1,6 @@
 import personSchema from "@/app/edit/person/[id]/personSchema"
 import prisma from "@/prisma/prisma"
 import { NextRequest, NextResponse } from "next/server"
-import { z } from "zod"
 
 export async function GET() {
   const persons = await prisma.person.findMany()
@@ -20,9 +19,11 @@ export async function POST(request: NextRequest) {
     fictional,
     textIdsAuthored,
     textIdsCharactered,
+    id,
   } = personSchema.parse(body)
   const person = await prisma.person.create({
     data: {
+      id,
       name: name,
       shortName: shortName || null,
       yearBorn: yearBorn || null,
@@ -38,6 +39,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const url = new URL(request.url)
+  const oldId = url.searchParams.get("id")
   const body = await request.json()
   const {
     name,
@@ -50,11 +53,11 @@ export async function PUT(request: NextRequest) {
     id,
     textIdsAuthored,
     textIdsCharactered,
-  } = personSchema.and(z.object({ id: z.string() })).parse(body)
+  } = personSchema.parse(body)
 
   // manually find which texts to disconnect in each category
   const old = await prisma.person.findUniqueOrThrow({
-    where: { id },
+    where: { id: oldId },
     include: { textsAuthored: true, textsCharactered: true },
   })
   const disconnectedTextsAuthored = old.textsAuthored.filter(
@@ -65,8 +68,9 @@ export async function PUT(request: NextRequest) {
   )
 
   const person = await prisma.person.update({
-    where: { id: id },
+    where: { id: oldId },
     data: {
+      id,
       name: name,
       shortName: shortName || null,
       yearBorn: yearBorn || null,

@@ -22,10 +22,10 @@ import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import SelectPersons from "../../SelectPersons"
 import Select from "react-select"
-import SelectText from "../../SelectText"
 import SelectPublisher from "../../SelectPublisher"
 import useOptions from "../../useOptions"
 import SelectTexts from "../../SelectTexts"
+import { generateID } from "@/lib/id"
 
 export default function EditThingForm({
   thing: initialThing,
@@ -52,6 +52,7 @@ export default function EditThingForm({
     resolver: zodResolver(thingSchema),
     defaultValues: initialThing
       ? {
+          id: initialThing.id,
           title: initialThing.title,
           subtitle: initialThing.subtitle ?? "",
           year: initialThing.year ?? "",
@@ -65,6 +66,7 @@ export default function EditThingForm({
           url: initialThing.url ?? "",
         }
       : {
+          id: generateID(),
           title: "",
           subtitle: "",
           year: "",
@@ -81,10 +83,10 @@ export default function EditThingForm({
   async function onSubmit(values: z.infer<typeof thingSchema>) {
     if (initialThing) {
       // edit
-      await axios.put("/api/thing", { ...values, id: initialThing.id })
+      await axios.put(`/api/thing?id=${initialThing.id}`, values)
       if (closeOnSubmit) return window.close()
       alert("Updated thing!")
-      location.reload()
+      location.assign(`/edit/thing/${values.id}`)
     } else {
       // create
       await axios.post("/api/thing", values)
@@ -289,6 +291,20 @@ export default function EditThingForm({
               <FormLabel>Notes</FormLabel>
               <FormControl>
                 <Textarea field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID</FormLabel>
+              <FormControl>
+                <Input field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>

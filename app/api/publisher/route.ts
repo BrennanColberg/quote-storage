@@ -1,7 +1,6 @@
 import publisherSchema from "@/app/edit/publisher/[id]/publisherSchema"
 import prisma from "@/prisma/prisma"
 import { NextRequest, NextResponse } from "next/server"
-import { z } from "zod"
 
 export async function GET() {
   const publishers = await prisma.publisher.findMany()
@@ -13,6 +12,7 @@ export async function POST(request: NextRequest) {
   const props = publisherSchema.parse(body)
   const person = await prisma.publisher.create({
     data: {
+      id: props.id,
       name: props.name,
       location: props.location || null,
       url: props.url || null,
@@ -23,11 +23,13 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const oldId = new URL(request.url).searchParams.get("id")
   const body = await request.json()
-  const props = publisherSchema.and(z.object({ id: z.string() })).parse(body)
+  const props = publisherSchema.parse(body)
   const person = await prisma.publisher.update({
-    where: { id: props.id },
+    where: { id: oldId },
     data: {
+      id: props.id,
       name: props.name,
       location: props.location || null,
       url: props.url || null,

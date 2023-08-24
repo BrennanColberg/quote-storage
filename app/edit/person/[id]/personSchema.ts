@@ -1,6 +1,8 @@
+import { generateID } from "@/lib/id"
 import { z } from "zod"
 
 const personSchema = z.object({
+  id: z.string().default(generateID),
   name: z.string().min(1, {
     message: "All authors must have a name.",
   }),

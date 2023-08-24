@@ -25,6 +25,7 @@ import { useState } from "react"
 import GoogleButton from "../../GoogleButton"
 import SelectTexts from "../../SelectTexts"
 import useOptions from "../../useOptions"
+import { generateID } from "@/lib/id"
 
 export default function EditPersonForm({
   person: initialPerson,
@@ -42,6 +43,7 @@ export default function EditPersonForm({
     resolver: zodResolver(personSchema),
     defaultValues: initialPerson
       ? {
+          id: initialPerson.id,
           name: initialPerson.name,
           shortName: initialPerson.shortName ?? "",
           yearBorn: initialPerson.yearBorn ?? undefined,
@@ -53,6 +55,7 @@ export default function EditPersonForm({
           textIdsCharactered: initialPerson.textsCharactered.map((t) => t.id),
         }
       : {
+          id: generateID(),
           name: "",
           shortName: "",
           yearBorn: "",
@@ -68,10 +71,10 @@ export default function EditPersonForm({
   async function onSubmit(values: z.infer<typeof personSchema>) {
     if (initialPerson) {
       // edit
-      await axios.put("/api/person", { ...values, id: initialPerson.id })
+      await axios.put(`/api/person?id=${initialPerson.id}`, values)
       if (closeOnSubmit) return window.close()
       alert("Updated person!")
-      location.reload()
+      location.assign(`/edit/person/${values.id}`)
     } else {
       // create
       await axios.post("/api/person", values)
@@ -271,6 +274,20 @@ export default function EditPersonForm({
               <FormLabel>Notes</FormLabel>
               <FormControl>
                 <Textarea field={field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID</FormLabel>
+              <FormControl>
+                <Input field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>
