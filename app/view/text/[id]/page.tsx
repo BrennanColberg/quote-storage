@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { QuoteList, QuoteProp } from "../../Quote"
 import { SourceProp, TextProp } from "../../Source"
 import { CitationProp } from "../../Citation"
+import compareCitation from "@/lib/compareCitation"
 
 export default async function ViewTextPage({
   params: { id },
@@ -95,7 +96,12 @@ export default async function ViewTextPage({
       <br />
 
       <h3>Quotes</h3>
-      <QuoteList quotes={quoteProps} excludeTexts={[text.id]} />
+      <QuoteList
+        quotes={quoteProps.sort((a, b) =>
+          compareCitation(a.sources[0].citations[0], b.sources[0].citations[0]),
+        )}
+        excludeTexts={[text.id]}
+      />
     </main>
   )
 }

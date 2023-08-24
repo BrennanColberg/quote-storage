@@ -36,7 +36,7 @@ things to "finalize" the app MVP
 
 - [ ] **display quote**
 - [x] display quotes from text
-  - [ ] custom start/end comparator
+  - [x] custom start/end comparator
 - [ ] **display quotes from author**
 - [ ] search quotes (via regex to start)
 
@@ -51,7 +51,7 @@ tasks from test #1
 - [x] on quote creation, scroll back to top
 - [x] reset thing start/end/etc on quote creation
 - [x] "thing" should show publisher/type/year when it has the same title
-- [ ] end page should never be "before" start page (properly compared)
+- [ ] end page should always be "after" start page (properly compared)
 - [x] **be able to edit a quote**
 
 - [ ] **actually reset start/end when a quote is submitted**

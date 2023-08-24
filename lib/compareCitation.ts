@@ -41,8 +41,19 @@ export default function compareCitation(a: Citation, b: Citation) {
   if (a.thingId !== b.thingId) return 0
 
   // if they both have a start, sort by start
+  const startCompare = comparePlaces(a.start, b.start)
+  if (startCompare !== 0) return startCompare
 
   // if the starts are the same and they both have a line, sort by line
+  const lineCompare =
+    a.startLine !== undefined && b.startLine !== undefined
+      ? a.startLine - b.startLine
+      : 0
+  if (lineCompare !== 0) return lineCompare
 
   // if the starts/lines are equal and ends are different, sort by end (undefined = start)
+  const endCompare = comparePlaces(a.end ?? a.start, b.end ?? b.start)
+  if (endCompare !== 0) return endCompare
+
+  return 0
 }
