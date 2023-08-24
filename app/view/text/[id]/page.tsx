@@ -93,7 +93,10 @@ export default async function ViewTextPage({
             <EditButton type="person" id={character.id} />
             <Link href={`/view/person/${character.id}`}>{character.name}</Link>
             {character.bio && (
-              <span className="font-light"> – {character.bio}</span>
+              <span className="font-light text-neutral-500">
+                {" "}
+                – {character.bio}
+              </span>
             )}
           </li>
         ))}
@@ -110,7 +113,11 @@ export default async function ViewTextPage({
       <br />
 
       <h3>Quotes</h3>
-      <QuoteList quotes={quoteProps} excludeTexts={[text.id]} />
+      <QuoteList
+        quotes={quoteProps}
+        excludeTexts={[text.id]}
+        excludeAuthors={text.authors.map((a) => a.id)}
+      />
     </main>
   )
 }

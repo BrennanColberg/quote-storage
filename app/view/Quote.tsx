@@ -23,13 +23,15 @@ export function QuoteComponent({
   return (
     <div className="mb-6 mt-3">
       <EditButton type="quote" id={quote.id} />
-      <blockquote className="border-l-4 pl-2 text-neutral-500 max-h-64 overflow-y-scroll pr-1">
+      <blockquote className="border-l-4 pl-2 text-neutral-600 max-h-64 overflow-y-scroll pr-1">
         <ReactMarkdown>{quote.content.replace(/\n+/g, "\n\n")}</ReactMarkdown>
       </blockquote>
 
       {/* TODO authors */}
       {authors.length > 0 && (
-        <li>{authors.map((author) => author.name).join(", ")}</li>
+        <li className="text-neutral-500">
+          {authors.map((author) => author.name).join(", ")}
+        </li>
       )}
 
       <SourceList sources={quote.sources} excludeTexts={excludeTexts} />

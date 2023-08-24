@@ -26,7 +26,7 @@ export function CitationComponent({ citation }: { citation: CitationProp }) {
   const items = [citation.thing.publisher?.name, citation.thing.year].filter(
     (x) => x,
   )
-  const endText = items.length ? <> ({items})</> : ""
+  const endText = items.length ? ` (${items.join(", ")})` : ""
   return (
     <li className="text-neutral-400">
       {pages}
