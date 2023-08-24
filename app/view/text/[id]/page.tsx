@@ -64,6 +64,7 @@ export default async function ViewTextPage({
 
   return (
     <main>
+      <EditButton type="text" id={text.id} />
       <h1>{text.title}</h1>
       {text.subtitle && <h2>{text.subtitle}</h2>}
       {text.authors.length > 0 && (
@@ -76,6 +77,7 @@ export default async function ViewTextPage({
       <ul className=" list-inside list-disc">
         {text.things.map((thing) => (
           <li key={thing.id}>
+            <EditButton type="thing" id={thing.id} />
             <a href={`/view/thing/${thing.id}`}>
               {thing.type.charAt(0).toUpperCase()}
               {thing.type.substring(1).toLowerCase()} ({thing.publisher?.name},{" "}
@@ -91,6 +93,7 @@ export default async function ViewTextPage({
       <ul>
         {text.characters.map((character) => (
           <li key={character.id}>
+            <EditButton type="person" id={character.id} />
             <Link className="font-medium" href={`/view/person/${character.id}`}>
               {character.name}
             </Link>

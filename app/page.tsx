@@ -1,3 +1,4 @@
+import EditButton from "@/components/EditButton"
 import prisma from "@/prisma/prisma"
 import { cookies } from "next/headers"
 import Link from "next/link"
@@ -12,6 +13,7 @@ export default async function Page() {
       <ul>
         {texts.map((text) => (
           <li key={text.id}>
+            <EditButton type="text" id={text.id} />
             <Link href={`/view/text/${text.id}`}>
               {text.title} (
               {text.authors.map((author) => author.name).join(", ")})
