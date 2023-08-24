@@ -33,7 +33,7 @@ export default function EditPersonForm({
 }) {
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
-  const [showYears, setShowYears] = useState(true)
+  const [showYears, setShowYears] = useState(!initialPerson?.fictional)
 
   const [texts, setTexts] = useState<Text[]>([])
   useOptions("text", setTexts)
