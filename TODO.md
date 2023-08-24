@@ -62,7 +62,7 @@ tasks from test #1
 - [ ] _about fields that are different from notes fields_
 - [x] **content should be rendered as markdown**
 - [x] render from list of quotes, not list of sources
-- [ ] make sure it dynamically rerenders from DB every time
+- [x] make sure it dynamically rerenders from DB every time
 
 tasks from test #2:
 
@@ -71,6 +71,11 @@ tasks from test #2:
 - [ ] way to specify the order of authors (for both text and thing)
 - [ ] data linter script which checks that everything's in the right format (start before end, matching time/page citations, etc)
 - [ ] created at, updated at timestamp keeping
+
+tasks from test #3:
+
+- [ ] google button for publisher location
+- [ ] ISBN / LoC catalog card number / LCC / Dewey on Thing
 
 later super upgrades
 

@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client"
+import { cookies } from "next/headers"
 import Link from "next/link"
 
-// basic placeholder page
 export default async function Page() {
+  cookies() // calling this forces dynamic rerendering
+
   const prisma = new PrismaClient()
   const texts = await prisma.text.findMany({ include: { authors: true } })
   return (
