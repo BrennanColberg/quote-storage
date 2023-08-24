@@ -27,7 +27,7 @@ export function SourceComponent({
   if (authors) authors = ` (${authors})`
 
   return (
-    <li>
+    <li className="text-neutral-400">
       {source.text.title}
       {authors}
       <CitationList citations={source.citations} />

@@ -12,11 +12,14 @@ export type QuoteProp = Quote & {
 
 export function QuoteComponent({
   quote,
-  excludeTexts,
+  excludeTexts = [],
+  excludeAuthors = [],
 }: {
   quote: QuoteProp
   excludeTexts?: string[]
+  excludeAuthors?: string[]
 }) {
+  const authors = quote.authors.filter((a) => !excludeAuthors.includes(a.id))
   return (
     <div className="mb-6 mt-3">
       <EditButton type="quote" id={quote.id} />
@@ -25,10 +28,9 @@ export function QuoteComponent({
       </blockquote>
 
       {/* TODO authors */}
-      {/* ({source.quote.authors
-  .filter((author) => !text.authors.find((a) => a.id === author.id))
-  .map((author) => author.name)
-  .join(", ")}) */}
+      {authors.length > 0 && (
+        <li>{authors.map((author) => author.name).join(", ")}</li>
+      )}
 
       <SourceList sources={quote.sources} excludeTexts={excludeTexts} />
     </div>
@@ -38,10 +40,12 @@ export function QuoteComponent({
 export function QuoteList({
   quotes,
   excludeTexts,
+  excludeAuthors,
   sort = true,
 }: {
   quotes: QuoteProp[]
   excludeTexts?: string[]
+  excludeAuthors?: string[]
   sort?: boolean
 }) {
   if (sort) quotes.sort(compareQuotes)
@@ -49,7 +53,11 @@ export function QuoteList({
     <div>
       {quotes.map((quote) => (
         <div key={quote.id}>
-          <QuoteComponent quote={quote} excludeTexts={excludeTexts} />
+          <QuoteComponent
+            quote={quote}
+            excludeTexts={excludeTexts}
+            excludeAuthors={excludeAuthors}
+          />
         </div>
       ))}
     </div>

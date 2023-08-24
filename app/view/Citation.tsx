@@ -28,7 +28,7 @@ export function CitationComponent({ citation }: { citation: CitationProp }) {
   )
   const endText = items.length ? <> ({items})</> : ""
   return (
-    <li>
+    <li className="text-neutral-400">
       {pages}
       {endText}
     </li>
