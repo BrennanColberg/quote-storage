@@ -26,7 +26,7 @@ import {
   Text,
 } from "@prisma/client"
 import quoteSchema from "./quoteSchema"
-import SelectPerson from "../../SelectPerson"
+import SelectPersons from "../../SelectPersons"
 import EditSourceSubform from "./EditSourceSubform"
 import useOptions from "../../useOptions"
 import { useSearchParams } from "next/navigation"
@@ -144,7 +144,7 @@ export function EditQuoteForm({
             <FormItem>
               <FormLabel>Author</FormLabel>
               <FormControl>
-                <SelectPerson
+                <SelectPersons
                   personIds={field.value}
                   setPersonIds={(value) => form.setValue("authorIds", value)}
                   persons={persons}

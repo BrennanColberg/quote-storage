@@ -28,7 +28,8 @@ model Person {
   yearBorn         String?
   yearDied         String?
   quotes           Quote[]
-  texts            Text[]
+  textsAuthored    Text[]   @relation("TextAuthors")
+  textsCharactered Text[]   @relation("TextCharacters")
   fictional        Boolean  @default(false)
   notes            String?
   bio              String?
@@ -51,17 +52,18 @@ enum TextType {
 }
 
 model Text {
-  id        String    @id @default(uuid())
-  authors   Person[]
-  things    Thing[]
-  subtitle  String?
-  title     String
-  type      TextType?
-  year      String?
-  sources   Source[]
-  notes     String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id         String    @id @default(uuid())
+  authors    Person[]  @relation("TextAuthors")
+  characters Person[]  @relation("TextCharacters")
+  things     Thing[]
+  subtitle   String?
+  title      String
+  type       TextType?
+  year       String?
+  sources    Source[]
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Source {

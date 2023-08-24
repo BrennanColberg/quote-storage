@@ -3,7 +3,7 @@ import axios from "axios"
 import { Dispatch, SetStateAction, useMemo } from "react"
 import CreatableSelect from "react-select/creatable"
 
-export default function SelectPerson({
+export default function SelectPersons({
   persons,
   setPersons,
   personIds,

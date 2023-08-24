@@ -17,21 +17,26 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
 import personSchema from "./personSchema"
-import { Person } from "@prisma/client"
+import { Person, Text } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
 import GoogleButton from "../../GoogleButton"
+import SelectTexts from "../../SelectTexts"
+import useOptions from "../../useOptions"
 
 export default function EditPersonForm({
   person: initialPerson,
 }: {
-  person?: Person
+  person?: Person & { textsAuthored: Text[]; textsCharactered: Text[] }
 }) {
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
   const [showYears, setShowYears] = useState(true)
+
+  const [texts, setTexts] = useState<Text[]>([])
+  useOptions("text", setTexts)
 
   const form = useForm<z.infer<typeof personSchema>>({
     resolver: zodResolver(personSchema),
@@ -44,6 +49,8 @@ export default function EditPersonForm({
           bio: initialPerson.bio ?? "",
           notes: initialPerson.notes ?? "",
           fictional: initialPerson.fictional,
+          textIdsAuthored: initialPerson.textsAuthored.map((t) => t.id),
+          textIdsCharactered: initialPerson.textsCharactered.map((t) => t.id),
         }
       : {
           name: "",
@@ -53,6 +60,8 @@ export default function EditPersonForm({
           bio: "",
           notes: "",
           fictional: false,
+          textIdsAuthored: [],
+          textIdsCharactered: [],
         },
   })
 
@@ -208,6 +217,51 @@ export default function EditPersonForm({
             />
           </div>
         )}
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="textIdsAuthored"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Texts authored</FormLabel>
+                <FormControl>
+                  <SelectTexts
+                    texts={texts}
+                    setTexts={setTexts}
+                    textIds={field.value}
+                    setTextIds={(textIds) =>
+                      form.setValue("textIdsAuthored", textIds)
+                    }
+                    authorIds={initialPerson?.id && [initialPerson.id]}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="textIdsCharactered"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Texts in which they are a character</FormLabel>
+                <FormControl>
+                  <SelectTexts
+                    texts={texts}
+                    setTexts={setTexts}
+                    textIds={field.value}
+                    setTextIds={(textIds) =>
+                      form.setValue("textIdsCharactered", textIds)
+                    }
+                    characterIds={initialPerson?.id && [initialPerson.id]}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}

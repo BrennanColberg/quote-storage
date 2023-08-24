@@ -8,13 +8,15 @@ export default function SelectTexts({
   setTexts,
   textIds,
   setTextIds,
-  authorIds,
+  authorIds = [],
+  characterIds = [],
 }: {
   texts: Text[]
   setTexts: Dispatch<SetStateAction<(Text & { authors: Person[] })[]>>
   textIds: string[]
   setTextIds: (value: string[]) => void
-  authorIds: string[]
+  authorIds?: string[]
+  characterIds?: string[]
 }) {
   const textOptions = useMemo(
     () => texts.map((text) => ({ value: text.id, label: text.title })),
@@ -31,6 +33,7 @@ export default function SelectTexts({
         const text = await axios.post<Text>("/api/text", {
           title: inputValue,
           authorIds: authorIds,
+          characterIds: characterIds,
         })
         setTexts((x) => [...x, { ...text.data, authors: [] }])
         setTextIds([...textIds, text.data.id])

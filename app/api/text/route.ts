@@ -10,7 +10,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const { title, authorIds, notes, subtitle, year, type } =
+  const { title, authorIds, characterIds, notes, subtitle, year, type } =
     textSchema.parse(body)
   const text = await prisma.text.create({
     data: {
@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       year: year || null,
       notes: notes || null,
       authors: { connect: authorIds.map((id) => ({ id })) },
+      characters: { connect: characterIds.map((id) => ({ id })) },
       type: type ?? null,
     },
   })
@@ -27,16 +28,18 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const body = await request.json()
-  const { title, authorIds, id, subtitle, year, notes, type } = textSchema
-    .and(z.object({ id: z.string() }))
-    .parse(body)
+  const { title, authorIds, characterIds, id, subtitle, year, notes, type } =
+    textSchema.and(z.object({ id: z.string() })).parse(body)
 
-  // manually tally which authors to delete
+  // manually tally which authors/characters to delete
   const old = await prisma.text.findUniqueOrThrow({
     where: { id },
-    include: { authors: true },
+    include: { authors: true, characters: true },
   })
   const deletedAuthors = old.authors.filter((oa) => !authorIds.includes(oa.id))
+  const deletedCharacters = old.characters.filter(
+    (oc) => !characterIds.includes(oc.id),
+  )
 
   const text = await prisma.text.update({
     where: { id },
@@ -48,6 +51,10 @@ export async function PUT(request: NextRequest) {
       authors: {
         connect: authorIds.map((id) => ({ id })),
         disconnect: deletedAuthors,
+      },
+      characters: {
+        connect: characterIds.map((id) => ({ id })),
+        disconnect: deletedCharacters,
       },
       type: type ?? null,
     },

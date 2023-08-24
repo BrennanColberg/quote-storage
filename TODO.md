@@ -6,7 +6,6 @@
 - end page should always be "after" start page (properly compared)
 - command + enter to submit
 - **content form size should reset (to larger than now) default every time**
-- **link fictional Persons to texts as "from X book"**
 - difference between author and sayer of a quote?
 - about fields that are different from notes fields
 - **subtexts**
@@ -22,8 +21,8 @@
 - trim quote content
 - be able to fully delete line
 - **edit ids in forms**
+- **edit buttons everywhere**
 - render Thing name when different from Text
-- **render characters in Text, with edit button (and their “about”)**
 - **show authors in quotes (when different from author of currently rendered text)**
 - persons should have authors (other persons) associated with them. e.g. Hardin is by Asimov
 - **multi paragraph quotes should be indented, not separated vertically**

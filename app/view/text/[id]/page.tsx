@@ -2,9 +2,9 @@ import { notFound } from "next/navigation"
 import { QuoteList, QuoteProp } from "../../Quote"
 import { SourceProp, TextProp } from "../../Source"
 import { CitationProp } from "../../Citation"
-import compareCitations from "@/lib/compareCitations"
-import compareQuotes from "@/lib/compareQuotes"
 import prisma from "@/prisma/prisma"
+import Link from "next/link"
+import EditButton from "@/components/EditButton"
 
 export default async function ViewTextPage({
   params: { id },
@@ -15,6 +15,7 @@ export default async function ViewTextPage({
     where: { id },
     include: {
       authors: true,
+      characters: true,
       things: { include: { publisher: true } },
       sources: {
         include: {
@@ -71,7 +72,7 @@ export default async function ViewTextPage({
 
       <br />
 
-      <h3>My Things</h3>
+      <h3>My Copies</h3>
       <ul className=" list-inside list-disc">
         {text.things.map((thing) => (
           <li key={thing.id}>
@@ -86,8 +87,21 @@ export default async function ViewTextPage({
 
       <br />
 
+      <h3>Characters</h3>
+      <ul>
+        {text.characters.map((character) => (
+          <li key={character.id}>
+            <Link className="font-medium" href={`/view/person/${character.id}`}>
+              {character.name}
+            </Link>
+            {character.bio && `: ${character.bio}`}
+          </li>
+        ))}
+      </ul>
+
       {text.notes && (
         <>
+          <br />
           <h3>Notes</h3>
           <p>{text.notes}</p>
         </>

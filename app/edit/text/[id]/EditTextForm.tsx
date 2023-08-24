@@ -20,7 +20,7 @@ import { Person, Text, TextType } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
-import SelectPerson from "../../SelectPerson"
+import SelectPersons from "../../SelectPersons"
 import Select from "react-select"
 import useOptions from "../../useOptions"
 import GoogleButton from "../../GoogleButton"
@@ -28,7 +28,7 @@ import GoogleButton from "../../GoogleButton"
 export default function EditTextForm({
   text: initialText,
 }: {
-  text?: Text & { authors: Person[] }
+  text?: Text & { authors: Person[]; characters: Person[] }
 }) {
   const [persons, setPersons] = useState<Person[]>([])
   useOptions("person", setPersons)
@@ -45,6 +45,7 @@ export default function EditTextForm({
           year: initialText.year ?? "",
           notes: initialText.notes ?? "",
           authorIds: initialText.authors.map((a) => a.id),
+          characterIds: initialText.characters.map((a) => a.id),
           type: initialText.type,
         }
       : {
@@ -53,6 +54,7 @@ export default function EditTextForm({
           year: "",
           notes: "",
           authorIds: [],
+          characterIds: [],
           type: null,
         },
   })
@@ -110,9 +112,9 @@ export default function EditTextForm({
             name="authorIds"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Author</FormLabel>
+                <FormLabel>Author(s)</FormLabel>
                 <FormControl>
-                  <SelectPerson
+                  <SelectPersons
                     personIds={field.value}
                     setPersonIds={(value) => form.setValue("authorIds", value)}
                     persons={persons}
@@ -142,6 +144,25 @@ export default function EditTextForm({
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="characterIds"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Characters</FormLabel>
+              <FormControl>
+                <SelectPersons
+                  personIds={field.value}
+                  setPersonIds={(value) => form.setValue("characterIds", value)}
+                  persons={persons}
+                  setPersons={setPersons}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

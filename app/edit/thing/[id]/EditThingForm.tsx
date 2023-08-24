@@ -20,7 +20,7 @@ import { Person, Thing, ThingType, Publisher, Text } from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
-import SelectPerson from "../../SelectPerson"
+import SelectPersons from "../../SelectPersons"
 import Select from "react-select"
 import SelectText from "../../SelectText"
 import SelectPublisher from "../../SelectPublisher"
@@ -197,7 +197,7 @@ export default function EditThingForm({
               <FormItem>
                 <FormLabel>Author(s)</FormLabel>
                 <FormControl>
-                  <SelectPerson
+                  <SelectPersons
                     personIds={field.value}
                     setPersonIds={(value) => form.setValue("authorIds", value)}
                     persons={persons}
@@ -215,7 +215,7 @@ export default function EditThingForm({
               <FormItem>
                 <FormLabel>Editor(s)</FormLabel>
                 <FormControl>
-                  <SelectPerson
+                  <SelectPersons
                     personIds={field.value}
                     setPersonIds={(value) => form.setValue("editorIds", value)}
                     persons={persons}
@@ -233,7 +233,7 @@ export default function EditThingForm({
               <FormItem>
                 <FormLabel>Translator(s)</FormLabel>
                 <FormControl>
-                  <SelectPerson
+                  <SelectPersons
                     personIds={field.value}
                     setPersonIds={(value) =>
                       form.setValue("translatorIds", value)

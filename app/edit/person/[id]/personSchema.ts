@@ -10,6 +10,8 @@ const personSchema = z.object({
   yearBorn: z.string().optional(),
   yearDied: z.string().optional(),
   fictional: z.boolean().default(false),
+  textIdsAuthored: z.array(z.string()).default([]),
+  textIdsCharactered: z.array(z.string()).default([]),
 })
 
 export default personSchema

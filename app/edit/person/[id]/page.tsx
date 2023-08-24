@@ -8,6 +8,10 @@ export default async function EditPersonPage({
 }) {
   const person = await prisma.person.findUniqueOrThrow({
     where: { id },
+    include: {
+      textsAuthored: true,
+      textsCharactered: true,
+    },
   })
   return <EditPersonForm person={person} />
 }
