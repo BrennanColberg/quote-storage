@@ -37,14 +37,11 @@ export async function PUT(request: Request) {
     .and(z.object({ id: z.string() }))
     .parse(body)
 
-  // we have to manually delete sources/citations that are no longer
-  // included in the quote. we do this with as few operations as are
-  // possible, by deleting (1) sources that are no longer included
-  // (which cascade to their citations), then (2) citations that are
-  // no longer included _for sources that are still included_
+  // we have to manually specify sources/citations/authors that are not
+  // included in the quote in order to delete them
   const old = await prisma.quote.findUniqueOrThrow({
     where: { id },
-    include: { sources: { include: { citations: true } } },
+    include: { sources: { include: { citations: true } }, authors: true },
   })
   const deletedSourceIds = []
   const deletedCitationIds = []
@@ -61,68 +58,69 @@ export async function PUT(request: Request) {
       // if the source is no longer included, goodbye
     } else deletedSourceIds.push(os.id)
   }
+  const deletedAuthorIds = []
+  for (const oa of old.authors) {
+    if (!authorIds.includes(oa.id)) deletedAuthorIds.push(oa.id)
+  }
 
-  // now update, etc
-  const quote = await Promise.all([
-    // delete old sources
-    prisma.source.deleteMany({ where: { id: { in: deletedSourceIds } } }),
-    // delete old citations (for still-existing sources)
-    prisma.citation.deleteMany({ where: { id: { in: deletedCitationIds } } }),
-    // update the rest
-    prisma.quote.update({
-      where: { id },
-      data: {
-        content,
-        notes: notes || null,
-        authors: { connect: authorIds.map((id) => ({ id })) },
-        sources: {
-          upsert: sources.map(({ textId, citations, primary, id }) => ({
-            where: { id },
-            update: {
-              textId,
-              primary,
-              citations: {
-                upsert: citations.map(
-                  ({ thingId, start, end, startLine, id }) => ({
-                    where: { id },
-                    update: {
-                      thingId,
-                      start: start || null,
-                      end: end || null,
-                      startLine: startLine || (startLine === 0 ? 0 : null),
-                    },
-                    create: {
-                      thingId,
-                      start: start || null,
-                      end: end || null,
-                      startLine: startLine || (startLine === 0 ? 0 : null),
-                      id,
-                    },
-                  }),
-                ),
-              },
-            },
-            create: {
-              id,
-              textId,
-              primary,
-              citations: {
-                create: citations.map(
-                  ({ thingId, start, end, startLine, id }) => ({
-                    id,
+  const quote = await prisma.quote.update({
+    where: { id },
+    data: {
+      content,
+      notes: notes || null,
+      authors: {
+        connect: authorIds.map((id) => ({ id })),
+        disconnect: deletedAuthorIds.map((id) => ({ id })),
+      },
+      sources: {
+        deleteMany: { id: { in: deletedSourceIds } },
+        upsert: sources.map(({ textId, citations, primary, id }) => ({
+          where: { id },
+          update: {
+            textId,
+            primary,
+            citations: {
+              deleteMany: { id: { in: deletedCitationIds } },
+              upsert: citations.map(
+                ({ thingId, start, end, startLine, id }) => ({
+                  where: { id },
+                  update: {
                     thingId,
                     start: start || null,
                     end: end || null,
                     startLine: startLine || (startLine === 0 ? 0 : null),
-                  }),
-                ),
-              },
+                  },
+                  create: {
+                    thingId,
+                    start: start || null,
+                    end: end || null,
+                    startLine: startLine || (startLine === 0 ? 0 : null),
+                    id,
+                  },
+                }),
+              ),
             },
-          })),
-        },
+          },
+          create: {
+            id,
+            textId,
+            primary,
+            citations: {
+              create: citations.map(
+                ({ thingId, start, end, startLine, id }) => ({
+                  id,
+                  thingId,
+                  start: start || null,
+                  end: end || null,
+                  startLine: startLine || (startLine === 0 ? 0 : null),
+                }),
+              ),
+            },
+          },
+        })),
       },
-    }),
-  ])
+    },
+  })
 
   return NextResponse.json(quote)
 }

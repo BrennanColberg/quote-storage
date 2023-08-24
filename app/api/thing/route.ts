@@ -62,14 +62,44 @@ export async function PUT(request: NextRequest) {
     type,
     year,
   } = thingSchema.and(z.object({ id: z.string() })).parse(body)
+
+  // manually tally which authors/editors/translators/texts to disconnect
+  const old = await prisma.thing.findUniqueOrThrow({
+    where: { id },
+    include: {
+      authors: true,
+      editors: true,
+      translators: true,
+      texts: true,
+    },
+  })
+  const deletedAuthors = old.authors.filter((oa) => !authorIds.includes(oa.id))
+  const deletedEditors = old.editors.filter((oe) => !editorIds.includes(oe.id))
+  const deletedTranslators = old.translators.filter(
+    (ot) => !translatorIds.includes(ot.id),
+  )
+  const deletedTexts = old.texts.filter((ot) => !textIds.includes(ot.id))
+
   const thing = await prisma.thing.update({
     where: { id },
     data: {
       title,
-      authors: { connect: authorIds.map((id) => ({ id })) },
-      editors: { connect: editorIds.map((id) => ({ id })) },
-      translators: { connect: translatorIds.map((id) => ({ id })) },
-      texts: { connect: textIds.map((id) => ({ id })) },
+      authors: {
+        connect: authorIds.map((id) => ({ id })),
+        disconnect: deletedAuthors,
+      },
+      editors: {
+        connect: editorIds.map((id) => ({ id })),
+        disconnect: deletedEditors,
+      },
+      translators: {
+        connect: translatorIds.map((id) => ({ id })),
+        disconnect: deletedTranslators,
+      },
+      texts: {
+        connect: textIds.map((id) => ({ id })),
+        disconnect: deletedTexts,
+      },
       publisherId: publisherId || null,
       subtitle: subtitle || null,
       notes: notes || null,

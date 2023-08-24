@@ -30,6 +30,14 @@ export async function PUT(request: NextRequest) {
   const { title, authorIds, id, subtitle, year, notes, type } = textSchema
     .and(z.object({ id: z.string() }))
     .parse(body)
+
+  // manually tally which authors to delete
+  const old = await prisma.text.findUniqueOrThrow({
+    where: { id },
+    include: { authors: true },
+  })
+  const deletedAuthors = old.authors.filter((oa) => !authorIds.includes(oa.id))
+
   const text = await prisma.text.update({
     where: { id },
     data: {
@@ -37,7 +45,10 @@ export async function PUT(request: NextRequest) {
       subtitle: subtitle || null,
       year: year || null,
       notes: notes || null,
-      authors: { connect: authorIds.map((id) => ({ id })) },
+      authors: {
+        connect: authorIds.map((id) => ({ id })),
+        disconnect: deletedAuthors,
+      },
       type: type ?? null,
     },
   })

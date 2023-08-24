@@ -14,13 +14,13 @@ export default function SelectThing({
   setThings: Dispatch<SetStateAction<Thing[]>>
   thingId?: string
   setThingId: (value?: string) => void
-  text: Text & { authors: Person[] }
+  text?: Text & { authors: Person[] }
 }) {
   const thingOptions = useMemo(
     () =>
       things
         // only show things that contain the current text
-        .filter((thing) => thing.texts.find((et) => et.id === text.id))
+        .filter((thing) => thing.texts.find((et) => et.id === text?.id))
         .map((thing) => {
           let label: string = thing.type
           if (thing.publisher && thing.year)

@@ -21,7 +21,6 @@
 - hit tab from content skips to citation page?
 - trim quote content
 - be able to fully delete line
-- **delete authors**
 - **edit ids in forms**
 - render Thing name when different from Text
 - **render characters in Text, with edit button (and their “about”)**
