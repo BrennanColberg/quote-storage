@@ -24,8 +24,6 @@
 - view publisher page
 - filtered search on each page that has quotes
 
-- **"add text", "add quote" directly from homepage**
-- **"add quote" from text page, prefills author/text/edition**
 - quotes should be able to be "about" a Person
 - person title? Idk. Include in long name?
 - **edit editions from text**
@@ -38,7 +36,6 @@
 - how do I handle cases where multiple "people" are the same person?
 - book genres (history, fiction, etc)
 - **total statistics (quotes, things, texts, words in quotes, etc) on homepage**
-- **different /add/[type] urls (instead of raw /edit/[type])**
 - volume as attribute on Thing?
 - copy number as attribute on Thing?
 - display Thing title when different than Text in SelectThing

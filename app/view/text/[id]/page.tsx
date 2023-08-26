@@ -6,6 +6,7 @@ import prisma from "@/prisma/prisma"
 import Link from "next/link"
 import EditButton from "@/components/EditButton"
 import { ThingLink } from "../../Thing"
+import AddButton from "@/components/AddButton"
 
 export default async function ViewTextPage({
   params: { id },
@@ -65,8 +66,13 @@ export default async function ViewTextPage({
 
   return (
     <main>
-      <EditButton type="text" id={text.id} />
-      <h1>{text.title}</h1>
+      {/* TODO autofill author/text/edition */}
+      <AddButton type="quote" />
+
+      <h1>
+        <EditButton type="text" id={text.id} />
+        {text.title}
+      </h1>
       {text.subtitle && <h2>{text.subtitle}</h2>}
       {text.authors.length > 0 && (
         <h3>{text.authors.map((author) => author.name).join(", ")}</h3>
