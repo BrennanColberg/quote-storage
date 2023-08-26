@@ -1,6 +1,5 @@
 - see information about texts/sources? with button to go edit?
 - better form validation error rendering for `sources`
-- **display individual quote with all relevant info**
 - **display quotes from author**
 - search quotes (via regex to start)
 - end page should always be "after" start page (properly compared)
@@ -18,15 +17,11 @@
 - button to visit url? Maybe google button too?
 - trim quote content & all other inputs too
 - **multi paragraph quotes should be indented, not separated vertically**
-- view thing page
-- view person page
-- view publisher page
 - filtered search on each page that has quotes
 
 - quotes should be able to be "about" a Person
 - person title? Idk. Include in long name?
 - **edit editions from text**
-- "add text" from homepage (+ edition, person, etc)
 - "about" of each character should be text-specific
 - keep track of my info about things (when I got them, when I read them, etc)
 - relationships between Persons (relative, etc)?
@@ -45,4 +40,4 @@
 - **add (wikipedia?) link to person**
 - person social media handle(s)
 - **delete button on edit forms**
-- **very basic displays for each type: just their JSON and an edit button**
+- author from text page should hyperlink
