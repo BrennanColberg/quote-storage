@@ -18,9 +18,40 @@
 - quote search via embeddings
 - button to visit url? Maybe google button too?
 - trim quote content & all other inputs too
-- **show authors in quotes (when different from author of currently rendered text)**
 - **multi paragraph quotes should be indented, not separated vertically**
 - view thing page
 - view person page
 - view publisher page
 - filtered search on each page that has quotes
+
+- **"add text", "add quote" directly from homepage**
+- **"add quote" from text page, prefills author/text/edition**
+- quotes should be able to be "about" a Person
+- person title? Idk. Include in long name?
+- **edit editions from text**
+- "add text" from homepage (+ edition, person, etc)
+- "about" of each character should be text-specific
+- keep track of my info about things (when I got them, when I read them, etc)
+- relationships between Persons (relative, etc)?
+- **"edit last" button in quote creation**
+- <spoiler> tags in quotes/notes/bios that only show when "spoilers mode" is enabled
+- how do I handle cases where multiple "people" are the same person?
+- book genres (history, fiction, etc)
+- **total statistics (quotes, things, texts, words in quotes, etc) on homepage**
+- **different /add/[type] urls (instead of raw /edit/[type])**
+- volume as attribute on Thing?
+- copy number as attribute on Thing?
+- display Thing title when different than Text in SelectThing
+- there's some way to tie "primary" source to the combo of text/author I think
+- button to reset author of quote form to the author from the text
+- how to sort between multiple Thing-volumes when displaying one text?
+- **restrict text author to nonfictional**
+- subquotes (which power quote bots)
+- automatically re-link things which have their IDs change under you (keep track of title → see when the ID is not present in the options → update ID)
+- **quotes need to be able to not have a source**
+- **sources need to be able to not have a citation**
+- **add (wikipedia?) link to person**
+- **BUG text creation requires characterIds**
+- person social media handle(s)
+- **delete button on edit forms**
+- **very basic displays for each type: just their JSON and an edit button**
