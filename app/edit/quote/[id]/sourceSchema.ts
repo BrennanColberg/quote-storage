@@ -7,9 +7,7 @@ const sourceSchema = z.object({
     required_error: "Source must refer to a text.",
   }),
   // notes: z.string().optional(),
-  citations: z
-    .array(citationSchema)
-    .min(1, "Source must contain at least one citation."),
+  citations: z.array(citationSchema).default([]),
   primary: z.boolean().default(false),
 })
 

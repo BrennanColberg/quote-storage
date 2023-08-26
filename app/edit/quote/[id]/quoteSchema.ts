@@ -7,9 +7,7 @@ const quoteSchema = z.object({
     .array(z.string())
     .min(1, "Quotes must have at least one author."),
   notes: z.string().optional(),
-  sources: z
-    .array(sourceSchema)
-    .min(1, "Quotes must have at least one source."),
+  sources: z.array(sourceSchema).default([]),
 })
 
 export default quoteSchema
