@@ -35,7 +35,6 @@
 - <spoiler> tags in quotes/notes/bios that only show when "spoilers mode" is enabled
 - how do I handle cases where multiple "people" are the same person?
 - book genres (history, fiction, etc)
-- **total statistics (quotes, things, texts, words in quotes, etc) on homepage**
 - volume as attribute on Thing?
 - copy number as attribute on Thing?
 - display Thing title when different than Text in SelectThing
