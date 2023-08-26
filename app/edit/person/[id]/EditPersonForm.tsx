@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
-import GoogleButton from "../../GoogleButton"
+import SearchButton from "../../SearchButton"
 import SelectTexts from "../../SelectTexts"
 import useOptions from "../../useOptions"
 import { generateID } from "@/lib/id"
@@ -53,6 +53,8 @@ export default function EditPersonForm({
           fictional: initialPerson.fictional,
           textIdsAuthored: initialPerson.textsAuthored.map((t) => t.id),
           textIdsCharactered: initialPerson.textsCharactered.map((t) => t.id),
+          linkTwitter: initialPerson.linkTwitter ?? "",
+          linkWikipedia: initialPerson.linkWikipedia ?? "",
         }
       : {
           id: generateID(),
@@ -65,6 +67,8 @@ export default function EditPersonForm({
           fictional: false,
           textIdsAuthored: [],
           textIdsCharactered: [],
+          linkTwitter: "",
+          linkWikipedia: "",
         },
   })
 
@@ -142,6 +146,45 @@ export default function EditPersonForm({
             </FormItem>
           )}
         />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="linkWikipedia"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Wikipedia Link</FormLabel>
+                <FormControl>
+                  <div className="flex flex-row">
+                    <Input field={field} />
+                    <SearchButton
+                      website="wikipedia"
+                      query={() => form.getValues("name")}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="linkTwitter"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Twitter Link</FormLabel>
+                <FormControl>
+                  <div className="flex flex-row">
+                    <Input field={field} />
+                    <SearchButton
+                      query={() => `${form.getValues("name")} twitter`}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -188,8 +231,8 @@ export default function EditPersonForm({
                   <FormControl>
                     <div className="flex flex-row">
                       <Input field={field} />
-                      <GoogleButton
-                        query={`${form.getValues("name")} birth year`}
+                      <SearchButton
+                        query={() => `${form.getValues("name")} birth year`}
                       />
                     </div>
                   </FormControl>
@@ -209,8 +252,8 @@ export default function EditPersonForm({
                   <FormControl>
                     <div className="flex flex-row">
                       <Input field={field} />
-                      <GoogleButton
-                        query={`${form.getValues("name")} death year`}
+                      <SearchButton
+                        query={() => `${form.getValues("name")} death year`}
                       />
                     </div>
                   </FormControl>

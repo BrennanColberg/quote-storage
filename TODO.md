@@ -37,7 +37,6 @@
 - how to sort between multiple Thing-volumes when displaying one text?
 - subquotes (which power quote bots)
 - automatically re-link things which have their IDs change under you (keep track of title → see when the ID is not present in the options → update ID)
-- **add (wikipedia?) link to person**
-- person social media handle(s)
 - **delete button on edit forms**
 - author from text page should hyperlink
+- don't by default generate ID if it isn't already set (i.e. on creation not edit)

@@ -38,6 +38,8 @@ model Person {
   thingsEdited     Thing[]  @relation("ThingEditors")
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  linkWikipedia    String?
+  linkTwitter      String?
 }
 
 enum TextType {

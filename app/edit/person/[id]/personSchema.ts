@@ -14,6 +14,8 @@ const personSchema = z.object({
   fictional: z.boolean().default(false),
   textIdsAuthored: z.array(z.string()).default([]),
   textIdsCharactered: z.array(z.string()).default([]),
+  linkWikipedia: z.string().optional(),
+  linkTwitter: z.string().optional(),
 })
 
 export default personSchema

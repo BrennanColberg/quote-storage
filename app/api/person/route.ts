@@ -1,5 +1,6 @@
 import personSchema from "@/app/edit/person/[id]/personSchema"
 import prisma from "@/prisma/prisma"
+import { link } from "fs"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET() {
@@ -20,6 +21,8 @@ export async function POST(request: NextRequest) {
     textIdsAuthored,
     textIdsCharactered,
     id,
+    linkTwitter,
+    linkWikipedia,
   } = personSchema.parse(body)
   const person = await prisma.person.create({
     data: {
@@ -33,6 +36,8 @@ export async function POST(request: NextRequest) {
       fictional: fictional,
       textsAuthored: { connect: textIdsAuthored.map((id) => ({ id })) },
       textsCharactered: { connect: textIdsCharactered.map((id) => ({ id })) },
+      linkTwitter: linkTwitter || null,
+      linkWikipedia: linkWikipedia || null,
     },
   })
   return NextResponse.json(person)
@@ -53,6 +58,8 @@ export async function PUT(request: NextRequest) {
     id,
     textIdsAuthored,
     textIdsCharactered,
+    linkTwitter,
+    linkWikipedia,
   } = personSchema.parse(body)
 
   // manually find which texts to disconnect in each category
@@ -86,6 +93,8 @@ export async function PUT(request: NextRequest) {
         connect: textIdsCharactered.map((id) => ({ id })),
         disconnect: disconnectedTextsCharactered,
       },
+      linkTwitter: linkTwitter || null,
+      linkWikipedia: linkWikipedia || null,
     },
   })
   return NextResponse.json(person)
