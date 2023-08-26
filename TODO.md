@@ -51,7 +51,6 @@
 - **quotes need to be able to not have a source**
 - **sources need to be able to not have a citation**
 - **add (wikipedia?) link to person**
-- **BUG text creation requires characterIds**
 - person social media handle(s)
 - **delete button on edit forms**
 - **very basic displays for each type: just their JSON and an edit button**

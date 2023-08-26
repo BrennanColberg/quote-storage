@@ -7,8 +7,8 @@ const textSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   year: z.string().optional(),
-  authorIds: z.array(z.string()),
-  characterIds: z.array(z.string()),
+  authorIds: z.array(z.string()).default([]),
+  characterIds: z.array(z.string()).default([]),
   notes: z.string().optional(),
   type: z.nativeEnum(TextType).optional(),
 })
