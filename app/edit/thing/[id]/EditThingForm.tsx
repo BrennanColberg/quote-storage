@@ -204,6 +204,7 @@ export default function EditThingForm({
                     setPersonIds={(value) => form.setValue("authorIds", value)}
                     persons={persons}
                     setPersons={setPersons}
+                    allowFictional={false}
                   />
                 </FormControl>
                 <FormMessage />
@@ -222,6 +223,7 @@ export default function EditThingForm({
                     setPersonIds={(value) => form.setValue("editorIds", value)}
                     persons={persons}
                     setPersons={setPersons}
+                    allowFictional={false}
                   />
                 </FormControl>
                 <FormMessage />
@@ -242,6 +244,7 @@ export default function EditThingForm({
                     }
                     persons={persons}
                     setPersons={setPersons}
+                    allowFictional={false}
                   />
                 </FormControl>
                 <FormMessage />

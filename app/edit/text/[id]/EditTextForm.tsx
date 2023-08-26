@@ -124,6 +124,7 @@ export default function EditTextForm({
                     setPersonIds={(value) => form.setValue("authorIds", value)}
                     persons={persons}
                     setPersons={setPersons}
+                    allowFictional={false}
                   />
                 </FormControl>
                 <FormMessage />

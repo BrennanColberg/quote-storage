@@ -8,14 +8,19 @@ export default function SelectPersons({
   setPersons,
   personIds,
   setPersonIds,
+  allowFictional = true,
 }: {
   persons: Person[]
   setPersons: Dispatch<SetStateAction<Person[]>>
   personIds: string[]
   setPersonIds: (value: string[]) => void
+  allowFictional?: boolean
 }) {
   const personOptions = useMemo(
-    () => persons.map((person) => ({ value: person.id, label: person.name })),
+    () =>
+      persons
+        .filter((p) => allowFictional || !p.fictional)
+        .map((person) => ({ value: person.id, label: person.name })),
     [persons],
   )
 

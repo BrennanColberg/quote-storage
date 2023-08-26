@@ -45,7 +45,6 @@
 - there's some way to tie "primary" source to the combo of text/author I think
 - button to reset author of quote form to the author from the text
 - how to sort between multiple Thing-volumes when displaying one text?
-- **restrict text author to nonfictional**
 - subquotes (which power quote bots)
 - automatically re-link things which have their IDs change under you (keep track of title → see when the ID is not present in the options → update ID)
 - **quotes need to be able to not have a source**
