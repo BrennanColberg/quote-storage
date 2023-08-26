@@ -5,7 +5,6 @@
 - search quotes (via regex to start)
 - end page should always be "after" start page (properly compared)
 - command + enter to submit
-- **content form size should reset (to larger than now) default every time**
 - difference between author and sayer of a quote?
 - **about fields that are different from notes fields**
 - **subtexts**

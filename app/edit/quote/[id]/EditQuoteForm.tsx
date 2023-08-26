@@ -128,6 +128,7 @@ export function EditQuoteForm({
               <FormLabel>Content</FormLabel>
               <FormControl>
                 <Textarea
+                  className="h-48"
                   placeholder="In the beginning..."
                   field={field}
                   ref={contentRef}
