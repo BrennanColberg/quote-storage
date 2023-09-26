@@ -5,27 +5,27 @@
 - end page should always be "after" start page (properly compared)
 - command + enter to submit
 - difference between author and sayer of a quote?
-- **about fields that are different from notes fields**
+- about fields that are different from notes fields
 - **subtexts**
 - link to add should show up on index for authenticated users (me)
 - way to specify the order of authors (for both text, thing, author)
 - data linter script which checks that everything's in the right format
-- **ISBN / LoC catalog card number / LCC / Dewey on Thing**
+- ISBN / LoC catalog card number / LCC / Dewey on Thing
 - content form input should be bigger, rich text, etc
 - dictation for content
 - quote search via embeddings
 - button to visit url? Maybe google button too?
 - trim quote content & all other inputs too
-- **multi paragraph quotes should be indented, not separated vertically**
+- multi paragraph quotes should be indented, not separated vertically
 - filtered search on each page that has quotes
 
 - quotes should be able to be "about" a Person
 - person title? Idk. Include in long name?
-- **edit editions from text**
+- **edit things from text**
 - "about" of each character should be text-specific
 - keep track of my info about things (when I got them, when I read them, etc)
 - relationships between Persons (relative, etc)?
-- **"edit last" button in quote creation**
+- "edit last" button in quote creation
 - <spoiler> tags in quotes/notes/bios that only show when "spoilers mode" is enabled
 - how do I handle cases where multiple "people" are the same person?
 - book genres (history, fiction, etc)
@@ -37,6 +37,49 @@
 - how to sort between multiple Thing-volumes when displaying one text?
 - subquotes (which power quote bots)
 - automatically re-link things which have their IDs change under you (keep track of title → see when the ID is not present in the options → update ID)
-- **delete button on edit forms**
-- author from text page should hyperlink
+- delete button on edit forms
+- **author from text page should hyperlink**
 - don't by default generate ID if it isn't already set (i.e. on creation not edit)
+- search button for publisher URL
+- search button for edition URL
+- search button for publisher URL
+- trim twitter link of search parameters when entered
+- rearrange text edit form. second row: type/year. third row: authors/characters
+- represent publisher imprints somehow? publisher-publisher relation?
+- **clothbound as ThingType**
+- notes/id fields under submit button?
+- changing text resets things?
+- **subtitle in text selector**
+- question mark before each input?
+- **faux leatherbound ThingType**
+- publisher / type info as normal sublist of thing Title (not parens after)
+- autofill Thing when loading text if only one is attached
+- **autofill book info from "add quote" button**
+- "add thing" button on homepage/text page
+- change thing text to "Publisher, YYYY (Format)"
+- **github style heatmap of quote additions and/or reading (of pages? books? subsections?) (react-activity-calendar)**
+- on homepage make text list 2-3-level via supertexts
+- setup S3 auto dump backup on a schedule
+- QR code printer (on label machine) to link from inside covers -> online Things
+- primary source default true
+- all start/end/line on same row
+- show originally published date on text page
+
+- quote count on text page (+ homepage?)
+- **add plausible**
+- “star” really good quotes
+- year first published search includes author name
+- **escape search field (when including &)**
+- automatic ID assignment for new people from their names
+- **owner of thing (self? Library? Etc)**
+- search field for publisher URL
+- editor/translator on book itself?
+- **quote can be “about” a person**
+- **notes rendered as markdown**
+- render citations e.g. {quote/6382353c-d187-4fa4-8393-095d2fac188c} in notes as footnotes with hover-preview and link them to the actual quote
+- render quote notes inline in book
+- **intro: “by X people / from Y copies”**
+- quote “collections” / “themes” / “topics” (e.g. multiple relevant to one point or subject)
+- reading logs (start/end/chapters)
+- chapters = subtexts
+- summaries as distinct from notes?
