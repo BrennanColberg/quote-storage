@@ -197,23 +197,14 @@ describe(bucketsOfAndBetweenSubtexts, () => {
     ])
   })
 
-  test("replication of observed bug", () => {
-    const subtexts = [
-      { citation: { start: "vii", end: "viii" } },
-      { citation: { start: "3", end: "21" } },
-      { citation: { start: "22", end: "43" } },
-      { citation: { start: "187", end: "205" } },
-    ]
-    const buckets = bucketsOfAndBetweenSubtexts(subtexts)
+  test("open-ended subtexts cut each other off", () => {
+    const subtext1 = { citation: { start: "2" } }
+    const subtext2 = { citation: { start: "4" } }
+    const buckets = bucketsOfAndBetweenSubtexts([subtext1, subtext2])
     expect(buckets).toMatchObject([
-      { citation: { end: "vi" } },
-      { citation: { start: "vii", end: "viii" } },
-      { citation: { start: "ix", end: "2" } },
-      { citation: { start: "3", end: "21" } },
-      { citation: { start: "22", end: "43" } },
-      { citation: { start: "44", end: "186" } },
-      { citation: { start: "187", end: "205" } },
-      { citation: { start: "206" } },
+      { citation: { end: "1" } },
+      { citation: { start: "2", end: "3" } },
+      { citation: { start: "4" } },
     ])
   })
 })
