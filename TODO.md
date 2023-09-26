@@ -60,7 +60,6 @@
 - show originally published date on text page
 
 - quote count on text page (+ homepage?)
-- **add plausible**
 - “star” really good quotes
 - year first published search includes author name
 - **escape search field (when including &)**
