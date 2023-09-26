@@ -1,6 +1,7 @@
 import { Person, Source, Text } from "@prisma/client"
 import { CitationProp, CitationList } from "./Citation"
 import Link from "next/link"
+import listOfLinks from "@/lib/listOfLinks"
 
 // TODO maybe move elsewhere?
 export type TextProp = Text & {
@@ -24,19 +25,26 @@ export function SourceComponent({
   if (excludeTexts?.includes(source.textId))
     return <CitationList citations={source.citations} type={null} />
 
-  // show authors afterwards, if any exist
-  // TODO store and retrieve author order
-  let authors = source.text.authors
-    .filter((author) => !excludeAuthors?.includes(author.id))
-    // TODO make these authors links via list-of-links thingy
-    .map((author) => author.name)
-    .join(", ")
-  if (authors) authors = ` (${authors})`
+  const showAuthors = !!source.text.authors.find(
+    (a) => !excludeAuthors?.includes(a.id),
+  )
 
   return (
     <li className="text-neutral-400">
       <Link href={`/view/text/${source.text.id}`}>{source.text.title}</Link>
-      {authors}
+      {showAuthors && (
+        <>
+          {" "}
+          (
+          {listOfLinks(
+            source.text.authors.map((author) => ({
+              href: `/view/person/${author.id}`,
+              text: author.name,
+            })),
+          )}
+          )
+        </>
+      )}
       <CitationList citations={source.citations} />
     </li>
   )

@@ -22,8 +22,12 @@ export function QuoteComponent({
   excludeAuthors?: string[]
   excludeSubjects?: string[]
 }) {
-  const authors = quote.authors.filter((a) => !excludeAuthors.includes(a.id))
-  const subjects = quote.subjects.filter((a) => !excludeSubjects.includes(a.id))
+  const showAuthors = !!quote.authors.find(
+    (a) => !excludeAuthors.includes(a.id),
+  )
+  const showSubjects = !!quote.subjects.find(
+    (a) => !excludeSubjects.includes(a.id),
+  )
   return (
     <div className="mb-6 mt-3">
       <EditButton type="quote" id={quote.id} />
@@ -31,11 +35,11 @@ export function QuoteComponent({
         <ReactMarkdown>{quote.content.replace(/\n+/g, "\n\n")}</ReactMarkdown>
       </blockquote>
 
-      {authors.length > 0 && (
+      {showAuthors && (
         <li className="text-neutral-500">
-          {subjects.length > 0 && "by "}
+          {showSubjects && "by "}
           {listOfLinks(
-            authors.map((author) => ({
+            quote.authors.map((author) => ({
               href: `/view/person/${author.id}`,
               text: author.name,
             })),
@@ -43,11 +47,11 @@ export function QuoteComponent({
         </li>
       )}
 
-      {subjects.length > 0 && (
+      {showSubjects && (
         <li className="text-neutral-500">
           about{" "}
           {listOfLinks(
-            subjects.map((subject) => ({
+            quote.subjects.map((subject) => ({
               href: `/view/person/${subject.id}`,
               text: subject.name,
             })),
@@ -58,7 +62,7 @@ export function QuoteComponent({
       <SourceList
         sources={quote.sources}
         excludeTexts={excludeTexts}
-        excludeAuthors={excludeAuthors}
+        excludeAuthors={[...excludeAuthors, ...quote.authors.map((a) => a.id)]}
       />
     </div>
   )
