@@ -47,7 +47,6 @@
 - represent publisher imprints somehow? publisher-publisher relation?
 - notes/id fields under submit button?
 - changing text resets things?
-- **subtitle in text selector**
 - question mark before each input?
 - publisher / type info as normal sublist of thing Title (not parens after)
 - autofill Thing when loading text if only one is attached

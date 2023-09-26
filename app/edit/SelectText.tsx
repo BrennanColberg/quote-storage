@@ -2,6 +2,7 @@ import { Person, Text } from "@prisma/client"
 import axios from "axios"
 import { Dispatch, SetStateAction, useMemo } from "react"
 import CreatableSelect from "react-select/creatable"
+import { validate as isUuid } from "uuid"
 
 export default function SelectText({
   texts,
@@ -17,7 +18,13 @@ export default function SelectText({
   authorIds: string[]
 }) {
   const textOptions = useMemo(
-    () => texts.map((text) => ({ value: text.id, label: text.title })),
+    () =>
+      texts.map((text) => {
+        let label = text.title
+        if (text.subtitle) label += `: ${text.subtitle}`
+        if (!isUuid(text.id)) label += ` [${text.id}]`
+        return { value: text.id, label }
+      }),
     [texts],
   )
 
