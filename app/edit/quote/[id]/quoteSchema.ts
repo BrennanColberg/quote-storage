@@ -6,6 +6,7 @@ const quoteSchema = z.object({
   authorIds: z
     .array(z.string())
     .min(1, "Quotes must have at least one author."),
+  subjectIds: z.array(z.string()).default([]),
   notes: z.string().optional(),
   sources: z.array(sourceSchema).default([]),
 })

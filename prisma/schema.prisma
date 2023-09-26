@@ -12,7 +12,8 @@ datasource db {
 
 model Quote {
   id        String   @id @default(uuid())
-  authors   Person[]
+  authors   Person[] @relation("QuoteAuthors")
+  subjects  Person[] @relation("QuoteSubjects")
   key       String?
   sources   Source[]
   content   String   @map("text")
@@ -27,7 +28,8 @@ model Person {
   shortName        String?
   yearBorn         String?
   yearDied         String?
-  quotes           Quote[]
+  quotesAuthored   Quote[]  @relation("QuoteAuthors")
+  quotesAbout      Quote[]  @relation("QuoteSubjects")
   textsAuthored    Text[]   @relation("TextAuthors")
   textsCharactered Text[]   @relation("TextCharacters")
   fictional        Boolean  @default(false)

@@ -38,6 +38,7 @@ export function EditQuoteForm({
 }: {
   quote?: Quote & {
     authors: Person[]
+    subjects: Person[]
     sources: (Source & { citations: Citation[] })[]
   }
   text?: Text & { authors: Person[]; things: Thing[] }
@@ -60,6 +61,7 @@ export function EditQuoteForm({
       ? {
           content: initialQuote.content,
           authorIds: initialQuote.authors.map((a) => a.id),
+          subjectIds: initialQuote.subjects.map((a) => a.id),
           notes: initialQuote.notes ?? "",
           sources: initialQuote.sources.map((source) => ({
             id: source.id,
@@ -77,6 +79,7 @@ export function EditQuoteForm({
       : {
           content: "",
           authorIds: initialText?.authors.map((a) => a.id) ?? [],
+          subjectIds: [],
           notes: "",
           sources: initialText
             ? [
@@ -151,24 +154,44 @@ export function EditQuoteForm({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="authorIds"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Author</FormLabel>
-              <FormControl>
-                <SelectPersons
-                  personIds={field.value}
-                  setPersonIds={(value) => form.setValue("authorIds", value)}
-                  persons={persons}
-                  setPersons={setPersons}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="authorIds"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Author(s)</FormLabel>
+                <FormControl>
+                  <SelectPersons
+                    personIds={field.value}
+                    setPersonIds={(value) => form.setValue("authorIds", value)}
+                    persons={persons}
+                    setPersons={setPersons}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="subjectIds"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>About</FormLabel>
+                <FormControl>
+                  <SelectPersons
+                    personIds={field.value}
+                    setPersonIds={(value) => form.setValue("subjectIds", value)}
+                    persons={persons}
+                    setPersons={setPersons}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}

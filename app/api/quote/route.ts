@@ -5,13 +5,15 @@ import { z } from "zod"
 
 export async function POST(request: Request) {
   const body = await request.json()
-  const { content, authorIds, notes, sources } = quoteSchema.parse(body)
+  const { content, authorIds, subjectIds, notes, sources } =
+    quoteSchema.parse(body)
 
   const quote = await prisma.quote.create({
     data: {
       content,
       notes: notes || null,
       authors: { connect: authorIds.map((id) => ({ id })) },
+      subjects: { connect: subjectIds.map((id) => ({ id })) },
       sources: {
         create: sources.map(({ textId, citations, primary }) => ({
           textId,
@@ -33,7 +35,7 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   const body = await request.json()
-  const { content, authorIds, notes, sources, id } = quoteSchema
+  const { content, authorIds, subjectIds, notes, sources, id } = quoteSchema
     .and(z.object({ id: z.string() }))
     .parse(body)
 
@@ -41,7 +43,11 @@ export async function PUT(request: Request) {
   // included in the quote in order to delete them
   const old = await prisma.quote.findUniqueOrThrow({
     where: { id },
-    include: { sources: { include: { citations: true } }, authors: true },
+    include: {
+      sources: { include: { citations: true } },
+      authors: true,
+      subjects: true,
+    },
   })
   const deletedSourceIds = []
   const deletedCitationIds = []
@@ -62,6 +68,10 @@ export async function PUT(request: Request) {
   for (const oa of old.authors) {
     if (!authorIds.includes(oa.id)) deletedAuthorIds.push(oa.id)
   }
+  const deletedSubjectIds = []
+  for (const os of old.subjects) {
+    if (!subjectIds.includes(os.id)) deletedSubjectIds.push(os.id)
+  }
 
   const quote = await prisma.quote.update({
     where: { id },
@@ -71,6 +81,10 @@ export async function PUT(request: Request) {
       authors: {
         connect: authorIds.map((id) => ({ id })),
         disconnect: deletedAuthorIds.map((id) => ({ id })),
+      },
+      subjects: {
+        connect: subjectIds.map((id) => ({ id })),
+        disconnect: deletedSubjectIds.map((id) => ({ id })),
       },
       sources: {
         deleteMany: { id: { in: deletedSourceIds } },

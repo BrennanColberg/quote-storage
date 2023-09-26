@@ -8,6 +8,7 @@ import EditButton from "@/components/EditButton"
 import { ThingLink } from "../../Thing"
 import AddButton from "@/components/AddButton"
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
+import listOfLinks from "@/lib/listOfLinks"
 
 export default async function ViewTextPage({
   params: { id },
@@ -25,6 +26,7 @@ export default async function ViewTextPage({
           quote: {
             include: {
               authors: true,
+              subjects: true,
               // // only include authors that aren't the current text's authors
               // authors: { where: { texts: { none: { id } } } },
             },
@@ -65,12 +67,12 @@ export default async function ViewTextPage({
     else quoteProps.push({ ...source.quote, sources: [sourceProp] })
   }
 
-  const authors = []
-  for (const author of text.authors) {
-    authors.push(<Link href={`/view/person/${author.id}`}>{author.name}</Link>)
-    authors.push(", ")
-  }
-  authors.pop() // remove last comma
+  const authors = listOfLinks(
+    text.authors.map((author) => ({
+      href: `/view/person/${author.id}`,
+      text: author.name,
+    })),
+  )
 
   return (
     <main>

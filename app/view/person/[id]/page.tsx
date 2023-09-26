@@ -29,9 +29,24 @@ export default async function ViewPersonPage({
     include: {
       textsAuthored: true,
       textsCharactered: true,
-      quotes: {
+      quotesAuthored: {
         include: {
           authors: true,
+          subjects: true,
+          sources: {
+            include: {
+              text: { include: { authors: true } },
+              citations: {
+                include: { thing: { include: { publisher: true } } },
+              },
+            },
+          },
+        },
+      },
+      quotesAbout: {
+        include: {
+          authors: true,
+          subjects: true,
           sources: {
             include: {
               text: { include: { authors: true } },
@@ -82,12 +97,23 @@ export default async function ViewPersonPage({
           <ReactMarkdown className="notes">{person.notes}</ReactMarkdown>
         </>
       )}
-      {person.quotes.length > 0 && (
+      {person.quotesAuthored.length > 0 && (
         <>
           <br />
-          <h3>Quotes</h3>
+          <h3>Quotes (Authored)</h3>
           <QuoteList
-            quotes={person.quotes}
+            quotes={person.quotesAuthored}
+            // excludeTexts={[text.id]}
+            excludeAuthors={[person.id]}
+          />
+        </>
+      )}
+      {person.quotesAbout.length > 0 && (
+        <>
+          <br />
+          <h3>Quotes (About)</h3>
+          <QuoteList
+            quotes={person.quotesAbout}
             // excludeTexts={[text.id]}
             excludeAuthors={[person.id]}
           />

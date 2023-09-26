@@ -66,7 +66,6 @@
 - **owner of thing (self? Library? Etc)**
 - search field for publisher URL
 - editor/translator on book itself?
-- **quote can be “about” a person**
 - render citations e.g. {quote/6382353c-d187-4fa4-8393-095d2fac188c} in notes as footnotes with hover-preview and link them to the actual quote (via remark/rehype in ReactMarkdown)
 - render quote notes inline in book
 - quote “collections” / “themes” / “topics” (e.g. multiple relevant to one point or subject)
@@ -80,3 +79,4 @@
 - account for precise birth/death dates
 - add tooltips to contribution graph via `renderBlock`
 - make contribution graph labels percentile-based?
+- automatically make referenced persons' names _within_ a quote into links (and only list subjects beneath the quote if they're not explicitly mentioned in it?)
