@@ -62,7 +62,6 @@
 - quote count on text page (+ homepage?)
 - “star” really good quotes
 - year first published search includes author name
-- **escape search field (when including &)**
 - automatic ID assignment for new people from their names
 - **owner of thing (self? Library? Etc)**
 - search field for publisher URL

@@ -5,11 +5,10 @@ type SearchWebsite = "google" | "wikipedia"
 function getSearchURL(website: SearchWebsite, query: string) {
   switch (website) {
     case "google":
-      return `https://www.google.com/search?q=${query.replaceAll(" ", "+")}`
+      return `https://www.google.com/search?q=${encodeURIComponent(query)}`
     case "wikipedia":
-      return `https://en.wikipedia.org/w/index.php?search=${query.replaceAll(
-        " ",
-        "+",
+      return `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(
+        query,
       )}`
   }
 }
