@@ -119,4 +119,15 @@ main {
       @apply mt-2;
     }
   }
+
+  .notes {
+    li,
+    p {
+      @apply mt-2;
+    }
+    li {
+      @apply list-outside;
+      @apply ml-8;
+    }
+  }
 }

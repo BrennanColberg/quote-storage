@@ -7,6 +7,7 @@ import Link from "next/link"
 import EditButton from "@/components/EditButton"
 import { ThingLink } from "../../Thing"
 import AddButton from "@/components/AddButton"
+import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 
 export default async function ViewTextPage({
   params: { id },
@@ -117,7 +118,7 @@ export default async function ViewTextPage({
         <>
           <br />
           <h3>Notes</h3>
-          <p>{text.notes}</p>
+          <ReactMarkdown className="notes">{text.notes}</ReactMarkdown>
         </>
       )}
 

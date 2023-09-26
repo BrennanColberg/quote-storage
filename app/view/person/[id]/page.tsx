@@ -3,6 +3,7 @@ import prisma from "@/prisma/prisma"
 import { notFound } from "next/navigation"
 import { QuoteList } from "../../Quote"
 import { Person } from "@prisma/client"
+import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 
 // converts a number stored as string to "A.D." or "B.C." (if negative)
 function renderYear(year: string) {
@@ -74,13 +75,24 @@ export default async function ViewPersonPage({
       {/* what texts they are a character in */}
       {/* wikipedia link */}
       {/* twitter link */}
-      <br />
-      <h3>Quotes</h3>
-      <QuoteList
-        quotes={person.quotes}
-        // excludeTexts={[text.id]}
-        excludeAuthors={[person.id]}
-      />
+      {person.notes && (
+        <>
+          <br />
+          <h3>Notes</h3>
+          <ReactMarkdown className="notes">{person.notes}</ReactMarkdown>
+        </>
+      )}
+      {person.quotes.length > 0 && (
+        <>
+          <br />
+          <h3>Quotes</h3>
+          <QuoteList
+            quotes={person.quotes}
+            // excludeTexts={[text.id]}
+            excludeAuthors={[person.id]}
+          />
+        </>
+      )}
     </main>
   )
 }
