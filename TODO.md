@@ -1,6 +1,5 @@
 - see information about texts/sources? with button to go edit?
 - better form validation error rendering for `sources`
-- **display quotes from author**
 - search quotes (via regex to start)
 - end page should always be "after" start page (properly compared)
 - command + enter to submit
@@ -83,3 +82,8 @@
 - reading logs (start/end/chapters)
 - chapters = subtexts
 - summaries as distinct from notes?
+
+- links should underline on hover
+- authors in SourceComponent should be links
+- citation things should be links (e.g. "(Easton Press, 2021)")
+- account for precise birth/death dates

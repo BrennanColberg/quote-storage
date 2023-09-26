@@ -34,7 +34,11 @@ export function QuoteComponent({
         </li>
       )}
 
-      <SourceList sources={quote.sources} excludeTexts={excludeTexts} />
+      <SourceList
+        sources={quote.sources}
+        excludeTexts={excludeTexts}
+        excludeAuthors={excludeAuthors}
+      />
     </div>
   )
 }
