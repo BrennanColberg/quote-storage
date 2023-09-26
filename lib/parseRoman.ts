@@ -29,3 +29,44 @@ export default function parseRoman(roman: string): number {
   result += reserve
   return result
 }
+
+export function arabicToRoman(arabic: number): string {
+  // https://stackoverflow.com/a/9083076/2981429
+  var digits = String(+arabic).split(""),
+    key = [
+      "",
+      "c",
+      "cc",
+      "ccc",
+      "cd",
+      "d",
+      "dc",
+      "dcc",
+      "dccc",
+      "cm",
+      "",
+      "x",
+      "xx",
+      "xxx",
+      "xl",
+      "l",
+      "lx",
+      "lxx",
+      "lxxx",
+      "xc",
+      "",
+      "i",
+      "ii",
+      "iii",
+      "iv",
+      "v",
+      "vi",
+      "vii",
+      "viii",
+      "ix",
+    ],
+    roman = "",
+    i = 3
+  while (i--) roman = (key[+digits.pop() + i * 10] || "") + roman
+  return Array(+digits.join("") + 1).join("M") + roman
+}

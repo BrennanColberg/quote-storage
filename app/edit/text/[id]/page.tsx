@@ -8,7 +8,11 @@ export default async function EditTextPage({
 }) {
   const text = await prisma.text.findUniqueOrThrow({
     where: { id },
-    include: { authors: true, characters: true },
+    include: {
+      authors: true,
+      characters: true,
+      subtexts: { include: { citations: true } },
+    },
   })
   return <EditTextForm text={text} />
 }

@@ -1,6 +1,7 @@
 import { generateID } from "@/lib/id"
 import { TextType } from "@prisma/client"
 import { z } from "zod"
+import subtextSchema from "./subtextSchema"
 
 const textSchema = z.object({
   id: z.string().default(generateID),
@@ -11,6 +12,7 @@ const textSchema = z.object({
   characterIds: z.array(z.string()).default([]),
   notes: z.string().optional(),
   type: z.nativeEnum(TextType).optional(),
+  subtexts: z.array(subtextSchema).default([]),
 })
 
 export default textSchema

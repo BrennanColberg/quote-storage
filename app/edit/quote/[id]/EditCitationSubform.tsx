@@ -18,11 +18,14 @@ export default function EditCitationSubform({
 }: {
   i: number
   j: number
-  things: (Thing & { publisher?: Publisher; texts: Text[] })[]
+  things: (Thing & { publisher?: Publisher; texts?: Text[] })[]
   setThings: Dispatch<SetStateAction<Thing[]>>
   citation: z.infer<typeof citationSchema>
   setCitation: (citation: z.infer<typeof citationSchema>) => void
-  text: Text & { authors: Person[] }
+  text: Pick<Text, "title" | "subtitle" | "year"> & {
+    authors: Person[]
+    id?: string
+  }
 }) {
   const thing = things.find((thing) => thing.id === citation.thingId)
   let markerType: "page" | "time" | "none" | "any"
@@ -45,37 +48,33 @@ export default function EditCitationSubform({
   }
 
   return (
-    <div key={j} className="border-4 border-neutral-300">
-      <h4 className="text-center font-lg text-neutral-300 font-bold">
-        Citation {i + 1}.{j + 1}
+    <div key={j} className="border-4 border-neutral-300 my-2 p-2">
+      <div className="flex flex-row gap-4 items-end">
+        <FormItem className="flex-grow">
+          <FormLabel>Thing</FormLabel>
+          <FormControl>
+            <SelectThing
+              things={things}
+              setThings={setThings}
+              thingId={citation.thingId}
+              setThingId={(thingId) => setCitation({ ...citation, thingId })}
+              text={text}
+            />
+          </FormControl>
+        </FormItem>
         <Button
           variant="destructive"
           onClick={(e) => {
             e.preventDefault()
             setCitation(undefined)
           }}
-          className="h-6 ml-2"
         >
           Remove
         </Button>
-      </h4>
-
-      {/* Thing */}
-      <FormItem>
-        <FormLabel>Thing</FormLabel>
-        <FormControl>
-          <SelectThing
-            things={things}
-            setThings={setThings}
-            thingId={citation.thingId}
-            setThingId={(thingId) => setCitation({ ...citation, thingId })}
-            text={text}
-          />
-        </FormControl>
-      </FormItem>
+      </div>
 
       {markerType !== "none" && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-row justify-evenly gap-4">
           <FormItem>
             <FormLabel>
               Start{" "}
@@ -108,17 +107,9 @@ export default function EditCitationSubform({
                 />
               </FormControl>
             </FormItem>
-          )}
+          )}{" "}
           <FormItem>
-            <FormLabel>
-              End{" "}
-              {markerType === "page"
-                ? "page"
-                : markerType === "time"
-                ? "time"
-                : "page/time"}
-              , if different
-            </FormLabel>
+            <FormLabel>End, if different</FormLabel>
             <FormControl>
               <Input
                 value={citation.end ?? ""}

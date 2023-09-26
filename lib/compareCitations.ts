@@ -1,6 +1,7 @@
 import { Citation } from "@prisma/client"
 import parseRoman from "./parseRoman"
 import { compareTimestamps, parseTimestamp } from "./timestamp"
+import { SortableCitation } from "./SortableCitation"
 
 export function typeOfPlace(
   place: string,
@@ -36,9 +37,13 @@ export function comparePlaces(a: string, b: string): number {
   return compareTimestamps(parseTimestamp(a), parseTimestamp(b))
 }
 
-export default function compareCitations(a: Citation, b: Citation) {
+export default function compareCitations(
+  a: SortableCitation & { thingId?: string },
+  b: SortableCitation & { thingId?: string },
+  endAsTiebreaker = true,
+) {
   // citations cannot be compared if they aren't in the same Thing
-  if (a.thingId !== b.thingId) return 0
+  if (a.thingId && b.thingId && a.thingId !== b.thingId) return 0
 
   // if they both have a start, sort by start
   const startCompare = comparePlaces(a.start, b.start)
@@ -52,6 +57,7 @@ export default function compareCitations(a: Citation, b: Citation) {
   if (lineCompare !== 0) return lineCompare
 
   // if the starts/lines are equal and ends are different, sort by end (undefined = start)
+  if (!endAsTiebreaker) return 0
   const endCompare = comparePlaces(a.end ?? a.start, b.end ?? b.start)
   if (endCompare !== 0) return endCompare
 

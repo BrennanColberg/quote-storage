@@ -5,7 +5,6 @@
 - command + enter to submit
 - difference between author and sayer of a quote?
 - about fields that are different from notes fields
-- **subtexts**
 - link to add should show up on index for authenticated users (me)
 - way to specify the order of authors (for both text, thing, author)
 - data linter script which checks that everything's in the right format
@@ -70,7 +69,6 @@
 - render quote notes inline in book
 - quote “collections” / “themes” / “topics” (e.g. multiple relevant to one point or subject)
 - reading logs (start/end/chapters)
-- chapters = subtexts
 - summaries as distinct from notes?
 
 - authors in SourceComponent should be links
@@ -79,3 +77,6 @@
 - add tooltips to contribution graph via `renderBlock`
 - make contribution graph labels percentile-based?
 - automatically make referenced persons' names _within_ a quote into links (and only list subjects beneath the quote if they're not explicitly mentioned in it?)
+
+- match subtexts/quotes that are not from same Thing
+- subtexts should be collapsible (and perhaps collapsed by default?)

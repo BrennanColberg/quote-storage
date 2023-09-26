@@ -10,19 +10,25 @@ export default function SelectThing({
   setThingId,
   text,
 }: {
-  things: (Thing & { publisher?: Publisher; texts: Text[] })[]
+  things: (Thing & { publisher?: Publisher; texts?: Text[] })[]
   setThings: Dispatch<SetStateAction<Thing[]>>
   thingId?: string
   setThingId: (value?: string) => void
-  text?: Text & { authors: Person[] }
+  text?: Pick<Text, "title" | "subtitle" | "year"> & {
+    authors: Person[]
+    id?: string
+  }
 }) {
   const thingOptions = useMemo(
     () =>
       things
         // only show things that contain the current text
-        .filter((thing) => thing.texts.find((et) => et.id === text?.id))
+        .filter(
+          (thing) => !text.id || thing.texts.find((et) => et.id === text?.id),
+        )
         .map((thing) => {
           let label: string = thing.type
+          if (!text.id) label = `"${thing.title}" ${label}`
           if (thing.publisher && thing.year)
             label += ` (${thing.publisher.name}, ${thing.year})`
           else if (thing.publisher) label += ` (${thing.publisher.name})`
@@ -47,7 +53,7 @@ export default function SelectThing({
             authorIds: text.authors.map((a) => a.id),
             translatorIds: [],
             editorIds: [],
-            textIds: [text.id],
+            textIds: text.id ? [text.id] : [],
           })
           setThings((x) => [...x, { ...thing.data, texts: [text] }])
           setThingId(thing.data.id)

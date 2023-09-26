@@ -11,7 +11,7 @@ const thingSchema = z.object({
   authorIds: z.array(z.string()),
   translatorIds: z.array(z.string()),
   editorIds: z.array(z.string()),
-  textIds: z.array(z.string()).min(1, "Must have at least one text."),
+  textIds: z.array(z.string()),
   notes: z.string().optional(),
   type: z.nativeEnum(ThingType).optional(),
   url: z.string().optional(),

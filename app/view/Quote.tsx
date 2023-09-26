@@ -1,4 +1,4 @@
-import { Person, Quote } from "@prisma/client"
+import { Citation, Person, Quote, Subtext } from "@prisma/client"
 import { SourceList, SourceProp } from "./Source"
 import ReactMarkdown from "react-markdown"
 import EditButton from "@/components/EditButton"
@@ -29,7 +29,7 @@ export function QuoteComponent({
     (a) => !excludeSubjects.includes(a.id),
   )
   return (
-    <div className="mb-6 mt-3">
+    <div className="my-6 mt-3">
       <EditButton type="quote" id={quote.id} />
       <blockquote className="border-l-4 pl-2 text-neutral-600 max-h-64 overflow-y-scroll pr-1">
         <ReactMarkdown>{quote.content.replace(/\n+/g, "\n\n")}</ReactMarkdown>

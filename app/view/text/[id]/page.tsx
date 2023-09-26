@@ -9,6 +9,7 @@ import { ThingLink } from "../../Thing"
 import AddButton from "@/components/AddButton"
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 import listOfLinks from "@/lib/listOfLinks"
+import sortQuotesIntoSubtexts from "@/lib/sortQuotesIntoSubtexts"
 
 export default async function ViewTextPage({
   params: { id },
@@ -20,6 +21,7 @@ export default async function ViewTextPage({
     include: {
       authors: true,
       characters: true,
+      subtexts: { include: { citations: true } },
       things: { include: { publisher: true } },
       sources: {
         include: {
@@ -74,6 +76,9 @@ export default async function ViewTextPage({
     })),
   )
 
+  const subtextBuckets = sortQuotesIntoSubtexts(quoteProps, text.subtexts)
+
+  console.log("subtextBuckets", subtextBuckets)
   return (
     <main>
       {/* TODO autofill author/text/edition */}
@@ -83,7 +88,7 @@ export default async function ViewTextPage({
         <EditButton type="text" id={text.id} />
         {text.title}
       </h1>
-      {text.subtitle && <h2>{text.subtitle}</h2>}
+      {text.subtitle && <h2 className="font-medium">{text.subtitle}</h2>}
       {authors.length > 0 && <h3>{authors}</h3>}
 
       <br />
@@ -124,14 +129,41 @@ export default async function ViewTextPage({
         </>
       )}
 
-      <br />
-
-      <h3>Quotes</h3>
-      <QuoteList
+      <hr className="my-8" />
+      {/*<QuoteList
         quotes={quoteProps}
         excludeTexts={[text.id]}
         excludeAuthors={text.authors.map((a) => a.id)}
-      />
+      /> */}
+
+      {subtextBuckets.map((bucket, i) => (
+        <section
+          key={i}
+          className={bucket.subtext && "bg-gray-50 px-4 py-2 my-6"}
+        >
+          {bucket.subtext && (
+            <h2>
+              {bucket.subtext.ordinal && (
+                <span className="font-semibold">
+                  {bucket.subtext.ordinal}:{" "}
+                </span>
+              )}
+              <span className="">{bucket.subtext.title}</span>
+              {/* TODO put in pages */}
+            </h2>
+          )}
+          {bucket.subtext?.notes && (
+            <ReactMarkdown className="mb-6 mt-2 notes">
+              {bucket.subtext.notes}
+            </ReactMarkdown>
+          )}
+          <QuoteList
+            quotes={bucket.quotes}
+            excludeTexts={[text.id]}
+            excludeAuthors={text.authors.map((a) => a.id)}
+          />
+        </section>
+      ))}
     </main>
   )
 }

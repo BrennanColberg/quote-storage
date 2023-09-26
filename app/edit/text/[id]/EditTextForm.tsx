@@ -16,7 +16,15 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
 import textSchema from "./textSchema"
-import { Person, Text, TextType } from "@prisma/client"
+import {
+  Citation,
+  Person,
+  Publisher,
+  Subtext,
+  Text,
+  TextType,
+  Thing,
+} from "@prisma/client"
 import { Input } from "@/components/ui/input"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -25,14 +33,24 @@ import Select from "react-select"
 import useOptions from "../../useOptions"
 import SearchButton from "../../SearchButton"
 import { generateID } from "@/lib/id"
+import { v4 as uuid } from "uuid"
+import EditSubtextSubform from "./EditSubtextSubform"
 
 export default function EditTextForm({
   text: initialText,
 }: {
-  text?: Text & { authors: Person[]; characters: Person[] }
+  text?: Text & {
+    authors: Person[]
+    characters: Person[]
+    subtexts: (Subtext & { citations: Citation[] })[]
+  }
 }) {
   const [persons, setPersons] = useState<Person[]>([])
   useOptions("person", setPersons)
+  const [things, setThings] = useState<
+    (Thing & { publisher?: Publisher; texts: Text[] })[]
+  >([])
+  useOptions("thing", setThings)
 
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
@@ -49,6 +67,19 @@ export default function EditTextForm({
           authorIds: initialText.authors.map((a) => a.id),
           characterIds: initialText.characters.map((a) => a.id),
           type: initialText.type,
+          subtexts: initialText.subtexts.map((subtext) => ({
+            id: subtext.id,
+            title: subtext.title,
+            ordinal: subtext.ordinal ?? "",
+            notes: subtext.notes ?? "",
+            citations: subtext.citations.map((citation) => ({
+              id: citation.id,
+              thingId: citation.thingId,
+              start: citation.start ?? "",
+              startLine: citation.startLine ?? undefined,
+              end: citation.end ?? "",
+            })),
+          })),
         }
       : {
           id: generateID(),
@@ -59,8 +90,10 @@ export default function EditTextForm({
           authorIds: [],
           characterIds: [],
           type: null,
+          subtexts: [],
         },
   })
+  console.log(form.getValues())
 
   async function onSubmit(values: z.infer<typeof textSchema>) {
     if (initialText) {
@@ -204,6 +237,64 @@ export default function EditTextForm({
               <FormControl>
                 <Textarea field={field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* subtext add/edit form */}
+        <FormField
+          control={form.control}
+          name="subtexts"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <>
+                  {field.value.map((subtext, i) => (
+                    <EditSubtextSubform
+                      text={{
+                        id: "",
+                        title: "",
+                        subtitle: "",
+                        year: "",
+                        authors: form
+                          .getValues()
+                          .authorIds.map((id) =>
+                            persons.find((p) => p.id === id),
+                          ),
+                        ...form.getValues(),
+                        // don't include ID if creating a new text!
+                        // because the link when creating a thing will fail
+                        ...{ id: initialText?.id },
+                      }}
+                      things={things}
+                      setThings={setThings}
+                      key={i}
+                      subtext={subtext}
+                      i={i}
+                      setSubtext={(newSubtext) => {
+                        let newSubtexts = [...field.value]
+                        newSubtexts[i] = newSubtext
+                        newSubtexts = newSubtexts.filter((x) => x !== undefined)
+                        form.setValue("subtexts", newSubtexts)
+                      }}
+                    />
+                  ))}
+                </>
+              </FormControl>
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={(e) => {
+                  e.preventDefault()
+                  form.setValue("subtexts", [
+                    ...field.value,
+                    { citations: [], id: generateID(), title: "" },
+                  ])
+                }}
+              >
+                Add subtext
+              </Button>
               <FormMessage />
             </FormItem>
           )}
