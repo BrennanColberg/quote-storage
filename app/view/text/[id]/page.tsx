@@ -74,7 +74,7 @@ export default async function ViewTextPage({
   return (
     <main>
       {/* TODO autofill author/text/edition */}
-      <AddButton type="quote" />
+      <AddButton type="quote" urlSuffix={"?text=" + text.id} />
 
       <h1>
         <EditButton type="text" id={text.id} />

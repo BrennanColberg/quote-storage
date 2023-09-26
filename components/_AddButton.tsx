@@ -2,7 +2,13 @@
 
 import { Button } from "./ui/button"
 
-export function _AddButton({ type }: { type: string }) {
+export function _AddButton({
+  type,
+  urlSuffix,
+}: {
+  type: string
+  urlSuffix?: string
+}) {
   return (
     <Button
       variant="outline"
@@ -10,7 +16,7 @@ export function _AddButton({ type }: { type: string }) {
       className="mb-3"
       onClick={(e) => {
         e.preventDefault()
-        location.href = `/add/${type}`
+        location.href = `/add/${type}${urlSuffix}`
       }}
     >
       Add {type}

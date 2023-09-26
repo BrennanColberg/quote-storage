@@ -50,7 +50,6 @@
 - question mark before each input?
 - publisher / type info as normal sublist of thing Title (not parens after)
 - autofill Thing when loading text if only one is attached
-- **autofill book info from "add quote" button**
 - "add thing" button on homepage/text page
 - change thing text to "Publisher, YYYY (Format)"
 - **github style heatmap of quote additions and/or reading (of pages? books? subsections?) (react-activity-calendar)**

@@ -34,11 +34,13 @@ import { v4 as uuid } from "uuid"
 
 export function EditQuoteForm({
   quote: initialQuote,
+  text: initialText,
 }: {
   quote?: Quote & {
     authors: Person[]
     sources: (Source & { citations: Citation[] })[]
   }
+  text?: Text & { authors: Person[]; things: Thing[] }
 }) {
   const searchParams = useSearchParams()
   const closeOnSubmit = searchParams.has("from")
@@ -74,9 +76,20 @@ export function EditQuoteForm({
         }
       : {
           content: "",
-          authorIds: [],
+          authorIds: initialText?.authors.map((a) => a.id) ?? [],
           notes: "",
-          sources: [],
+          sources: initialText
+            ? [
+                {
+                  id: uuid(),
+                  textId: initialText.id,
+                  citations: initialText.things.map((thing) => ({
+                    id: uuid(),
+                    thingId: thing.id,
+                  })),
+                },
+              ]
+            : [],
         },
   })
 
