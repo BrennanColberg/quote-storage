@@ -1,9 +1,10 @@
 import AddButton from "@/components/AddButton"
 import EditButton from "@/components/EditButton"
-import { Button } from "@/components/ui/button"
 import prisma from "@/prisma/prisma"
 import { cookies } from "next/headers"
 import Link from "next/link"
+import _ContributionGraph from "./_ContributionGraph"
+import ContributionGraph from "./ContributionGraph"
 
 export default async function Page() {
   cookies() // calling this forces dynamic rerendering
@@ -47,6 +48,9 @@ export default async function Page() {
           of <b>{textCount} texts</b>
         </li>
       </ul>
+      <br />
+      {/* @ts-ignore because of server component nonsense */}
+      <ContributionGraph />
       <br />
       <h3>Texts</h3>
       <ul>

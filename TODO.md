@@ -52,7 +52,6 @@
 - autofill Thing when loading text if only one is attached
 - "add thing" button on homepage/text page
 - change thing text to "Publisher, YYYY (Format)"
-- **github style heatmap of quote additions and/or reading (of pages? books? subsections?) (react-activity-calendar)**
 - on homepage make text list 2-3-level via supertexts
 - setup S3 auto dump backup on a schedule
 - QR code printer (on label machine) to link from inside covers -> online Things
@@ -83,3 +82,5 @@
 - authors in SourceComponent should be links
 - citation things should be links (e.g. "(Easton Press, 2021)")
 - account for precise birth/death dates
+- add tooltips to contribution graph via `renderBlock`
+- make contribution graph labels percentile-based?
