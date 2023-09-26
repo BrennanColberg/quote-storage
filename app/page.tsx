@@ -38,11 +38,11 @@ export default async function Page() {
           this system stores <b>{quoteCount} quotes</b>
         </li>
         <li>
-          from <b>{realPersonCount} real people</b> (and{" "}
-          <b>{fictionalPersonCount} fictional ones</b>)
+          by <b>{realPersonCount} people</b> (and{" "}
+          <b>{fictionalPersonCount} fictional characters</b>)
         </li>
         <li>
-          over <b>{thingCount} copies</b>
+          from <b>{thingCount} copies</b>
         </li>
         <li>
           of <b>{textCount} texts</b>

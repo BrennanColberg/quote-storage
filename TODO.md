@@ -69,7 +69,6 @@
 - **quote can be “about” a person**
 - render citations e.g. {quote/6382353c-d187-4fa4-8393-095d2fac188c} in notes as footnotes with hover-preview and link them to the actual quote (via remark/rehype in ReactMarkdown)
 - render quote notes inline in book
-- **intro: “by X people / from Y copies”**
 - quote “collections” / “themes” / “topics” (e.g. multiple relevant to one point or subject)
 - reading logs (start/end/chapters)
 - chapters = subtexts
