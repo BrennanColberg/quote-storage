@@ -3,7 +3,7 @@ import isUserAuthenticated from "@/lib/isUserAuthenticated"
 
 export default function AddButton({
   type,
-  urlSuffix,
+  urlSuffix = "",
 }: {
   type: string
   urlSuffix?: string
