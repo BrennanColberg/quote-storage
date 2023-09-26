@@ -64,6 +64,13 @@ export default async function ViewTextPage({
     else quoteProps.push({ ...source.quote, sources: [sourceProp] })
   }
 
+  const authors = []
+  for (const author of text.authors) {
+    authors.push(<Link href={`/view/person/${author.id}`}>{author.name}</Link>)
+    authors.push(", ")
+  }
+  authors.pop() // remove last comma
+
   return (
     <main>
       {/* TODO autofill author/text/edition */}
@@ -74,9 +81,7 @@ export default async function ViewTextPage({
         {text.title}
       </h1>
       {text.subtitle && <h2>{text.subtitle}</h2>}
-      {text.authors.length > 0 && (
-        <h3>{text.authors.map((author) => author.name).join(", ")}</h3>
-      )}
+      {authors.length > 0 && <h3>{authors}</h3>}
 
       <br />
 
