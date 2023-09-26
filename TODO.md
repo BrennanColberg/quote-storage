@@ -73,7 +73,6 @@
 - chapters = subtexts
 - summaries as distinct from notes?
 
-- links should underline on hover
 - authors in SourceComponent should be links
 - citation things should be links (e.g. "(Easton Press, 2021)")
 - account for precise birth/death dates
