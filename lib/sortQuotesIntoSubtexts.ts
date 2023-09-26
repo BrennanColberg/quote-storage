@@ -95,9 +95,9 @@ export function simplifyToMostCommonThing(
 export function justBeforeCitation(
   citation: SortableCitation,
 ): SortableCitation | undefined {
-  if (citation.start === undefined) return undefined
+  if (citation.start == null) return undefined
   // midway down the page? the last section ends on this page
-  if (citation.startLine !== undefined && citation.startLine > 1)
+  if (citation.startLine != null && citation.startLine > 1)
     return { end: citation.start }
   // otherwise, the last section ends on the previous page
   if (typeOfPlace(citation.start) === "arabic")
@@ -111,11 +111,12 @@ export function justBeforeCitation(
 export function justAfterCitation(
   citation: SortableCitation,
 ): SortableCitation | undefined {
-  if (citation.end === undefined) return undefined
+  if (citation.end == null) return undefined
   if (typeOfPlace(citation.end) === "arabic")
     return { start: +citation.end + 1 + "" }
   if (typeOfPlace(citation.end) === "roman")
     return { start: arabicToRoman(parseRoman(citation.end) + 1) }
+  console.log(citation)
   throw new Error("subtext sorting doesn't support timestamps yet")
 }
 
