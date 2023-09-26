@@ -12,6 +12,7 @@ export default async function ViewQuotePage({
     where: { id },
     include: {
       authors: true,
+      subjects: true,
       sources: {
         include: {
           // TODO import fewer things in future
