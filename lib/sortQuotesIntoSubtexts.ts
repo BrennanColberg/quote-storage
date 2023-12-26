@@ -55,7 +55,7 @@ export function simplifyToMostCommonThing(
   })
   const thingId = Object.entries(thingFrequencies).sort(
     ([, a], [, b]) => b - a,
-  )[0][0]
+  )[0]?.[0] // if there are no quotes -> thingFrequencies, `thingId` can be undefined
   const quotesInThing = []
   const quotesNotInThing = []
   quotes.forEach((quote) => {

@@ -39,6 +39,7 @@ export default async function ViewTextPage({
     },
   })
   if (!text) notFound()
+  console.log(text)
 
   // make simple version of text with just authors
   const _textProp: Partial<TextProp> & typeof text = { ...text }
