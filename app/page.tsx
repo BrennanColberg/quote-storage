@@ -5,10 +5,9 @@ import { cookies } from "next/headers"
 import Link from "next/link"
 import _ContributionGraph from "./_ContributionGraph"
 import ContributionGraph from "./ContributionGraph"
+import isUserAuthenticated from "@/lib/isUserAuthenticated"
 
 export default async function Page() {
-  cookies() // calling this forces dynamic rerendering
-
   const [
     texts,
     { _count: quoteCount },
@@ -16,7 +15,15 @@ export default async function Page() {
     { _count: thingCount },
     { _count: textCount },
   ] = await Promise.all([
-    prisma.text.findMany({ include: { authors: true } }),
+    prisma.text.findMany({
+      include: { authors: true, _count: { select: { sources: true } } },
+      orderBy: !isUserAuthenticated()
+        ? // show most recent first if authenticated (as they'll be editing)
+          // (note: `createdAt` is bad metric, doesn't look for quote edits)
+          { createdAt: "desc" }
+        : // otherwise show most populated (for viewers to see content)
+          { sources: { _count: "desc" } },
+    }),
     prisma.quote.aggregate({ _count: true }),
     prisma.person.groupBy({ by: ["fictional"], _count: true }),
     prisma.thing.aggregate({ _count: true }),
