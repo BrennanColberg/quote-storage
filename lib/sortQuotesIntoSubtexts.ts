@@ -1,10 +1,9 @@
 // TODO make faster by manipulating IDs instead of objects?
 
 import { QuoteProp } from "@/app/view/Quote"
-import { Citation, Quote, Subtext } from "@prisma/client"
+import { Citation, Subtext } from "@prisma/client"
 import compareCitations, { comparePlaces } from "./compareCitations"
 import { SortableCitation } from "./SortableCitation"
-import compareQuotes from "./compareQuotes"
 import { typeOfPlace } from "./compareCitations"
 import parseRoman, { arabicToRoman } from "./parseRoman"
 
@@ -18,7 +17,7 @@ export type SubtextBucket = {
 }
 
 /**
- * The sorting problem is nearly intractable in the general case,
+ * The sorting problem is extremely complex in the general case,
  * so we consider the case where all citations are within the same
  * Thing. This allows us to create a framework into which we can
  * later sort the remaining quotes based on the locations of some
@@ -44,6 +43,7 @@ export function simplifyToMostCommonThing(
   quotesInThing: (QuoteProp & { citation: Citation })[]
   subtextsInThing: (SubtextProp & { citation: Citation })[]
 } {
+  // figure out which Thing is cited the most, and just use that one
   const thingFrequencies: Record<string, number> = {}
   quotes.forEach((quote) => {
     quote.sources.forEach((source) => {
@@ -55,7 +55,10 @@ export function simplifyToMostCommonThing(
   })
   const thingId = Object.entries(thingFrequencies).sort(
     ([, a], [, b]) => b - a,
-  )[0]?.[0] // if there are no quotes -> thingFrequencies, `thingId` can be undefined
+  )[0]?.[0] // if there are no citations, `thingId` can be undefined
+
+  // only consider quotes that have a citation in the one Thing considered
+  // (and only consider the first such citation for each quote)
   const quotesInThing = []
   const quotesNotInThing = []
   quotes.forEach((quote) => {
@@ -72,6 +75,9 @@ export function simplifyToMostCommonThing(
     // note: could clean up object here
     quotesInThing.push({ ...quote, citation })
   })
+
+  // only consider subtexts that have a citation in the one Thing considered
+  // (and only consider the first such citation for each subtext)
   const subtextsInThing = []
   const subtextsNotInThing = []
   subtexts.forEach((subtext) => {
@@ -83,6 +89,7 @@ export function simplifyToMostCommonThing(
     // note: could clean up object here
     subtextsInThing.push({ ...subtext, citation })
   })
+
   return {
     thingId,
     quotesInThing,
@@ -184,6 +191,10 @@ export function isQuoteInsideBucket<
  *
  * Params must each have a single citation, all of which are within
  * the same Thing, like the output from `simplifyToMostCommonThing`.
+ *
+ * If a quote is within multiple subtexts, it will be placed in the
+ * latest-starting one that it is within (so that if e.g. it is in a
+ * chapter inside a section it will be shown as within the chapter.)
  */
 export function bucketQuotesBySubtext<
   S extends { citation: SortableCitation },
@@ -197,19 +208,18 @@ export function bucketQuotesBySubtext<
 
   console.log("BEFORE CULLING", buckets)
 
-  // sort quotes into buckets
+  // sort quotes into buckets (each into last bucket it's within)
   quotes.forEach((quote) => {
     // find the last bucket that this quote starts after
-    let i = 0
-    while (
-      // we're not at the end
-      i < buckets.length - 1 &&
-      // this quote isn't inside the bucket
-      !isQuoteInsideBucket(quote, buckets[i])
-    )
-      // keep going
-      i++
-    buckets[i].quotes.push(quote)
+    // note: this algo could be more efficient if it short-circuits when a
+    //       bucket is not valid after one *has been* valid (with an edge
+    //       case when the last bucket is valid), but I'm optimizing for
+    //       code readability over performance for now
+    let lastValidBucketIndex = undefined
+    for (let i = 0; i < buckets.length - 1; i++)
+      if (isQuoteInsideBucket(quote, buckets[i])) lastValidBucketIndex = i
+    if (lastValidBucketIndex !== undefined)
+      buckets[lastValidBucketIndex].quotes.push(quote)
   })
 
   return buckets
