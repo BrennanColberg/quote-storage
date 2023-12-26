@@ -93,8 +93,8 @@ export default function EditPublisherForm({
               <FormLabel>Location</FormLabel>
               <FormControl>
                 <div className="flex flex-row">
-                  <Input field={field} />
                   <SearchButton query={`${form.getValues("name")} location`} />
+                  <Input field={field} />
                 </div>
               </FormControl>
               <FormDescription>

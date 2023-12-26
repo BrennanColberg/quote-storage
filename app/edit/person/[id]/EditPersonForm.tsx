@@ -155,11 +155,11 @@ export default function EditPersonForm({
                 <FormLabel>Wikipedia Link</FormLabel>
                 <FormControl>
                   <div className="flex flex-row">
-                    <Input field={field} />
                     <SearchButton
                       website="wikipedia"
                       query={() => form.getValues("name")}
                     />
+                    <Input field={field} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -174,10 +174,10 @@ export default function EditPersonForm({
                 <FormLabel>Twitter Link</FormLabel>
                 <FormControl>
                   <div className="flex flex-row">
-                    <Input field={field} />
                     <SearchButton
                       query={() => `${form.getValues("name")} twitter`}
                     />
+                    <Input field={field} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -230,10 +230,10 @@ export default function EditPersonForm({
                   <FormLabel>Birth year</FormLabel>
                   <FormControl>
                     <div className="flex flex-row">
-                      <Input field={field} />
                       <SearchButton
                         query={() => `${form.getValues("name")} birth year`}
                       />
+                      <Input field={field} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -251,10 +251,10 @@ export default function EditPersonForm({
                   <FormLabel>Death year (if applicable)</FormLabel>
                   <FormControl>
                     <div className="flex flex-row">
-                      <Input field={field} />
                       <SearchButton
                         query={() => `${form.getValues("name")} death year`}
                       />
+                      <Input field={field} />
                     </div>
                   </FormControl>
                   <FormMessage />

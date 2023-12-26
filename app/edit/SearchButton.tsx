@@ -23,7 +23,7 @@ export default function SearchButton({
   return (
     <Button
       variant="secondary"
-      className="ml-1"
+      className="mr-1"
       onClick={(e) => {
         e.preventDefault()
         if (typeof query !== "string") query = query()

@@ -172,10 +172,10 @@ export default function EditTextForm({
                 <FormLabel>Year first published</FormLabel>
                 <FormControl>
                   <div className="flex flex-row">
-                    <Input field={field} />
                     <SearchButton
                       query={`${form.getValues("title")} year first published`}
                     />
+                    <Input field={field} />
                   </div>
                 </FormControl>
                 <FormMessage />
