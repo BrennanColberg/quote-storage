@@ -6,7 +6,7 @@ import {
   justBeforeCitation,
 } from "./sortQuotesIntoSubtexts"
 
-describe(bucketQuotesBySubtext, () => {
+describe("bucketQuotesBySubtext", () => {
   test("one quote before one subtext", () => {
     const subtext = { citation: { start: "2" } }
     const quote = { citation: { start: "1" } }
@@ -111,7 +111,7 @@ describe(bucketQuotesBySubtext, () => {
   })
 })
 
-describe(justBeforeCitation, () => {
+describe("justBeforeCitation", () => {
   test("simple arabic number, no line", () => {
     expect(justBeforeCitation({ start: "2" })).toEqual({ end: "1" })
   })
@@ -135,7 +135,7 @@ describe(justBeforeCitation, () => {
   })
 })
 
-describe(justAfterCitation, () => {
+describe("justAfterCitation", () => {
   test("simple arabic number", () => {
     expect(justAfterCitation({ end: "2" })).toEqual({ start: "3" })
   })
@@ -144,7 +144,7 @@ describe(justAfterCitation, () => {
   })
 })
 
-describe(bucketsOfAndBetweenSubtexts, () => {
+describe("bucketsOfAndBetweenSubtexts", () => {
   test("one with start/end", () => {
     const subtext = { citation: { start: "2", end: "3" } }
     const buckets = bucketsOfAndBetweenSubtexts([subtext])
@@ -209,7 +209,7 @@ describe(bucketsOfAndBetweenSubtexts, () => {
   })
 })
 
-describe(isQuoteInsideBucket, () => {
+describe("isQuoteInsideBucket", () => {
   test("clearly inside defined bucket", () => {
     const quote = { citation: { start: "3" } }
     const bucket = { citation: { start: "2", end: "4" }, quotes: [] }

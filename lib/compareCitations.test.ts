@@ -2,7 +2,7 @@ import { comparePlaces, typeOfPlace } from "./compareCitations"
 
 // reminder for comparators: 1 = b comes first, 0 = equal, -1 = a comes first
 
-describe(typeOfPlace, () => {
+describe("typeOfPlace", () => {
   test("undefined", () => {
     expect(typeOfPlace(undefined)).toBe(undefined)
     expect(typeOfPlace("")).toBe(undefined)
@@ -35,7 +35,7 @@ describe(typeOfPlace, () => {
   })
 })
 
-describe(comparePlaces, () => {
+describe("comparePlaces", () => {
   test("undefined", () => {
     // undefined always comes last
     expect(comparePlaces(undefined, undefined)).toBe(0)

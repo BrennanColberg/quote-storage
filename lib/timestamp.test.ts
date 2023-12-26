@@ -1,6 +1,6 @@
 import { compareTimestamps, parseTimestamp } from "./timestamp"
 
-describe(parseTimestamp, () => {
+describe("parseTimestamp", () => {
   test("simple", () => {
     expect(parseTimestamp("1")).toEqual([1])
     expect(parseTimestamp("1:2")).toEqual([2, 1])
@@ -14,7 +14,7 @@ describe(parseTimestamp, () => {
   })
 })
 
-describe(compareTimestamps, () => {
+describe("compareTimestamps", () => {
   test("different lengths", () => {
     expect(compareTimestamps([1], [1, 2])).toBeLessThan(0)
     expect(compareTimestamps([1, 2], [1])).toBeGreaterThan(0)

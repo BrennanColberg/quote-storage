@@ -1,6 +1,6 @@
 import parseRoman from "./parseRoman"
 
-describe(parseRoman, () => {
+describe("parseRoman", () => {
   test("all the same", () => {
     expect(parseRoman("i")).toBe(1)
     expect(parseRoman("ii")).toBe(2)
