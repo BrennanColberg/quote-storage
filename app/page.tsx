@@ -17,7 +17,7 @@ export default async function Page() {
   ] = await Promise.all([
     prisma.text.findMany({
       include: { authors: true, _count: { select: { sources: true } } },
-      orderBy: !isUserAuthenticated()
+      orderBy: isUserAuthenticated()
         ? // show most recent first if authenticated (as they'll be editing)
           // (note: `createdAt` is bad metric, doesn't look for quote edits)
           { createdAt: "desc" }
