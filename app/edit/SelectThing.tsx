@@ -33,6 +33,7 @@ export default function SelectThing({
             label += ` (${thing.publisher.name}, ${thing.year})`
           else if (thing.publisher) label += ` (${thing.publisher.name})`
           else if (thing.year) label += ` (${thing.year})`
+          if (thing.volume) label += ` vol. ${thing.volume}`
           return { label, value: thing.id }
         }),
     [things],

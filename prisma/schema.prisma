@@ -136,6 +136,7 @@ model Thing {
   citations   Citation[]
   publisherId String?
   notes       String?
+  volume      Int?
   authors     Person[]   @relation("ThingAuthors")
   translators Person[]   @relation("ThingTranslators")
   editors     Person[]   @relation("ThingEditors")

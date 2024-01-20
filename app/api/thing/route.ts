@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
     type,
     year,
     id,
+    volume,
   } = thingSchema.parse(body)
   const thing = await prisma.thing.create({
     data: {
@@ -42,6 +43,7 @@ export async function POST(request: NextRequest) {
       url: url || null,
       type: type ?? null,
       year: year || null,
+      volume: volume || null,
     },
   })
   return NextResponse.json(thing)
@@ -64,6 +66,7 @@ export async function PUT(request: NextRequest) {
     url,
     type,
     year,
+    volume,
   } = thingSchema.parse(body)
 
   // manually tally which authors/editors/translators/texts to disconnect
@@ -110,6 +113,7 @@ export async function PUT(request: NextRequest) {
       url: url || null,
       type: type ?? null,
       year: year || null,
+      volume: volume || null,
     },
   })
   return NextResponse.json(thing)

@@ -15,6 +15,7 @@ const thingSchema = z.object({
   notes: z.string().optional(),
   type: z.nativeEnum(ThingType).optional(),
   url: z.string().optional(),
+  volume: z.number().int().optional(),
 })
 
 export default thingSchema

@@ -64,6 +64,7 @@ export default function EditThingForm({
           notes: initialThing.notes ?? "",
           type: initialThing.type,
           url: initialThing.url ?? "",
+          volume: initialThing.volume || null,
         }
       : {
           id: generateID(),
@@ -77,6 +78,7 @@ export default function EditThingForm({
           notes: "",
           type: null,
           url: "",
+          volume: null,
         },
   })
 
@@ -101,7 +103,7 @@ export default function EditThingForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 max-w-xl mx-auto mt-5"
       >
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <FormField
             control={form.control}
             name="title"
@@ -123,6 +125,26 @@ export default function EditThingForm({
                 <FormLabel>Subtitle</FormLabel>
                 <FormControl>
                   <Input field={field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="volume"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Volume</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    field={field}
+                    value={field.value || ""}
+                    setValueAsNumber={(value) =>
+                      form.setValue("volume", value || null)
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

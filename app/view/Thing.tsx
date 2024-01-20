@@ -30,5 +30,6 @@ export function ThingLink({
 
   let text = items.shift()
   if (items.length) text += ` (${items.join(", ")})`
+  if (thing.volume) text += ` vol. ${thing.volume}`
   return <Link href={`/view/thing/${thing.id}`}>{text}</Link>
 }
