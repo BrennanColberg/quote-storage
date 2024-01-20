@@ -38,17 +38,17 @@
 - delete button on edit forms
 - author from text page should hyperlink
 - don't by default generate ID if it isn't already set (i.e. on creation not edit)
-- search button for publisher URL
-- search button for edition URL
-- search button for publisher URL
-- trim twitter link of search parameters when entered
+- **search button for publisher URL**
+- **search button for edition URL**
+- **search button for publisher URL**
+- **just store twitter username, not link**
 - rearrange text edit form. second row: type/year. third row: authors/characters
 - represent publisher imprints somehow? publisher-publisher relation?
 - notes/id fields under submit button?
 - changing text resets things?
 - question mark before each input?
 - publisher / type info as normal sublist of thing Title (not parens after)
-- autofill Thing when loading text if only one is attached
+- **autofill Thing when selecting text if only one is attached**
 - "add thing" button on homepage/text page
 - change thing text to "Publisher, YYYY (Format)"
 - on homepage make text list 2-3-level via supertexts
@@ -60,10 +60,9 @@
 
 - quote count on text page (+ homepage?)
 - “star” really good quotes
-- year first published search includes author name
+- **year first published search includes author name**
 - automatic ID assignment for new people from their names
 - **owner of thing (self? Library? Etc)**
-- search field for publisher URL
 - editor/translator on book itself?
 - render citations e.g. {quote/6382353c-d187-4fa4-8393-095d2fac188c} in notes as footnotes with hover-preview and link them to the actual quote (via remark/rehype in ReactMarkdown)
 - render quote notes inline in book
@@ -71,12 +70,20 @@
 - reading logs (start/end/chapters)
 - summaries as distinct from notes?
 
-- authors in SourceComponent should be links
 - citation things should be links (e.g. "(Easton Press, 2021)")
 - account for precise birth/death dates
 - add tooltips to contribution graph via `renderBlock`
 - make contribution graph labels percentile-based?
-- automatically make referenced persons' names _within_ a quote into links (and only list subjects beneath the quote if they're not explicitly mentioned in it?)
+- **automatically make referenced persons' names _within_ a quote into links (and only list subjects beneath the quote if they're not explicitly mentioned in it?)**
 
 - match subtexts/quotes that are not from same Thing
 - subtexts should be collapsible (and perhaps collapsed by default?)
+
+- dedicated single quote display page
+- easier edit button next to chapter notes
+- make ordinal field bigger (maybe add "chapter" automatically? or upon a boolean being flipped on the Text?)
+- remove Source header, move delete button down next to TextSelect
+- don't show author alongside fictional character in quote byline
+- script(s) for ingesting large amounts of quotes from prior systems
+- nested subtexts
+- should subtexts be text-tied or thing-tied??
