@@ -218,8 +218,12 @@ export function bucketQuotesBySubtext<
     let lastValidBucketIndex = undefined
     for (let i = 0; i < buckets.length - 1; i++)
       if (isQuoteInsideBucket(quote, buckets[i])) lastValidBucketIndex = i
+    // if the quote fits into any buckets, put it in the last valid one
     if (lastValidBucketIndex !== undefined)
       buckets[lastValidBucketIndex].quotes.push(quote)
+    // if the quote is not within any of the buckets, put it in the last one,
+    // which is always a blank one added on after all the existing ones
+    else buckets[buckets.length - 1].quotes.push(quote)
   })
 
   return buckets

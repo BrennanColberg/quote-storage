@@ -109,6 +109,12 @@ describe("bucketQuotesBySubtext", () => {
       { subtext: subtext2, quotes: [] },
     ])
   })
+
+  test("one quote, no subtexts", () => {
+    const quote = { citation: { start: "2" } }
+    const buckets = bucketQuotesBySubtext([], [quote])
+    expect(buckets).toEqual([{ quotes: [quote] }])
+  })
 })
 
 describe("justBeforeCitation", () => {
