@@ -42,15 +42,8 @@ export default function _ContributionGraph({
       }),
     )
 
-    return data
+    return data.sort((a, b) => a.date.localeCompare(b.date))
   }, [])
 
-  return (
-    <ActivityCalendar
-      data={data}
-      hideTotalCount
-      hideColorLegend
-      colorScheme="light"
-    />
-  )
+  return <ActivityCalendar data={data} showWeekdayLabels colorScheme="light" />
 }
