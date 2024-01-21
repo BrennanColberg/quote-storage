@@ -103,7 +103,6 @@ export default async function ViewPersonPage({
           <h3>Quotes (Authored)</h3>
           <QuoteList
             quotes={person.quotesAuthored}
-            // excludeTexts={[text.id]}
             excludeAuthors={[person.id]}
           />
         </>
@@ -114,8 +113,7 @@ export default async function ViewPersonPage({
           <h3>Quotes (About)</h3>
           <QuoteList
             quotes={person.quotesAbout}
-            // excludeTexts={[text.id]}
-            excludeAuthors={[person.id]}
+            excludeSubjects={[person.id]}
           />
         </>
       )}
