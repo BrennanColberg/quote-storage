@@ -23,7 +23,13 @@ export function SourceComponent({
   excludeAuthors?: string[]
 }) {
   if (excludeTexts?.includes(source.textId))
-    return <CitationList citations={source.citations} type={null} />
+    return (
+      <CitationList
+        citations={source.citations}
+        text={source.text}
+        type={null}
+      />
+    )
 
   const showAuthors = !!source.text.authors.find(
     (a) => !excludeAuthors?.includes(a.id),
@@ -45,7 +51,7 @@ export function SourceComponent({
           )
         </>
       )}
-      <CitationList citations={source.citations} />
+      <CitationList citations={source.citations} text={source.text} />
     </li>
   )
 }
