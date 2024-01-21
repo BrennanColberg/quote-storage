@@ -19,6 +19,7 @@ export default function compareQuotes(
   )
 
   // no overlapping citations = incomparable = "equal"
+  // TODO(brennan): check for citations -> Things with same title -> sort by volume
   if (commonThingIds.length === 0) return 0
 
   // all overlapping comparisons must match...

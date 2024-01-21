@@ -4,7 +4,7 @@ import {
   isQuoteInsideBucket,
   justAfterCitation,
   justBeforeCitation,
-} from "./sortQuotesIntoSubtexts"
+} from "./sortQuotesIntoSubtextBuckets"
 
 describe("bucketQuotesBySubtext", () => {
   test("one quote before one subtext", () => {

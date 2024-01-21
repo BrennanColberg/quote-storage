@@ -1,14 +1,16 @@
 // TODO make faster by manipulating IDs instead of objects?
 
 import { QuoteProp } from "@/app/view/Quote"
-import { Citation, Subtext } from "@prisma/client"
+import { Citation, Subtext, Thing } from "@prisma/client"
 import compareCitations, { comparePlaces } from "./compareCitations"
 import { SortableCitation } from "./SortableCitation"
 import { typeOfPlace } from "./compareCitations"
 import parseRoman, { arabicToRoman } from "./parseRoman"
+import { ThingProp } from "@/app/view/Thing"
+import { CitationProp } from "@/app/view/Citation"
 
 export type SubtextProp = Subtext & {
-  citations: Citation[]
+  citations: CitationProp[]
 }
 
 export type SubtextBucket = {
@@ -36,26 +38,55 @@ export function simplifyToMostCommonThing(
   quotes: QuoteProp[],
   subtexts: SubtextProp[],
 ): {
-  thingId: string
+  thing?: ThingProp
   quotesNotInThing: QuoteProp[]
   subtextsNotInThing: SubtextProp[]
   // note: could probably trim object quite a bit here
-  quotesInThing: (QuoteProp & { citation: Citation })[]
-  subtextsInThing: (SubtextProp & { citation: Citation })[]
+  quotesInThing: (QuoteProp & { citation: CitationProp })[]
+  subtextsInThing: (SubtextProp & { citation: CitationProp })[]
 } {
   // figure out which Thing is cited the most, and just use that one
   const thingFrequencies: Record<string, number> = {}
+  const things: Record<string, ThingProp> = {}
   quotes.forEach((quote) => {
     quote.sources.forEach((source) => {
       source.citations.forEach((citation) => {
         const thingId = citation.thingId
         thingFrequencies[thingId] = (thingFrequencies[thingId] || 0) + 1
+        if (!things[thingId]) things[thingId] = citation.thing
       })
     })
   })
-  const thingId = Object.entries(thingFrequencies).sort(
+  let thingId = Object.entries(thingFrequencies).sort(
     ([, a], [, b]) => b - a,
   )[0]?.[0] // if there are no citations, `thingId` can be undefined
+
+  // if there is no thingId, there are no quotes.
+  // in this case, look at the most common thing among _subtexts_.
+  if (!thingId) {
+    subtexts.forEach((subtext) => {
+      subtext.citations.forEach((citation) => {
+        const thingId = citation.thingId
+        thingFrequencies[thingId] = (thingFrequencies[thingId] || 0) + 1
+        if (!things[thingId]) things[thingId] = citation.thing
+      })
+    })
+
+    thingId = Object.entries(thingFrequencies).sort(
+      ([, a], [, b]) => b - a,
+    )[0]?.[0] // if there are no citations, `thingId` can be undefined
+
+    // if thingId is still undefined, no valid quotes/subtexts were passed
+    if (!thingId) {
+      return {
+        thing: undefined,
+        quotesInThing: [],
+        quotesNotInThing: quotes,
+        subtextsInThing: [],
+        subtextsNotInThing: subtexts,
+      }
+    }
+  }
 
   // only consider quotes that have a citation in the one Thing considered
   // (and only consider the first such citation for each quote)
@@ -63,7 +94,7 @@ export function simplifyToMostCommonThing(
   const quotesNotInThing = []
   quotes.forEach((quote) => {
     // mine quote to try to find one relevant citation
-    let citation: Citation | undefined = undefined
+    let citation: CitationProp | undefined = undefined
     for (let si = 0; si < quote.sources.length && !citation; si++) {
       const source = quote.sources[si]
       for (let ci = 0; ci < source.citations.length && !citation; ci++) {
@@ -91,7 +122,7 @@ export function simplifyToMostCommonThing(
   })
 
   return {
-    thingId,
+    thing: things[thingId],
     quotesInThing,
     quotesNotInThing,
     subtextsInThing,
@@ -206,7 +237,7 @@ export function bucketQuotesBySubtext<
   // create a "bucket" for each subtext
   const buckets = bucketsOfAndBetweenSubtexts(subtexts)
 
-  console.log("BEFORE CULLING", buckets)
+  // console.log("BEFORE CULLING", buckets)
 
   // sort quotes into buckets (each into last bucket it's within)
   quotes.forEach((quote) => {
@@ -244,20 +275,42 @@ export function bucketQuotesBySubtext<
  * Note: does not consider recursively-nested subtexts at this time.
  * Note: this algorithm is NOT yet optimized in the slightest.
  */
-export default function sortQuotesIntoSubtexts(
+export default function sortQuotesIntoSubtextBuckets(
   quotes: QuoteProp[],
   subtexts: SubtextProp[],
 ): SubtextBucket[] {
-  // simplify to the case of one shared Thing
-  const {
-    quotesInThing,
-    subtextsInThing,
-    quotesNotInThing,
-    subtextsNotInThing, // useless (for now?)
-  } = simplifyToMostCommonThing(quotes, subtexts)
+  const bucketBatches: { buckets: SubtextBucket[]; thing: Thing }[] = []
 
-  const buckets = bucketQuotesBySubtext(subtextsInThing, quotesInThing)
+  // first, drop all quotes/subtexts that are not in any Thing
+  // TODO render these somehow eventually... but not now
+  quotes = quotes.filter((q) => q.sources.some((s) => s.citations.length > 0))
+  subtexts = subtexts.filter((s) => s.citations.length > 0)
 
-  return buckets
-  // return [...buckets, { quotes: quotesNotInThing.sort(compareQuotes) }]
+  while (quotes.length > 0 || subtexts.length > 0) {
+    // simplify to the case of one shared Thing
+    const {
+      thing,
+      quotesInThing,
+      subtextsInThing,
+      quotesNotInThing,
+      subtextsNotInThing, // useless (for now?)
+    } = simplifyToMostCommonThing(quotes, subtexts)
+    const buckets = bucketQuotesBySubtext(subtextsInThing, quotesInThing)
+    bucketBatches.push({ buckets, thing })
+    console.log(`bucketed thing: ${thing.id}`)
+
+    // trim to the "remainder", repeat to find more Things
+    quotes = quotesNotInThing
+    subtexts = subtextsNotInThing
+    console.log(`down to ${quotes.length} quotes, ${subtexts.length} subtexts`)
+  }
+
+  // if multiple Things, sort by title -> volume
+  bucketBatches.sort((a, b) => {
+    const nameDiff = a.thing.title.localeCompare(b.thing.title)
+    if (nameDiff !== 0) return nameDiff
+    return a.thing.volume ?? 0 - b.thing.volume ?? 0
+  })
+
+  return bucketBatches.flatMap(({ buckets }) => buckets)
 }

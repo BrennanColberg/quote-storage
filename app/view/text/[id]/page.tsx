@@ -9,7 +9,7 @@ import { ThingLink } from "../../Thing"
 import AddButton from "@/components/AddButton"
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 import listOfLinks from "@/lib/listOfLinks"
-import sortQuotesIntoSubtexts from "@/lib/sortQuotesIntoSubtexts"
+import sortQuotesIntoSubtextBuckets from "@/lib/sortQuotesIntoSubtextBuckets"
 
 export default async function ViewTextPage({
   params: { id },
@@ -21,7 +21,7 @@ export default async function ViewTextPage({
     include: {
       authors: true,
       characters: true,
-      subtexts: { include: { citations: true } },
+      subtexts: { include: { citations: { include: { thing: true } } } },
       things: { include: { publisher: true } },
       sources: {
         include: {
@@ -76,9 +76,9 @@ export default async function ViewTextPage({
     })),
   )
 
-  const subtextBuckets = sortQuotesIntoSubtexts(quoteProps, text.subtexts)
+  const subtextBuckets = sortQuotesIntoSubtextBuckets(quoteProps, text.subtexts)
 
-  console.log("subtextBuckets", subtextBuckets)
+  // console.log("subtextBuckets", subtextBuckets)
   return (
     <main>
       {/* TODO autofill author/text/edition */}
