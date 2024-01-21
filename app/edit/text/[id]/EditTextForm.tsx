@@ -289,7 +289,23 @@ export default function EditTextForm({
                   e.preventDefault()
                   form.setValue("subtexts", [
                     ...field.value,
-                    { citations: [], id: generateID(), title: "" },
+                    {
+                      // start with one citation which has the same Thing as the previous subtext
+                      // (to avoid having to click the same thing constantly when entering a TOC)
+                      citations: [
+                        {
+                          id: generateID(),
+                          thingId:
+                            field.value[field.value.length - 1]?.citations[0]
+                              ?.thingId,
+                          start: "",
+                          startLine: undefined,
+                          end: "",
+                        },
+                      ],
+                      id: generateID(),
+                      title: "",
+                    },
                   ])
                 }}
               >
