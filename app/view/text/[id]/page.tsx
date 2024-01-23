@@ -10,6 +10,7 @@ import AddButton from "@/components/AddButton"
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 import listOfLinks from "@/lib/listOfLinks"
 import sortQuotesIntoSubtextBuckets from "@/lib/sortQuotesIntoSubtextBuckets"
+import Expandable from "@/components/Expandable"
 
 export default async function ViewTextPage({
   params: { id },
@@ -77,6 +78,10 @@ export default async function ViewTextPage({
   )
 
   const subtextBuckets = sortQuotesIntoSubtextBuckets(quoteProps, text.subtexts)
+
+  // all are either initially expanded or collapsed
+  // (the latter primarily on big, long texts with lots of quotes)
+  const initiallyExpanded = quoteProps.length < 10 || subtextBuckets.length < 3
 
   // console.log("subtextBuckets", subtextBuckets)
   return (
@@ -157,11 +162,18 @@ export default async function ViewTextPage({
               {bucket.subtext.notes}
             </ReactMarkdown>
           )}
-          <QuoteList
-            quotes={bucket.quotes}
-            excludeTexts={[text.id]}
-            excludeAuthors={text.authors.map((a) => a.id)}
-          />
+
+          <Expandable
+            description={`${bucket.quotes.length} quotes`}
+            initiallyExpanded={initiallyExpanded}
+            hidden={bucket.quotes.length === 0}
+          >
+            <QuoteList
+              quotes={bucket.quotes}
+              excludeTexts={[text.id]}
+              excludeAuthors={text.authors.map((a) => a.id)}
+            />
+          </Expandable>
         </section>
       ))}
     </main>
