@@ -99,7 +99,7 @@ export function simplifyToMostCommonThing(
       const source = quote.sources[si]
       for (let ci = 0; ci < source.citations.length && !citation; ci++) {
         const c = source.citations[ci]
-        if (c.thingId === thingId && c.start) citation = c
+        if (c.thingId === thingId) citation = c
       }
     }
     if (!citation) return quotesNotInThing.push(quote)
@@ -114,7 +114,7 @@ export function simplifyToMostCommonThing(
   subtexts.forEach((subtext) => {
     // mine subtext to try to find one relevant citation
     const citation = subtext.citations.find(
-      (citation) => citation.thingId === thingId && citation.start,
+      (citation) => citation.thingId === thingId,
     )
     if (!citation) return subtextsNotInThing.push(subtext)
     // note: could clean up object here
@@ -295,6 +295,7 @@ export default function sortQuotesIntoSubtextBuckets(
       quotesNotInThing,
       subtextsNotInThing, // useless (for now?)
     } = simplifyToMostCommonThing(quotes, subtexts)
+    if (!thing) break // no quotes or subtexts with things left
     const buckets = bucketQuotesBySubtext(subtextsInThing, quotesInThing)
     bucketBatches.push({ buckets, thing })
     console.log(`bucketed thing: ${thing.id}`)
