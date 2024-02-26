@@ -87,3 +87,106 @@
 - script(s) for ingesting large amounts of quotes from prior systems
 - nested subtexts
 - should subtexts be text-tied or thing-tied??
+
+- cannot read properties of undefined, reading ‘id’, .filter within useMemo (client side error on add form)
+- basic search at 1000 quotes
+- sub subtexts, etc
+- autoselect thing when making subtexts (urgent!)
+- allow for reordering of subtexts in the GUI
+- markdown in subtext headers
+- don’t put “:” after “.” In subtext headers
+- confirmation before “remove” for subtexts with content in their notes
+- don’t show characters on text view when there aren’t any
+- don’t purge subtext-associated buckets that start at the subsequent
+- option/method to show just notes, not quotes
+- “summary” on subtexts that’s distinct from “notes”
+- edit button next to each subtext that forwards you to its notes/etc field automatically
+- make edit form wider and shorter for more information on screen at once
+- ordered lists render properly in markdown text fields
+- what if I rendered text views as a split screen: on left, notes/summaries; on right, quotes from / that back them up? Right now the view is painfully long but only uses half a desktop screen. Obviously on mobile I would still need to have everything in one line.
+- basic intro at top of homepage about what this system is and how it works
+
+General question: how to cite when an author asserts some fact secondhand but in their own words? Am going with citing the proximate author but as a “secondary source.” Versus primary when it’s the author’s own pithy saying or whatever.
+
+2024-01-18
+
+- when two things start at same place but end differently, the one that ends sooner should be sorter AFTER the late ender, not before, as it’s a subset of the latter
+- subtext should not need to start BEFORE a later one to be its parent
+- subtext summary vs notes
+- collapsible subtexts
+- rendering quote notes inline
+- quote: about vs mentions
+- sort about quotes on person page by their position in the text
+
+2024-01-19
+
+- person to “entity” (organization, event, etc). Simplifies general “about,” allows citing institutions/etc
+- ^^ “topics”? How do those fit in?
+
+2024-01-20
+
+- how to put Publisher for an article within a journal. Journal? Publisher? ???
+- how to put Thing for a paper? PDF probably; DOI field?
+- adding DOI field to things would be a boon for citation
+- GitHub type field should render based on current time zone not UTC
+- quotes should be able to refer to other quotes as a source, without the whole thing being tied to the primary source
+  - in general, texts/quotes should be able to cite to different texts/quotes
+- journal articles as different type of text/etc
+- in general, journal articles citations should be rendered with a “proper”/standard format
+- in thing dropdown, show title/subtitle/id of each when the type/publisher/date is the same
+- some kind of super-Thing? “The EP copy of X” plus its sub-volumes as distinct?
+- incorporate chapter/subtext into some part of the citation?
+- migrate stuff to graphql?
+- quote sorting into subtexts for multiple sequential things
+- ability in a quote to signal a non-paragraph line break (e.g. in poetry) (probably single line break)
+- citations in texts say “copy N” instead of the full citation every time (or restrict to minimal difference, e.g. “vol. 1” or “Easton press vol. 1” if there are copies from multiple publishers)
+- ensure character description wraps go back to the start of description, not under their name
+- when adding quote after button there is a Citation for every Thing
+- primary/secondary default based on Text type
+- primary/secondary expansion: commentary, data vs opinion, etc
+- render short name as nickname in quotes. e.g. Rafael Theodore Cruz (“Ted”)
+- timeline for comparing when people were around (especially characters in a book)
+- chapter-level characters?
+- table of contents at beginning of Text which jumps to the proper subtexts
+  - perhaps an equivalent of expandable subtexts
+- sort about/by quotes for people into (collapsible) buckets based on text/thing for easier browsing
+- show page numbers in subtext on text page
+- compute/show “percentage through” its various parent subtexts that a quote is
+- make use of 2D on screen more aggressively (interfaces wider especially when editing)
+- render line in citation
+- text sort options on home screen (# of quotes, date originally published, title, author name, etc)
+- “summarizing” relation; not author, but not authored by the author originally either
+
+2024-01-21
+
+- Person → Entity
+- Thing → Copy/Version
+
+2024-01-22
+
+- annotation for positions/awards/etc (e.g. POTUS. would love to click a position, see who in my database was in it over time) (or e.g. Nobels)
+  - composable: US Senate Seat (Oregon Class II) → { US Senate (Oregon), US Senate (Class II), Senate in XYZth Congress } → U.S. Senate, XYZth Congress, U.S. Congress, etc.
+- search (at 1k quotes)
+- quote bot engine / integrations
+- information on when I read something (though is that even a coherent concept?)
+- visual timelines on history books of the lives of their characters
+- quizzing / recall / free association features (e.g. who said this, what did X think about Y)
+  - need spaced repetition exercises to absorb/integrate all this info over time
+- direct edit button/form for subtexts
+- locations? Annotated maps somehow? Idk
+- meta tags
+- buy links (books, quote merchandise)
+- quote can be “about” text
+- from above, add entities but as separate from people (for stuff like roles, founded, subsidiaries, etc)
+
+Text selector should show ID when ambiguous
+
+2024-02-26
+
+- link person to subtext as character? (→ automatically propagate through text hierarchy)
+- subtext end line (in case making scene breaks)
+- subtext type (scene, chapter, section, etc)
+- ordered lists fix
+- how to assign a fictional quote authorship? To author? To character? What if character real and quote {real, fake}?
+- themes. Linked to quotes, to subtexts, stuff directly. Collections for question/essay/etc basically
+- need to totally rethink associated quotes / primary-secondary / etc. this will likely be some kind of relationship hierarchy between quotes directly (these two are the same; this cites from this; this summarizes this; this is a translation of this; etc). The whole “same quote text multiple sources/citations” is Not It because the quote doesn’t have same text everywhere
