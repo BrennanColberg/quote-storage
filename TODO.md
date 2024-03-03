@@ -190,3 +190,25 @@ Text selector should show ID when ambiguous
 - how to assign a fictional quote authorship? To author? To character? What if character real and quote {real, fake}?
 - themes. Linked to quotes, to subtexts, stuff directly. Collections for question/essay/etc basically
 - need to totally rethink associated quotes / primary-secondary / etc. this will likely be some kind of relationship hierarchy between quotes directly (these two are the same; this cites from this; this summarizes this; this is a translation of this; etc). The whole “same quote text multiple sources/citations” is Not It because the quote doesn’t have same text everywhere
+
+- Make volume optional, no need to enter 0
+- Question mark button on subtitle
+- No colon when no title for a subtext
+- Optional subtitles for subtexts
+- After creating text, switch to entering quotes for it
+- Better “by / said by” distinction for fictional quotes
+
+- Not to be confused with IDs in people (at least when names are ambiguous)
+
+- Article should have publisher on text? In general publisher is a first-class attribute of most articles
+- Thing type: newspaper/online-scan/microfiche
+  - online scan can have page
+- Quote without author (in case of old newspaper)
+- Render quotes of text without any citations
+- Date-level specificity for articles
+
+- Text type: poem (with lines as location of source)
+- Thing type: PDF _of book_
+
+- View quote page
+- Show other sources of quote inline in text
